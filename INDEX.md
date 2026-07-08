@@ -28,25 +28,24 @@ app is the automated, programmatic mirror of that workflow.
 | `SUBMISSION.md` | Draft answers to the 5 hackathon questions (video script TBD) | ✅ draft |
 | `DEMO_PLAN.md` | 3-min video blueprint | ✅ |
 | `JOURNAL.md` | Dev log: blockers, decisions, running log | ✅ |
-| `ARCHITECTURE.md` (+`.html`) | How the current system works | ⚠️ consolidating (see to-dos) |
-| `SYSTEM_ARCHITECTURE_FUTURE_STATE.md` | Future state: Core-First-Agents-Later | ⚠️ merge into one arch doc |
-| `CORE_ENGINE_INTEGRATION_BLUEPRINT.md` | Path A/B code-level detail | ⚠️ merge or keep as appendix |
+| `ARCHITECTURE.md` | **Canonical** — how it works: Phase 1 (built) + Phase 2 (future) + Path A/B appendix | ✅ v3, consolidated |
+| `CORE_ENGINE_INTEGRATION_BLUEPRINT.md` | Path A/B code detail | ⚠️ candidate for deletion (now folded into ARCHITECTURE appendix) — confirm |
+| `render_docs.py` | Render any `.md` → styled HTML in `docs_html/` (git-ignored). Run `pip install markdown` once, then `python render_docs.py` | ✅ |
 | `GIT_DEPLOYMENT_GUIDE.md` | Git/deploy ops | ✅ |
 | `INDEX.md` | This map | ✅ |
 
 ## Open to-dos
 - [ ] Run `app.py` end-to-end with a real API key (nothing has actually generated yet)
 - [ ] Push local git repo to GitHub (`git push -u origin main`)
-- [ ] **Consolidate the architecture files into one** (decision pending — see below)
+- [x] Consolidate architecture into one canonical `ARCHITECTURE.md` (v3)
+- [ ] Confirm `CORE_ENGINE_INTEGRATION_BLUEPRINT.md` can be deleted (now folded into the ARCHITECTURE appendix)
 - [ ] Harden Phase 1 retrieval: query construction, use `population` input, add tests
 - [ ] Add `st.session_state` cache so re-runs don't re-hit registries (rate-limit safety)
 - [ ] Decide the JOURNAL safety-framing reframe (currently flagged, not applied)
 - [ ] Write the final demo video talk-track script (after the app is finalized)
 
-## Architecture consolidation (in progress)
-Three files currently overlap on "how it works": `ARCHITECTURE.md`,
-`SYSTEM_ARCHITECTURE_FUTURE_STATE.md`, `CORE_ENGINE_INTEGRATION_BLUEPRINT.md`.
-Plan: collapse to a single canonical architecture doc using the **"Core First,
-Agents Later"** framing — Phase 1 deterministic engine (built) + Phase 2 agentic
-expansion (future: Multi-Agent Critic + Competitive Intelligence tracks).
-Structure decisions pending user input.
+## Viewing docs as HTML
+`ARCHITECTURE.html` is no longer committed. Instead, generate HTML on demand:
+`pip install markdown` (once) → `python render_docs.py` → open `docs_html/*.html`.
+For quick edits, VS Code's built-in Markdown preview (`Cmd+Shift+V`) needs no
+files at all and updates live.

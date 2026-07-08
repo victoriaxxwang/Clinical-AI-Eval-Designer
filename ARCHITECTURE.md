@@ -1,107 +1,203 @@
 # Architecture — Clinical AI Eval Designer
 
-**Version:** 2 · 2026-07-07
-**Rendered HTML:** `ARCHITECTURE.html` (same version)
+**Version:** 3 · 2026-07-08
 
 ### Changelog
-- **v1 (2026-07-07)** — Initial architecture. Runtime retrieval was the Anthropic
-  API `web_search` server tool only (grounded web search, not structured database
-  queries). Documented the three roles of Claude and flagged that citation
-  identifiers still needed verification.
-- **v2 (2026-07-07)** — Added the live-registry data pipeline. The app now queries
-  **ClinicalTrials.gov, openFDA, and PubMed directly** before prompting the model,
-  and injects the retrieved records as *grounded reference context*. Identifiers
-  (NCT / PMID / 510(k) K-numbers / product codes) now come back from the databases
-  themselves, so citations are verifiable by construction. Web search is retained
-  as an optional supplement for sources the registries don't cover.
+- **v1 (2026-07-07)** — Initial. Runtime retrieval was the Anthropic API `web_search` server tool only.
+- **v2 (2026-07-07)** — Added the live-registry pipeline (ClinicalTrials.gov / openFDA / PubMed); citations verifiable by construction.
+- **v3 (2026-07-08)** — Consolidated into a single canonical doc under the **"Core First, Agents Later"** framing. Merged the former `SYSTEM_ARCHITECTURE_FUTURE_STATE.md` (Phase 2) and folded the integration code into an appendix. Structural checks reclassified as deterministic (not an agent).
 
-> **Versioning convention:** each meaningful edit to the architecture bumps the
-> version number in this header and adds a changelog entry. `ARCHITECTURE.md` and
-> `ARCHITECTURE.html` always share the same version number — edit the `.md`, then
-> re-render the `.html` to match.
+> **Design principle — "Core First, Agents Later."** Build a bounded,
+> deterministic core that is trustworthy on its own. Layer autonomous agents on
+> top *only after* the core passes rigorous testing — never as a replacement for
+> it, and always inheriting its constraints. If the core isn't trustworthy alone,
+> no agent orchestration fixes it. **Phase-gate rule: no agent logic is written
+> until Phase 1 is production-grade and validated.**
 
 ---
 
-## The three roles of Claude in this project
+## The three roles of Claude
 
-There are three distinct things people call "Claude," and conflating them will
-get a claim challenged by judges who know the products. Keep them separate in the
-write-up.
+Three distinct products get called "Claude." Keep them separate in the write-up.
 
-| Where | Which Claude | When | What it does |
-|---|---|---|---|
-| **Discovery / R&D** | **Claude Science** (interactive workbench at claude.ai) | Before the hackathon build | Manual proof-of-concept: the 48-paper HRV synthesis. Where you *found* that literature synthesis for a validation spec can be automated. **Not called by the app.** |
-| **Building the app** | **Claude Code** | July 7 | Wrote `app.py`, the constraint-layer system prompt, the registry retrieval pipeline, repo structure. |
-| **Runtime engine** | **Anthropic API — Claude Fable 5** | Every Generate click | Synthesizes the retrieved records into the constrained 8-field spec. |
+| Where | Which Claude | What it does |
+|---|---|---|
+| Discovery / R&D | **Claude Science** (workbench at claude.ai) | Manual proof-of-concept: the 48-paper HRV synthesis. Where the concept was proven. **Not called by the app.** |
+| Building the app | **Claude Code** | Wrote `app.py`, the constraint-layer prompt, the registry pipeline. |
+| Runtime engine | **Anthropic API — Claude Fable 5** | Synthesizes retrieved records into the constrained 8-field spec. |
 
 **Honest framing:** the running app does **not** call Claude Science — there is
-no programmatic Claude Science endpoint. Claude Science was the *discovery
-engine* that proved the concept. The *productized* runtime is direct registry
-APIs + the Anthropic API (Fable 5). The registries — not the model's memory — are
-what make citations real.
+no programmatic Claude Science endpoint. The runtime is *direct registry APIs +
+the Anthropic API (Fable 5)* — an automated, programmatic mirror of the Claude
+Science discovery workflow. The registries, not the model's memory, are what make
+citations real.
 
 ---
 
-## Runtime data pipeline (v2)
+## Phase 1 — The Core Deterministic Engine (built, strict priority)
+
+A straight-line pipeline. Same inputs → same retrieval → constrained synthesis.
+No open-ended agent loops. This must be rock-solid before any Phase 2 work.
 
 ```
-[ User Input ]  (AI model · clinical use case · patient population · healthcare setting)
-      │
-      ▼
-1. Fetch raw data ──► [ External registry APIs ]
-      │                 • ClinicalTrials.gov API v2  → study designs, endpoints, enrollment (NCT IDs)
-      │                 • openFDA device APIs         → classification + 510(k)/De Novo (K-numbers, product codes)
-      │                 • PubMed E-utilities          → literature (real PMIDs)
-      ▼
-2. Assemble "Grounded Reference Context"  (raw records, clearly labelled, capped in size)
-      │
-      ▼
-3. Synthesize ──► [ Anthropic API — Claude Fable 5 ]
-      │              • constraint layer (system prompt): no invented numbers,
-      │                cite-or-flag, confidence + expert-review tiers
-      │              • optional web_search server tool fills registry gaps (FDA guidance PDFs, etc.)
-      │              • auto-fallback → Opus 4.8 on a safety false-positive
-      ▼
-[ Structured 8-field validation spec ]  + confidence flags + certifies/does-not + real citations
+[ User input ]  (AI model · clinical use case · patient population · healthcare setting · optional URL)
+        │
+        ▼
+1. Synthesis / retrieval layer  — deterministic, cost-free, verifiable
+        • ClinicalTrials.gov API v2   → study designs, endpoints, enrollment (NCT IDs)
+        • openFDA device APIs         → classification + 510(k)/De Novo (K-numbers, product codes)
+        • PubMed E-utilities          → literature (real PMIDs)
+        • optional reference URL      → clean text extraction
+        │
+        ▼
+2. Grounded Reference Context  — labelled, size-capped raw records
+        │
+        ▼
+3. Claude Fable 5  — the constraint + synthesis layer ONLY
+        • system prompt = constraint layer: no invented numbers, cite-or-flag,
+          confidence tiers, expert-review flags
+        • maps real records into the 8-field structure (does not recall facts)
+        │
+        ▼
+[ Structured 8-field validation spec ]  + confidence + certifies/does-not + real citations
 ```
 
-**Why this ordering matters:** the registries are queried *first*, and their
-records are handed to Fable as source material. Fable's job is to *map and
-synthesize* real records into the 8-field structure — not to recall facts. An
-identifier it cites came back from a database this run, not from training memory.
+**Determinism boundary.** The retrieval half is fully deterministic and free
+(public APIs). The synthesis half is the model — bounded by the system prompt,
+grounded by the retrieved records, honest about confidence. The design goal is
+near-zero non-deterministic variance in *what evidence* enters the spec; the
+model's job is to map and constrain that evidence, not to source it.
 
----
+**Current implementation:** `app.py` — `search_clinicaltrials`, `search_openfda`,
+`search_pubmed`, `fetch_url_text`, `build_grounded_context`, `generate_spec`.
+Code detail in the Appendix.
 
-## What each field is grounded in
-
+### What each field is grounded in
 | Output field | Primary grounding source |
 |---|---|
-| Study Design | ClinicalTrials.gov (comparable trial designs, allocation, masking) |
-| Sensor / Input Validation | PubMed + web (device/acquisition validity literature) |
+| Study Design | ClinicalTrials.gov (comparable designs, allocation, masking) |
+| Sensor / Input Validation | PubMed + web (device/acquisition validity) |
 | Performance Benchmarks | PubMed + web (reported metrics by regime) |
 | Ground Truth Strategy | PubMed + trial reference standards |
-| Sample Size | ClinicalTrials.gov enrollment counts of comparable studies |
+| Sample Size | ClinicalTrials.gov enrollment of comparable studies |
 | Subgroup Requirements | PubMed (population-specific validity threats) |
 | Regulatory Pathway | openFDA (product codes, predicates, 510(k)/De Novo) |
-| Post-Deployment Monitoring | PubMed + web (drift / real-world monitoring precedent) |
+| Post-Deployment Monitoring | PubMed + web (drift / monitoring precedent) |
+
+### Honesty guardrails (what the app does *not* claim)
+- Registry coverage is best-effort. A nil result is reported as "no matching record retrieved," and the model lowers confidence rather than asserting the benchmark doesn't exist.
+- Web search returns real pages but not structured database records — the model prefers registry identifiers and never fabricates one.
+- Every field carries a confidence tier and an expert-review flag. This is a grounded starting point, not a substitute for expert sign-off.
 
 ---
 
-## Honesty guardrails (what the app does *not* claim)
+## Phase 2 — Asynchronous Agentic Expansion (future state)
 
-- Registry coverage is best-effort. A query that returns nothing is reported as
-  "no matching record retrieved," and the model must lower its confidence rather
-  than assert the benchmark doesn't exist.
-- Web search results are real pages but not structured database records — the
-  model is told to prefer registry identifiers and never fabricate one.
-- Every field carries a confidence tier and an expert-review flag. The tool is a
-  structured, grounded starting point — not a substitute for expert sign-off.
+Introduced **only after Phase 1 is validated and stable.** Two decoupled tracks
+run in parallel or post-generation. Neither may invent facts — both inherit the
+Phase-1 constraint layer.
+
+### 1. Multi-Agent Critic & Self-Healing Loop (asynchronous verification)
+
+An evaluation layer at the end of the deterministic line:
+
+- **Clinical Integrity Agent (LLM).** The one component that genuinely needs a
+  model. Checks the generated output against the raw retrieved literature / FDA
+  guidance to flag missing citations, source misrepresentation, or a
+  HIGH-confidence field backed only by tangential evidence.
+- **Structural Constraints check (deterministic code, *not* an agent).** Field
+  counts, schema, markdown-table formatting, prompt-rule compliance are format
+  checks — a plain validator is cheaper and 100% reliable where an LLM would
+  drift. Keeping this in the deterministic layer is *more* faithful to the
+  Core-First philosophy than making it an agent.
+- **Self-Correction Loop.** If either check flags a flaw, the system feeds the
+  critique + draft back to the generator for a self-healing second pass before
+  user exposure. Converges when checks pass, or escalates to a human after N
+  iterations — never loops forever, never silently accepts. Implementation
+  options: the SDK tool runner (code-orchestrated loop) or Managed Agents with an
+  Outcome + rubric (platform runs iterate→grade→revise).
+
+### 2. Autonomous Competitive Intelligence Agent (parallel track)
+
+Runs an unstructured discovery workflow alongside the clinical core, **physically
+separated** so market framing never contaminates the clinical spec.
+
+- **Dynamic Market Scouting:** takes population + disease area, queries active
+  market landscapes (ClinicalTrials.gov, openFDA clearances, public sources) for
+  direct competitors.
+- **Automated SWOT matrix:** synthesizes competitor profiles across *Patient
+  Population Overlap*, *Clinical Advantages*, and *Strategic Disadvantages (Your
+  Moat)* — e.g. high patient burden or slow enrollment in competing DCTs.
+- **Value-Proposition Synthesis:** surfaces targeted strategic insight — e.g.
+  *"Competitor X's recruitment weakness in this indication means your
+  decentralized design gives a distinct speed advantage."*
+
+Its guardrails are about sourcing and dating claims, not clinical safety — a
+different rulebook from the core.
+
+### The Phase-1 → Phase-2 seam (design decision to make now)
+The critics need exactly two inputs: the **8-field draft** and the **raw source
+records** it was grounded on. So Phase 1 should emit both as a single bundle
+(persist `grounded_context` alongside the spec). Then Phase 2 verifies
+draft-against-sources without re-fetching, and the interface between phases is
+just "that bundle." Small change now; keeps the seam clean later.
+
+### Guardrail inheritance (non-negotiable)
+Every Phase-2 component inherits the Phase-1 constraint layer verbatim: no
+invented numbers, cite-or-flag, confidence tiers, expert-review flags. Agents may
+critique, reorganize, and broaden — never relax a core constraint. An agent that
+would need to invent a threshold to "improve" the spec must instead flag it for
+expert input.
 
 ---
 
-## Roadmap (next versions)
+## Appendix — Integration paths (code detail)
 
-- **v3 (planned):** add ClinicalTrials.gov endpoint/statistical-plan extraction to
-  auto-populate a Statistical Analysis Plan (SAP) skeleton.
-- **v3+:** IRB submission template and Q-Sub outline pre-populated from the
-  generated spec (the workflow-integration moat).
+The retrieval engine can run two ways; the app uses **both** (B as the backbone,
+A as an optional gap-filler).
+
+| | Path A — `web_search` server tool | Path B — public registry APIs |
+|---|---|---|
+| Runs on | Anthropic's servers | Your Python (`requests`) |
+| Cost | API credits | **Free** |
+| Determinism | Best-effort | **Deterministic** |
+| Identifiers | Model-transcribed | Returned by the database (verifiable) |
+| Best for | Filling web gaps (FDA guidance PDFs) | The citable backbone |
+
+### Path A — `web_search` server tool (Streamlit boilerplate)
+```python
+tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6}]
+
+with client.beta.messages.stream(
+    model="claude-fable-5",
+    max_tokens=32000,
+    betas=["server-side-fallback-2026-06-01"],      # opt-in refusal fallback
+    fallbacks=[{"model": "claude-opus-4-8"}],        # Fable → Opus 4.8
+    output_config={"effort": "high"},                # Fable: no `thinking` param (400)
+    tools=tools,
+    system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
+    messages=[{"role": "user", "content": user_message}],
+) as stream:
+    for chunk in stream.text_stream:
+        ...  # render incrementally
+    final = stream.get_final_message()
+```
+
+### Path B — public registries via `requests` (deterministic, free)
+```python
+def search_clinicaltrials(term, max_studies=6, timeout=12):
+    r = requests.get("https://clinicaltrials.gov/api/v2/studies",
+                     params={"query.term": term, "pageSize": max_studies}, timeout=timeout)
+    r.raise_for_status()
+    for s in r.json().get("studies", []):
+        ps  = s.get("protocolSection", {})
+        idm = ps.get("identificationModule", {})   # nctId, briefTitle (NOT officialTitle — often missing)
+        dm  = ps.get("designModule", {})           # studyType, enrollmentInfo.count, designInfo
+        ...
+```
+Same pattern for **openFDA** (`/device/classification.json`, `/device/510k.json`
+— product codes, K-numbers) and **PubMed** (`esearch.fcgi` → id list →
+`esummary.fcgi` — real PMIDs). Wrap each in try/except for `requests.Timeout` /
+`requests.RequestException`; a nil result → "no matching record retrieved" and
+lower confidence. Field paths verified live 2026-07 (NCT03831841, live PMIDs,
+openFDA product code QEX).

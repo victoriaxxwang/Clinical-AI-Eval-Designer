@@ -1,0 +1,2 @@
+# Dev-only tools (not needed to run the app).
+markdown>=3.5   # used by render_docs.py to generate HTML views of the .md files
