@@ -12,6 +12,7 @@ Two kinds, matching the two ways the engine can silently break:
 Run:  pip install pytest  →  python -m pytest -q
 """
 
+import pytest
 import requests
 
 import engine
@@ -59,6 +60,41 @@ def test_keywords_splits_hyphens_and_drops_stopwords():
     kws = engine._keywords("photoplethysmography-derived heart-rate for the model", 6)
     assert "photoplethysmography" in kws and "derived" in kws
     assert "for" not in kws and "the" not in kws and "model" not in kws
+
+
+# --- 1b. Disease-agnosticism: invariants must hold across ANY indication ----
+
+# A deliberately diverse spread — cardiology, oncology, sepsis, dermatology,
+# mental health, ophthalmology, radiology, pathology, wearables, obstetrics,
+# gastroenterology, pulmonology. The engine is domain-agnostic, so we assert
+# only invariants (valid/deterministic/filler-free queries), never a
+# disease-specific keyword.
+DIVERSE_CASES = [
+    ("Detects atrial fibrillation from single-lead ECG", "AFib detection", "Ambulatory adults"),
+    ("Detects lung nodules on low-dose chest CT", "Lung cancer screening", "Adult smokers"),
+    ("Predicts sepsis onset from EHR vitals and labs", "Early sepsis prediction", "ICU patients"),
+    ("Classifies skin lesions from dermoscopy", "Melanoma detection", "Dermatology clinic patients"),
+    ("Detects depression from speech prosody", "Depression screening", "Primary care adults"),
+    ("Detects diabetic retinopathy from fundus photographs", "DR screening", "Adults with diabetes"),
+    ("Detects intracranial hemorrhage on head CT", "Acute stroke triage", "ED patients"),
+    ("Grades prostate cancer from histopathology slides", "Prostate cancer grading", "Biopsy patients"),
+    ("Estimates blood glucose from a wearable optical sensor", "Glucose monitoring", "Adults with diabetes"),
+    ("Predicts preeclampsia from maternal serum biomarkers", "Preeclampsia risk", "Pregnant patients"),
+    ("Detects polyps in colonoscopy video", "Colorectal cancer screening", "Screening-age adults"),
+    ("Detects pneumonia on chest X-ray", "Pneumonia screening", "Hospitalized adults"),
+]
+
+
+@pytest.mark.parametrize("model,use_case,population", DIVERSE_CASES)
+def test_queries_are_valid_for_any_indication(model, use_case, population):
+    q1 = engine.build_queries(model, use_case, population)
+    # deterministic for every domain
+    assert q1 == engine.build_queries(model, use_case, population)
+    # non-empty, bounded, focused search terms
+    assert q1["ct"] and len(q1["ct"]) <= 200 and 1 <= len(q1["ct"].split()) <= 4
+    assert q1["pubmed"] and len(q1["pubmed"]) <= 250
+    # a usable device keyword: present, not a stopword/verb/generic
+    assert q1["fda"] and q1["fda"] not in engine._STOP and len(q1["fda"]) > 2
 
 
 # --- 2. Response parsing (network mocked) -----------------------------------

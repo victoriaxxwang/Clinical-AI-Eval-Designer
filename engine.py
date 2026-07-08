@@ -42,6 +42,20 @@ _STOP = {
 }
 
 
+# Recognized imaging / sensor / device modalities. When one of these appears in
+# the model description it is the best openFDA device keyword, so it is preferred
+# over a generic anatomy/finding word. Domain-agnostic: covers the common
+# modalities across specialties, not any single disease.
+_MODALITY = {
+    "photoplethysmography", "ppg", "ecg", "ekg", "electrocardiogram", "eeg",
+    "emg", "ct", "mri", "ultrasound", "echocardiography", "echocardiogram",
+    "fundus", "oct", "dermoscopy", "spirometry", "oximeter", "oximetry",
+    "accelerometer", "wearable", "optical", "sensor", "radiograph", "radiography",
+    "mammography", "mammogram", "endoscopy", "colonoscopy", "histopathology",
+    "pathology", "capnography", "electrode", "patch", "biosensor",
+}
+
+
 def _clean(text, limit):
     return " ".join((text or "").split())[:limit]
 
@@ -82,9 +96,15 @@ def build_queries(model_desc, use_case, population=""):
     # → "coronary", not "cardiovascular".
     uc_kws = set(_keywords(use_case, 8))
     model_kws = _keywords(model_desc, 8)
-    device = next((k for k in model_kws if k not in uc_kws), "")
-    if not device:
-        device = model_kws[0] if model_kws else (_keywords(use_case, 1) or [""])[0]
+    distinctive = [k for k in model_kws if k not in uc_kws]
+    # 1) a recognized modality among the model's distinctive terms; else
+    # 2) the first distinctive term; else 3) any model term; else use_case.
+    device = (
+        next((k for k in distinctive if k in _MODALITY), "")
+        or (distinctive[0] if distinctive else "")
+        or (model_kws[0] if model_kws else "")
+        or (_keywords(use_case, 1) or [""])[0]
+    )
     query = _clean(" ".join(combined), 200)
     return {
         "ct": query,

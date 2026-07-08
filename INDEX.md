@@ -24,7 +24,7 @@ app is the automated, programmatic mirror of that workflow.
 |---|---|---|
 | `app.py` | UI layer: inputs, constraint-layer prompt, Fable 5 call, bundle output | ✅ built, compiles; not yet run end-to-end |
 | `engine.py` | **Core Deterministic Engine**: registry retrieval + query building (no UI, importable, unit-tested) | ✅ hardened, live-verified |
-| `test_engine.py` | 8 critical tests: query determinism + JSON field-path parsing | ✅ 8/8 pass |
+| `test_engine.py` | 20 tests: query determinism, JSON field-path parsing, + a 12-indication disease-agnosticism sweep | ✅ 20/20 pass |
 | `requirements.txt` | Deps: streamlit, anthropic, requests | ✅ |
 | `requirements-dev.txt` | Dev tools: markdown (render_docs), pytest (tests) | ✅ |
 | `README.md` | Public-facing: what it is + how to run | ✅ |
