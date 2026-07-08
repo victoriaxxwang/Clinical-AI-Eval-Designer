@@ -101,6 +101,15 @@ Introduced **only after Phase 1 is validated and stable.** Two decoupled tracks
 run in parallel or post-generation. Neither may invent facts — both inherit the
 Phase-1 constraint layer.
 
+> **Retrieval breadth is also a Phase-2 lever, not a Phase-1 one.** If we ever
+> want dynamic, model-chosen search (the "Claude Science-like" experience —
+> semantic literature search, richer connectors), the path is the Anthropic API
+> **MCP connector** or Managed Agents with MCP servers — server-side, no Science
+> UI, no screen-scraping. It belongs in Phase 2 because it is model-mediated and
+> therefore non-deterministic (and credit-metered). Phase 1's retrieval stays
+> direct REST for exactly that reason. There is no programmatic Claude Science
+> endpoint; its connectors are MCP servers, which the API can reach directly.
+
 ### 1. Multi-Agent Critic & Self-Healing Loop (asynchronous verification)
 
 An evaluation layer at the end of the deterministic line:

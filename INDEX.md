@@ -37,8 +37,15 @@ app is the automated, programmatic mirror of that workflow.
 | `GIT_DEPLOYMENT_GUIDE.md` | Git/deploy ops | ✅ |
 | `INDEX.md` | This map | ✅ |
 
+## Locked decisions (settled — don't relitigate after compaction)
+- **No Claude Science endpoint.** Claude Science is the discovery/R&D workbench; it has no API to call from the app. It proved the concept — it is not a runtime dependency.
+- **Phase-1 runtime = direct REST to public registries** (ClinicalTrials.gov, openFDA, PubMed). Deterministic, free, verifiable by identifier. This is `engine.py`, done and tested.
+- **MCP connectors (Claude Code plugins / Anthropic API MCP connector) = Phase-2 breadth option, not Phase 1.** They're model-mediated → nondeterministic + cost credits, which conflicts with the Phase-1 determinism goal. Build-time MCP use (pulling fixtures) is fine; runtime MCP is Phase 2.
+- **Architecture confirmed unchanged** after the Claude Science / MCP brainstorm.
+
 ## Open to-dos
-- [ ] Run `app.py` end-to-end with a real API key (nothing has actually generated yet)
+- [ ] Run `app.py` end-to-end with a real API key — the Phase-1 gate. Only setup needed: Anthropic key in `.streamlit/secrets.toml`; the 3 registries need no keys.
+- [ ] Review Claude Science's source list vs. our engine (+ Europe PMC / OpenAlex); wire only free, stable, identifier-returning sources — **waiting on the list from Claude Science**
 - [ ] Push local git repo to GitHub (`git push -u origin main`)
 - [x] Consolidate architecture into one canonical `ARCHITECTURE.md` (v3)
 - [ ] Confirm `CORE_ENGINE_INTEGRATION_BLUEPRINT.md` can be deleted (now folded into the ARCHITECTURE appendix)
