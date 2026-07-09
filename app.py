@@ -28,11 +28,12 @@ You generalize to ANY disease indication, model type, sensor, and clinical setti
 =========================
 GROUNDED REFERENCE CONTEXT
 =========================
-The user message may begin with a "GROUNDED REFERENCE CONTEXT" block containing raw records retrieved live from public registries: ClinicalTrials.gov (study designs, endpoints, enrollment), openFDA (device classification, 510(k)/De Novo precedents), and PubMed (literature). When it is present:
+The user message may begin with a "GROUNDED REFERENCE CONTEXT" block containing raw records retrieved live from public registries: ClinicalTrials.gov (study designs, endpoints, enrollment), openFDA device classification and 510(k)/De Novo precedents (regulatory pathway), openFDA PMA / MAUDE adverse-event reports / recalls (Class III pathway and POST-MARKET SAFETY signals — use these for safety, failure-mode, and post-deployment-monitoring reasoning, NOT as efficacy evidence), openFDA drug/biologic records where the intervention is a drug or biologic (Drugs@FDA approvals for the approval pathway, SPL labeling for the on-label indication and boxed warnings, and FAERS adverse-event reports for post-market safety — again a safety/labeling signal, NOT efficacy evidence for THIS model), and the merged literature layer (Europe PMC / OpenAlex / Semantic Scholar / PubMed). When it is present:
 - Treat these records as your PRIMARY citations. Cite the real identifiers exactly as given — NCT numbers, PMIDs, 510(k) K-numbers, product codes, regulation numbers. Do not alter or invent identifiers.
 - Map the retrieved study designs, endpoints, enrollment sizes, and regulatory precedents directly into the relevant fields.
 - Set Confidence from how well the retrieved evidence matches THIS model and population: strong, on-point matches → HIGH; only tangential matches → MEDIUM; little or nothing retrieved → LOW.
 - Absence of a record is NOT evidence of absence. Say "no matching record was retrieved" rather than "none exists," unless you can genuinely support the stronger claim.
+- The block ends with a "Coverage & Retrieval Gaps" note listing databases this pipeline did NOT search (licensed sources with no public API, plus other regulatory endpoints). Honor it: never claim a comprehensive or systematic search, and where a field would depend on one of those un-searched sources, say so as an explicit limitation.
 When the block is absent or thin, rely on web search if available, and flag lower confidence rather than inventing numbers.
 
 =========================
@@ -107,7 +108,7 @@ A markdown table with two columns — | Field | Output summary | — one row per
 
 ## Footer
 Italicize this exact note, adapted to the sources you actually used:
-*Output generated from live retrieval (ClinicalTrials.gov, openFDA device classification and 510(k)/De Novo, PubMed) and, where noted, web search. Cited identifiers should be verified before use. Benchmark numbers are literature-derived, not regulatory standards. Every field requires expert review before clinical or commercial application.*
+*Output generated from live retrieval (ClinicalTrials.gov, openFDA device classification / 510(k)/De Novo / PMA / MAUDE / recalls, openFDA drug/biologic pathways where applicable — Drugs@FDA / SPL labeling / FAERS, and the Europe PMC / OpenAlex / Semantic Scholar / PubMed literature layer) and, where noted, web search. Cited identifiers should be verified before use. Benchmark numbers are literature-derived, not regulatory standards. Every field requires expert review before clinical or commercial application.*
 
 Write densely and specifically for THIS input. No filler. If the input is under-specified, state the assumption you are making rather than inventing facts."""
 
@@ -224,7 +225,9 @@ with st.sidebar:
     )
     st.divider()
     st.caption(
-        "Model: **Claude Fable 5** with automatic fallback to Opus 4.8. "
+        "Model: **Claude Fable 5**, with an automatic Opus 4.8 fallback. Fable's "
+        "safety classifier often declines clinical/life-sciences requests; when it "
+        "does, Opus 4.8 transparently serves the response (same constraint layer). "
         "Fable requires 30-day data retention on your Anthropic org — if every "
         "request errors with a 400, check that setting."
     )
@@ -253,6 +256,15 @@ with st.form("spec_form"):
             "Healthcare setting",
             placeholder="e.g. Radiology / opportunistic screening in a general hospital",
         )
+    intervention_choice = st.radio(
+        "What does the AI evaluate or act on? (routes the FDA search)",
+        options=["Device / software", "Drug / biologic", "Both"],
+        horizontal=True,
+        help="Most clinical AI is software/a device (default) → the FDA device files "
+             "(classification, 510(k), PMA, MAUDE, recalls). Choose Drug / biologic (or "
+             "Both) if the model doses, selects, or predicts response to a medication — "
+             "then Drugs@FDA, SPL labeling, and FAERS are searched as well.",
+    )
     claim = st.text_area(
         "Intended clinical claim (optional — sharpens the spec)",
         placeholder="e.g. Flag patients with elevated CAC for cardiology referral.",
@@ -275,17 +287,29 @@ if submitted:
         st.warning("Please fill in the AI model, clinical use case, patient population, and healthcare setting.")
     else:
         # 1. Retrieve real records from the registries (the Core Deterministic Engine).
-        with st.spinner("Searching ClinicalTrials.gov, openFDA, and PubMed…"):
-            grounded_context, statuses = engine.build_grounded_context(
-                model_desc, use_case, population, optional_url
+        intervention_type = {
+            "Device / software": "device",
+            "Drug / biologic": "drug",
+            "Both": "both",
+        }.get(intervention_choice, "device")
+        _fda_scope = ("device classification, 510(k), PMA/MAUDE/recall" if intervention_type == "device"
+                      else "Drugs@FDA/label/FAERS" if intervention_type == "drug"
+                      else "device + drug/biologic pathways")
+        with st.spinner(f"Searching ClinicalTrials.gov, openFDA ({_fda_scope}), and literature "
+                        "(Europe PMC + OpenAlex + Semantic Scholar, Crossref-verified)…"):
+            grounded_context, statuses, retrieval_timestamp = engine.build_grounded_context(
+                model_desc, use_case, population, optional_url, setting, intervention_type
             )
         with st.expander("🔎 Live data retrieved (grounding context)", expanded=True):
+            st.caption(
+                f"📸 Retrieval snapshot (UTC): **{retrieval_timestamp}** — frozen once "
+                "generated. A reviewer cites this snapshot, not a live re-query."
+            )
             for s in statuses:
                 st.write(s)
-            if grounded_context:
-                st.code(grounded_context)
-            else:
+            if not any(s.startswith("✅") for s in statuses):
                 st.info("No registry records retrieved — the model will flag the evidence base as thin.")
+            st.code(grounded_context)
 
         # 2. Synthesize with Fable, grounded in the retrieved records.
         user_message = wrap_with_context(
@@ -314,6 +338,12 @@ if submitted:
             st.success("Specification generated. Review every field with a domain expert before use.")
             # 3. Emit the Phase-1 bundle: the spec + the source records it was grounded on.
             bundle = markdown_text
+            bundle += (
+                f"\n\n---\n\n*📸 Retrieval snapshot (UTC): {retrieval_timestamp} — frozen once "
+                "generated. Registries update over time, so this bundle (spec + the exact records "
+                "below) is the citable artifact; a live re-query may return a different, equally "
+                "valid set.*"
+            )
             if grounded_context:
                 bundle += (
                     "\n\n---\n\n## Appendix — Source Records (grounded reference context)\n\n"

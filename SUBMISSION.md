@@ -78,10 +78,18 @@ Three distinct roles:
   a regression guard on the registry field paths). Handled git/repo setup. This
   is where the manual insight became working, tested software.
 
-- **Anthropic API (Claude Fable 5) — the runtime engine.** Every generation runs
-  Fable 5 as the constrained synthesis layer over records retrieved live from the
-  public registries, with an automatic Opus 4.8 fallback for benign requests a
-  safety classifier occasionally false-positives on.
+- **Anthropic API (Claude Fable 5 → Opus 4.8) — the runtime engine.** Each
+  generation calls Fable 5 as the constrained synthesis layer over records
+  retrieved live from the public registries. In practice Fable's safety classifier
+  frequently declines benign life-sciences requests, so I ship Anthropic's
+  server-side refusal fallback by default: Opus 4.8 transparently re-serves the
+  response inside the same call, with no user-visible failure and no safeguard
+  weakened. Verified end-to-end (2026-07-08): a real HRV-wearable case retrieved
+  6 trials / 10 FDA records / 8 papers and produced a fully-grounded 8-field spec
+  in ~90s — Fable declined, the Opus 4.8 fallback served it, and the constraint
+  layer is identical on either model. The honest read is that clinical inputs
+  often run on Opus 4.8 today; the value (constraint layer + grounding) is
+  model-independent.
 
 **Where it mattered most:** Claude Science proved the workflow was possible;
 Claude Code turned that into a product whose defensibility is the constraint
