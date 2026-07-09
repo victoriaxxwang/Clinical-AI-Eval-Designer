@@ -1,0 +1,152 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the EHR-based sepsis early-warning reference case (Case 4). Fourth golden; companion to golden_expected_ids.json (HRV), golden_expected_ids_DR.json (DR), golden_expected_ids_warfarin.json (warfarin). This is the FIRST BROAD-PARENT condition in the slate (MeSH 'Sepsis' D018805 has narrower descriptors), so it is the case that finally exercises the MeSH '+hierarchy' ablation axis (inert on the leaf-term pilot 3). It is a regulatory-POSITIVE case like DR (a real device class exists: product code SAK) AND an EHR-only software SaMD (no new sensor/image/assay). Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), precision = on-topic rate. Every id in 'required' resolved live 2026-07-09 (17 PMIDs via E-utils, 17 DOIs via Crossref, product code SAK via openFDA classification, DEN230036 + K250680 via openFDA 510k, 5 NCTs via ClinicalTrials.gov v2). None dropped.",
+  "reference_case": "Algorithm that continuously analyzes routinely-collected structured EHR time-series (vitals, labs, nursing assessments, demographics) to predict onset of sepsis / septic shock in hospitalized adults hours before clinical recognition; inpatient early-warning / clinical decision support (CDS). Input: structured EHR data only.",
+  "source_spec_artifact": "sepsis_ehr_validation_spec.md",
+  "generated": "2026-07-09",
+  "intervention_type": "device",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown, following each source's role per the spec's SOURCE INVENTORY. Like DR and warfarin (and unlike HRV), sepsis has a scored 'ncts' category: the 5 registered trials are load-bearing - the spec grounds its Field-5 enrollment brackets directly on their retrieved-from-source enrollment counts (NCT02376842 n=1149, NCT03235193 n=2296, NCT05065333 n=1345, NCT04570618 n=320, NCT04005001 n=37986) and cites them for Field 1.",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA classification; DEN/K -> openFDA 510k (De Novo grant records surface in the 510k endpoint - DEN230036 resolves there); NCT -> ClinicalTrials.gov v2. A required id that fails to resolve is a TEST FAILURE, not a silent drop. Verified live 2026-07-09: all 41 required ids resolved, none dropped.",
+    "regulatory_positive": "Unlike the HRV/warfarin nulls, openFDA MUST return an established device class here: product code SAK, 21 CFR 880.6316, Class II, 'Software Device To Aid In The Prediction Or Diagnosis Of Sepsis', General Hospital specialty. The PRESENCE of SAK is the Field-7 assertion. Classification created by De Novo DEN230036 (Prenosis Sepsis ImmunoScore, 2024-04-02); an EHR-based 510(k) predicate exists (K250680, Bayesian Health, 2026-04-30, Substantially Equivalent).",
+    "denovo_note": "DEN230036 is the classification-founding De Novo but its granted device combines blood-biomarker measurements with clinical parameters - it is NOT a pure-EHR-time-series predicate. It is scored as the class-defining record (grounds Field 7), NOT as a drop-in predicate for an EHR-only device. The clean EHR-based predicate is K250680.",
+    "regulatory_null": "No PMA (Class III) authorization applies - this is a Class II device; no PMA number exists for this device type. The FDA has NOT published a fixed numeric performance threshold (minimum AUROC/sensitivity) - authorization rests on special controls plus clinical/analytical validation. All performance targets and sample sizes in the spec are [study-defined-placeholder], not retrieved standards.",
+    "broad_parent_mesh": "'Sepsis' is a BROAD-PARENT MeSH descriptor (D018805) with narrower descriptors (e.g. Neonatal Sepsis, Endotoxemia), UNLIKE the pilot-3 leaf terms (Diabetic Retinopathy, Atrial Fibrillation, Heart Rate). This is the case for which the ablation '+hierarchy' config is expected to DIVERGE from canonical/canonical+synonyms - the first real test of the MeSH-tree child-fetch axis."
+  },
+  "required": {
+    "pmids": [
+      "26903338",
+      "26246167",
+      "35864252",
+      "35864251",
+      "34152373",
+      "34152360",
+      "41758510",
+      "33711001",
+      "31965266",
+      "34124082",
+      "38263386",
+      "34504260",
+      "38381351",
+      "41337748",
+      "38626948",
+      "35585198",
+      "35584845"
+    ],
+    "dois": [
+      "10.1001/jama.2016.0287",
+      "10.1126/scitranslmed.aab3719",
+      "10.1038/s41591-022-01894-0",
+      "10.1038/s41591-022-01895-z",
+      "10.1001/jamainternmed.2021.2626",
+      "10.1001/jamainternmed.2021.3333",
+      "10.1001/jamanetworkopen.2026.0181",
+      "10.1097/CCM.0000000000004966",
+      "10.1007/s00134-019-05872-y",
+      "10.3389/fmed.2021.607952",
+      "10.1038/s41746-023-00986-6",
+      "10.1038/s41746-021-00504-6",
+      "10.1007/s11739-024-03535-5",
+      "10.2196/78309",
+      "10.1136/bmj-2023-078378",
+      "10.1038/s41591-022-01772-9",
+      "10.1136/bmj-2022-070904"
+    ],
+    "ncts": [
+      "NCT02376842",
+      "NCT03235193",
+      "NCT05065333",
+      "NCT04570618",
+      "NCT04005001"
+    ],
+    "fda_product_codes": [
+      "SAK"
+    ],
+    "fda_den_numbers": [
+      "DEN230036"
+    ],
+    "fda_k_numbers": [
+      "K250680"
+    ]
+  },
+  "regulatory_context_not_scored": {
+    "note": "Retrieved/known but NOT part of the scored recall set. Sepsis-related product codes that cover IN-VITRO / biomarker assays, not EHR-only algorithms. If the pipeline's openFDA classification sweep on 'sepsis' returns these, they are on-topic-adjacent but not golden - they deflate golden-overlap precision on fda_product_codes (read precision comparatively across configs, as with warfarin's null-evidence PMAs).",
+    "biomarker_assay_codes": {
+      "QFS": "Monocyte Distribution Width sepsis indicator",
+      "NTM": "inflammatory-marker antigen assay",
+      "SCX": "host-biomarker immunoassay",
+      "QUT": "deformability cytometry"
+    }
+  },
+  "regulatory_null_evidence": {
+    "note": "Proof-of-ABSENCE: no Class III / PMA pathway applies (this is Class II software) and no fixed numeric benchmark exists as a retrieved standard. These are NOT required app retrievals.",
+    "no_pma": "No PMA number exists or was found for this device type; not Class III.",
+    "no_numeric_benchmark": "No retrieved regulatory or literature source establishes a minimum AUROC/sensitivity/alert-rate a sepsis EHR algorithm must exceed; all targets are [study-defined-placeholder]."
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["26246167", "35864252", "35864251", "34152373", "34152360", "41758510", "33711001", "38263386", "38626948", "35585198", "35584845"],
+      "dois": ["10.1126/scitranslmed.aab3719", "10.1038/s41591-022-01894-0", "10.1038/s41591-022-01895-z", "10.1001/jamainternmed.2021.2626", "10.1001/jamainternmed.2021.3333", "10.1001/jamanetworkopen.2026.0181", "10.1097/CCM.0000000000004966", "10.1038/s41746-023-00986-6", "10.1136/bmj-2023-078378", "10.1038/s41591-022-01772-9", "10.1136/bmj-2022-070904"],
+      "ncts": ["NCT02376842", "NCT03235193", "NCT05065333", "NCT04570618", "NCT04005001"],
+      "note": "Phased maturity ladder: retrospective + external validation (TREWScore derivation 26246167; Epic external-validation cautionary case 34152373 + editorial 34152360; updated prospective validation 41758510) -> silent-mode prospective (33711001) -> prospective interventional (TREWS 35864252/35864251, COMPOSER 38263386). Reporting standards TRIPOD+AI (38626948) + DECIDE-AI (35585198/35584845). Registered interventional + observational designs bracket the design space."
+    },
+    "2_input_signal_validation": {
+      "pmids": ["34152373", "31965266", "34124082", "34504260", "41337748"],
+      "dois": ["10.1001/jamainternmed.2021.2626", "10.1007/s00134-019-05872-y", "10.3389/fmed.2021.607952", "10.1038/s41746-021-00504-6", "10.2196/78309"],
+      "fda_product_codes": ["SAK"],
+      "note": "For an EHR-only model the 'signal' is the data pipeline; its integrity is the dominant failure mode (Epic collapse 34152373; reviews flag leakage/heterogeneous input handling 31965266/34124082). Explicit abstain-when-uncertain behavior (COMPOSER 34504260); input data-drift surveillance (41337748). SAK special controls presuppose trustworthy adjunctive inputs."
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["26246167", "34152373", "41758510", "31965266", "34124082", "38263386", "38381351"],
+      "dois": ["10.1126/scitranslmed.aab3719", "10.1001/jamainternmed.2021.2626", "10.1001/jamanetworkopen.2026.0181", "10.1007/s00134-019-05872-y", "10.3389/fmed.2021.607952", "10.1038/s41746-023-00986-6", "10.1007/s11739-024-03535-5"],
+      "fda_product_codes": ["SAK"],
+      "note": "AUROC + AUPRC + sensitivity-at-fixed-alert-rate + PPV + number-needed-to-alert + calibration, stratified by lead time. No codified numeric threshold retrieved (SAK relies on special controls). Vendor-vs-external AUROC divergence (34152373); process/outcome endpoints (antibiotic timeliness 38381351; care/survival 38263386) are the meaningful benchmarks."
+    },
+    "4_ground_truth": {
+      "pmids": ["26903338", "34152373", "31965266", "34124082"],
+      "dois": ["10.1001/jama.2016.0287", "10.1001/jamainternmed.2021.2626", "10.1007/s00134-019-05872-y", "10.3389/fmed.2021.607952"],
+      "fda_product_codes": ["SAK"],
+      "note": "Anchor label on Sepsis-3 (26903338): suspected infection + acute SOFA >=2; septic shock = vasopressor + lactate subset. Label definition (clinical vs administrative, onset-time anchoring) is a primary driver of apparent performance (31965266/34124082). SAK definition frames the device around prediction/diagnosis of sepsis (excludes monitoring treatment response), constraining the ground-truth event."
+    },
+    "5_sample_size": {
+      "pmids": ["31965266", "34124082", "38626948"],
+      "dois": ["10.1007/s00134-019-05872-y", "10.3389/fmed.2021.607952", "10.1136/bmj-2023-078378"],
+      "ncts": ["NCT02376842", "NCT03235193", "NCT05065333", "NCT04570618", "NCT04005001"],
+      "note": "Power on EVENT (sepsis case) count, not admissions (low prevalence); TRIPOD+AI-aligned events-per-predictor logic (38626948). Precedent enrollments [retrieved-from-source]: NCT02376842 n=1149, NCT03235193 n=2296, NCT05065333 n=1345, NCT04570618 n=320, NCT04005001 n=37986 - bracket realistic enrollment; exact N is [study-defined-placeholder]."
+    },
+    "6_subgroup": {
+      "pmids": ["34152373", "31965266", "34124082", "38626948"],
+      "dois": ["10.1001/jamainternmed.2021.2626", "10.1007/s00134-019-05872-y", "10.3389/fmed.2021.607952", "10.1136/bmj-2023-078378"],
+      "note": "Pre-specify discrimination AND calibration within sex, age bands, race/ethnicity, admitting service, care setting, acuity + confounder strata. Inconsistent subgroup reporting is a known limitation (31965266/34124082); TRIPOD+AI strengthens fairness/subgroup expectations (38626948); external-validation failure manifests unevenly across case-mix (34152373), making subgroup calibration a safety issue."
+    },
+    "7_regulatory": {
+      "fda_product_codes": ["SAK"],
+      "fda_den_numbers": ["DEN230036"],
+      "fda_k_numbers": ["K250680"],
+      "note": "FDA Class II software, 21 CFR 880.6316, product code SAK. A pure-EHR sepsis prediction/diagnosis-aid device has a 510(k) route with a verified predicate (K250680, Bayesian Health, cleared 2026-04-30); De Novo (DEN230036, Prenosis, 2024-04-02) CREATED the classification but its granted device is biomarker-inclusive, not a pure-EHR predicate. Label to SAK special controls: adjunctive, not sole determining factor, not for monitoring treatment response. No PMA (not Class III)."
+    },
+    "8_monitoring": {
+      "pmids": ["35864251", "38263386", "38381351", "41337748"],
+      "dois": ["10.1038/s41591-022-01895-z", "10.1038/s41746-023-00986-6", "10.1007/s11739-024-03535-5", "10.2196/78309"],
+      "fda_product_codes": ["SAK"],
+      "note": "Continuous monitoring: input data-drift per feature (41337748), performance drift (rolling AUROC/AUPRC/calibration), alert burden/fatigue (PPV in production; adoption/response 35864251/38263386), subgroup performance, pre-specified recalibration/retraining/rollback (FDA PCCP). Downstream process metrics (time-to-antibiotics 38381351) as leading indicators. SAK adjunctive/alarm framing makes alert-fatigue/override monitoring a labeling-relevant safety obligation."
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "U.S. FDA Class II software, product code SAK, 21 CFR 880.6316 ('Software Device To Aid In The Prediction Or Diagnosis Of Sepsis'), General Hospital specialty; classification established by De Novo DEN230036; a pure-EHR device has a 510(k) route with a verified predicate K250680.",
+    "authorization_exists": true,
+    "is_drug_case": false,
+    "is_broad_parent_mesh_case": true,
+    "no_pma_class_iii": true,
+    "denovo_is_classification_founding_not_pure_ehr_predicate": true,
+    "ehr_based_predicate": "K250680 (Bayesian Health Sepsis Flagging Device, 510(k), Substantially Equivalent, 2026-04-30)",
+    "no_established_numeric_benchmark": true,
+    "benchmark_precedent_only": "No fixed AUROC/sensitivity threshold is retrieved as a standard; reported performance is highly heterogeneous and setting-dependent (Fleuren 31965266; Moor 34124082) and vendor-vs-external AUROC diverges sharply (Epic 34152373). All targets are [study-defined-placeholder]."
+  },
+  "coverage_gaps_expected": [
+    "Drugs@FDA / drug labeling: not applicable (no drug/biologic); scope exclusion, not an access failure",
+    "Full 510(k)/De Novo narrative decision-summary PDFs + codified special-controls text for 21 CFR 880.6316 (accessdata.fda.gov / eCFR; not exposed via openFDA JSON)",
+    "The app's free literature providers may lag on the 2026 records (PMID 41758510 JAMA Netw Open 2026) - a fair recall-lag signal, not an error",
+    "NCBI E-utilities intermittently rate-limited (HTTP 429) without a contact email; queries completed with backoff but breadth was constrained",
+    "Vendor technical dossiers / peer-reviewed head-to-head EHR-only algorithm comparisons beyond those cited: not systematically retrievable via open APIs"
+  ]
+}

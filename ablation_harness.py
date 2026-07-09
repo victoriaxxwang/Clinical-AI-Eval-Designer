@@ -114,6 +114,30 @@ CASES = {
         "population": "Adults starting warfarin across genotypes and ancestries",
         "setting": "Inpatient initiation and outpatient anticoagulation-clinic management",
     },
+    "sepsis": {
+        # First BROAD-PARENT condition ("Sepsis" MeSH D018805 has narrower
+        # descriptors) → the case the MeSH "+hierarchy" axis is expected to
+        # finally DIVERGE on (inert on the leaf-term pilot 3). EHR-only software
+        # SaMD, regulatory-positive (product code SAK) → intervention_type="device".
+        "golden": "golden_expected_ids_sepsis.json",
+        "intervention_type": "device",
+        # NB: model_desc is CONDITION-FORWARD ("Sepsis early-warning algorithm that…").
+        # A mechanism-first phrasing ("Algorithm that continuously analyzes routinely-
+        # collected EHR time-series … to predict … sepsis") buries "sepsis" PAST
+        # model_desc's top-12 keyword cap (build_queries line ~212), so the condition
+        # never enters mesh_candidates/fda_terms/the query and retrieval collapses to 0.
+        # That brittleness is a real engine finding (logged in ablation_findings.md +
+        # INDEX "engine to-do"); here we phrase the case as a coached user would so the
+        # sepsis ablation actually tests sepsis retrieval.
+        "model_desc": ("Sepsis early-warning algorithm that continuously analyzes routinely-"
+                       "collected structured EHR time-series (vital signs, labs, nursing "
+                       "assessments) to predict onset of sepsis and septic shock in "
+                       "hospitalized adults before clinical recognition."),
+        "use_case": ("Inpatient sepsis early-warning clinical decision support alerting "
+                     "clinicians to initiate sepsis workup and treatment"),
+        "population": "Hospitalized adults on medical and surgical wards and in the ICU",
+        "setting": "Inpatient hospital early-warning / clinical decision support",
+    },
 }
 
 

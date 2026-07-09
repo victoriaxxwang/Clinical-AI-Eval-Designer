@@ -1740,5 +1740,677 @@
         ]
       }
     }
+  },
+  "sepsis": {
+    "baseline": {
+      "pmids": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "26246167",
+          "35864252"
+        ],
+        "missed": [
+          "26903338",
+          "31965266",
+          "33711001",
+          "34124082",
+          "34152360",
+          "34152373",
+          "34504260",
+          "35584845",
+          "35585198",
+          "35864251",
+          "38263386",
+          "38381351",
+          "38626948",
+          "41337748",
+          "41758510"
+        ]
+      },
+      "dois": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "10.1038/s41591-022-01894-0",
+          "10.1126/scitranslmed.aab3719"
+        ],
+        "missed": [
+          "10.1001/jama.2016.0287",
+          "10.1001/jamainternmed.2021.2626",
+          "10.1001/jamainternmed.2021.3333",
+          "10.1001/jamanetworkopen.2026.0181",
+          "10.1007/s00134-019-05872-y",
+          "10.1007/s11739-024-03535-5",
+          "10.1038/s41591-022-01772-9",
+          "10.1038/s41591-022-01895-z",
+          "10.1038/s41746-021-00504-6",
+          "10.1038/s41746-023-00986-6",
+          "10.1097/ccm.0000000000004966",
+          "10.1136/bmj-2022-070904",
+          "10.1136/bmj-2023-078378",
+          "10.2196/78309",
+          "10.3389/fmed.2021.607952"
+        ]
+      },
+      "ncts": {
+        "kind": "deterministic",
+        "golden_n": 5,
+        "retrieved_n": 5,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "NCT02376842",
+          "NCT03235193",
+          "NCT04005001",
+          "NCT04570618",
+          "NCT05065333"
+        ]
+      },
+      "fda_product_codes": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 9,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "SAK"
+        ]
+      },
+      "fda_den_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "DEN230036"
+        ]
+      },
+      "fda_k_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "K250680"
+        ]
+      }
+    },
+    "mesh_canonical": {
+      "pmids": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "26246167",
+          "35864252"
+        ],
+        "missed": [
+          "26903338",
+          "31965266",
+          "33711001",
+          "34124082",
+          "34152360",
+          "34152373",
+          "34504260",
+          "35584845",
+          "35585198",
+          "35864251",
+          "38263386",
+          "38381351",
+          "38626948",
+          "41337748",
+          "41758510"
+        ]
+      },
+      "dois": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "10.1038/s41591-022-01894-0",
+          "10.1126/scitranslmed.aab3719"
+        ],
+        "missed": [
+          "10.1001/jama.2016.0287",
+          "10.1001/jamainternmed.2021.2626",
+          "10.1001/jamainternmed.2021.3333",
+          "10.1001/jamanetworkopen.2026.0181",
+          "10.1007/s00134-019-05872-y",
+          "10.1007/s11739-024-03535-5",
+          "10.1038/s41591-022-01772-9",
+          "10.1038/s41591-022-01895-z",
+          "10.1038/s41746-021-00504-6",
+          "10.1038/s41746-023-00986-6",
+          "10.1097/ccm.0000000000004966",
+          "10.1136/bmj-2022-070904",
+          "10.1136/bmj-2023-078378",
+          "10.2196/78309",
+          "10.3389/fmed.2021.607952"
+        ]
+      },
+      "ncts": {
+        "kind": "deterministic",
+        "golden_n": 5,
+        "retrieved_n": 5,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "NCT02376842",
+          "NCT03235193",
+          "NCT04005001",
+          "NCT04570618",
+          "NCT05065333"
+        ]
+      },
+      "fda_product_codes": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 9,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "SAK"
+        ]
+      },
+      "fda_den_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "DEN230036"
+        ]
+      },
+      "fda_k_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "K250680"
+        ]
+      }
+    },
+    "mesh_hierarchy": {
+      "pmids": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "26246167",
+          "35864252"
+        ],
+        "missed": [
+          "26903338",
+          "31965266",
+          "33711001",
+          "34124082",
+          "34152360",
+          "34152373",
+          "34504260",
+          "35584845",
+          "35585198",
+          "35864251",
+          "38263386",
+          "38381351",
+          "38626948",
+          "41337748",
+          "41758510"
+        ]
+      },
+      "dois": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "10.1038/s41591-022-01894-0",
+          "10.1126/scitranslmed.aab3719"
+        ],
+        "missed": [
+          "10.1001/jama.2016.0287",
+          "10.1001/jamainternmed.2021.2626",
+          "10.1001/jamainternmed.2021.3333",
+          "10.1001/jamanetworkopen.2026.0181",
+          "10.1007/s00134-019-05872-y",
+          "10.1007/s11739-024-03535-5",
+          "10.1038/s41591-022-01772-9",
+          "10.1038/s41591-022-01895-z",
+          "10.1038/s41746-021-00504-6",
+          "10.1038/s41746-023-00986-6",
+          "10.1097/ccm.0000000000004966",
+          "10.1136/bmj-2022-070904",
+          "10.1136/bmj-2023-078378",
+          "10.2196/78309",
+          "10.3389/fmed.2021.607952"
+        ]
+      },
+      "ncts": {
+        "kind": "deterministic",
+        "golden_n": 5,
+        "retrieved_n": 5,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "NCT02376842",
+          "NCT03235193",
+          "NCT04005001",
+          "NCT04570618",
+          "NCT05065333"
+        ]
+      },
+      "fda_product_codes": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 9,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "SAK"
+        ]
+      },
+      "fda_den_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "DEN230036"
+        ]
+      },
+      "fda_k_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "K250680"
+        ]
+      }
+    },
+    "lit_epmc_only": {
+      "pmids": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "26246167",
+          "26903338",
+          "31965266",
+          "33711001",
+          "34124082",
+          "34152360",
+          "34152373",
+          "34504260",
+          "35584845",
+          "35585198",
+          "35864251",
+          "35864252",
+          "38263386",
+          "38381351",
+          "38626948",
+          "41337748",
+          "41758510"
+        ]
+      },
+      "dois": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "10.1001/jama.2016.0287",
+          "10.1001/jamainternmed.2021.2626",
+          "10.1001/jamainternmed.2021.3333",
+          "10.1001/jamanetworkopen.2026.0181",
+          "10.1007/s00134-019-05872-y",
+          "10.1007/s11739-024-03535-5",
+          "10.1038/s41591-022-01772-9",
+          "10.1038/s41591-022-01894-0",
+          "10.1038/s41591-022-01895-z",
+          "10.1038/s41746-021-00504-6",
+          "10.1038/s41746-023-00986-6",
+          "10.1097/ccm.0000000000004966",
+          "10.1126/scitranslmed.aab3719",
+          "10.1136/bmj-2022-070904",
+          "10.1136/bmj-2023-078378",
+          "10.2196/78309",
+          "10.3389/fmed.2021.607952"
+        ]
+      },
+      "ncts": {
+        "kind": "deterministic",
+        "golden_n": 5,
+        "retrieved_n": 5,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "NCT02376842",
+          "NCT03235193",
+          "NCT04005001",
+          "NCT04570618",
+          "NCT05065333"
+        ]
+      },
+      "fda_product_codes": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 9,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "SAK"
+        ]
+      },
+      "fda_den_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "DEN230036"
+        ]
+      },
+      "fda_k_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "K250680"
+        ]
+      }
+    },
+    "lit_epmc_openalex": {
+      "pmids": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "26246167",
+          "35864252"
+        ],
+        "missed": [
+          "26903338",
+          "31965266",
+          "33711001",
+          "34124082",
+          "34152360",
+          "34152373",
+          "34504260",
+          "35584845",
+          "35585198",
+          "35864251",
+          "38263386",
+          "38381351",
+          "38626948",
+          "41337748",
+          "41758510"
+        ]
+      },
+      "dois": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "10.1038/s41591-022-01894-0",
+          "10.1126/scitranslmed.aab3719"
+        ],
+        "missed": [
+          "10.1001/jama.2016.0287",
+          "10.1001/jamainternmed.2021.2626",
+          "10.1001/jamainternmed.2021.3333",
+          "10.1001/jamanetworkopen.2026.0181",
+          "10.1007/s00134-019-05872-y",
+          "10.1007/s11739-024-03535-5",
+          "10.1038/s41591-022-01772-9",
+          "10.1038/s41591-022-01895-z",
+          "10.1038/s41746-021-00504-6",
+          "10.1038/s41746-023-00986-6",
+          "10.1097/ccm.0000000000004966",
+          "10.1136/bmj-2022-070904",
+          "10.1136/bmj-2023-078378",
+          "10.2196/78309",
+          "10.3389/fmed.2021.607952"
+        ]
+      },
+      "ncts": {
+        "kind": "deterministic",
+        "golden_n": 5,
+        "retrieved_n": 5,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "NCT02376842",
+          "NCT03235193",
+          "NCT04005001",
+          "NCT04570618",
+          "NCT05065333"
+        ]
+      },
+      "fda_product_codes": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 9,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "SAK"
+        ]
+      },
+      "fda_den_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "DEN230036"
+        ]
+      },
+      "fda_k_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "K250680"
+        ]
+      }
+    },
+    "verify_off": {
+      "pmids": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "26246167",
+          "35864252"
+        ],
+        "missed": [
+          "26903338",
+          "31965266",
+          "33711001",
+          "34124082",
+          "34152360",
+          "34152373",
+          "34504260",
+          "35584845",
+          "35585198",
+          "35864251",
+          "38263386",
+          "38381351",
+          "38626948",
+          "41337748",
+          "41758510"
+        ]
+      },
+      "dois": {
+        "kind": "literature",
+        "golden_n": 17,
+        "retrieved_n": 15,
+        "hits_n": 2,
+        "recall": 0.11764705882352941,
+        "precision": 0.13333333333333333,
+        "hits": [
+          "10.1038/s41591-022-01894-0",
+          "10.1126/scitranslmed.aab3719"
+        ],
+        "missed": [
+          "10.1001/jama.2016.0287",
+          "10.1001/jamainternmed.2021.2626",
+          "10.1001/jamainternmed.2021.3333",
+          "10.1001/jamanetworkopen.2026.0181",
+          "10.1007/s00134-019-05872-y",
+          "10.1007/s11739-024-03535-5",
+          "10.1038/s41591-022-01772-9",
+          "10.1038/s41591-022-01895-z",
+          "10.1038/s41746-021-00504-6",
+          "10.1038/s41746-023-00986-6",
+          "10.1097/ccm.0000000000004966",
+          "10.1136/bmj-2022-070904",
+          "10.1136/bmj-2023-078378",
+          "10.2196/78309",
+          "10.3389/fmed.2021.607952"
+        ]
+      },
+      "ncts": {
+        "kind": "deterministic",
+        "golden_n": 5,
+        "retrieved_n": 5,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "NCT02376842",
+          "NCT03235193",
+          "NCT04005001",
+          "NCT04570618",
+          "NCT05065333"
+        ]
+      },
+      "fda_product_codes": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 9,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "hits": [],
+        "missed": [
+          "SAK"
+        ]
+      },
+      "fda_den_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "DEN230036"
+        ]
+      },
+      "fda_k_numbers": {
+        "kind": "deterministic",
+        "golden_n": 1,
+        "retrieved_n": 0,
+        "hits_n": 0,
+        "recall": 0.0,
+        "precision": null,
+        "hits": [],
+        "missed": [
+          "K250680"
+        ]
+      }
+    }
   }
 }
