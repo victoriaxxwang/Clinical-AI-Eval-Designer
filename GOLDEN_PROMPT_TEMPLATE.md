@@ -104,6 +104,81 @@ care settings, sexes, ages, races/ethnicities, and admitting diagnoses. *(Opens 
 predictive model on EHR data, with the Epic Sepsis Model external-validation failure as a rich
 Input-Validation + Post-Deployment-Monitoring test.)*
 
+### Case 5 — Atrial-fibrillation detection from single-lead / wearable ECG
+An algorithm that analyzes a **single-lead ECG recorded on a consumer wearable** (e.g. a
+smartwatch or patch) to **detect atrial fibrillation** and notify the wearer, deployed as an
+over-the-counter / direct-to-consumer screening and notification feature. Intended claim: flag
+possible AFib so the user can seek clinical confirmation (it does not replace a 12-lead ECG or a
+clinician diagnosis). Input: a single-lead ECG waveform plus a photoplethysmography (PPG)
+irregular-rhythm signal, with a signal-quality/wear-detection gate. Setting: ambulatory,
+unsupervised consumer use. Population: adults without a prior AFib diagnosis, across ages, skin
+tones, wrist sizes, and activity states. *(A consumer wearable that IS a regulated device via the
+De Novo pathway — a live test of the classification / `submission_type_id:3` De Novo check on a
+real granted De Novo, and of signal-quality Input Validation against a 12-lead reference.)*
+
+### Case 6 — Melanoma / malignant skin-lesion classification from images
+An algorithm that analyzes **dermoscopic and/or clinical photographs of a skin lesion** to
+estimate the **risk that the lesion is malignant (melanoma or other skin cancer)** and guide the
+biopsy / refer-to-dermatology decision, deployed as decision support in primary-care and
+dermatology settings. Intended claim: help non-specialists decide which lesions need biopsy or
+specialist referral. Input: dermoscopic or standardized clinical images, with an image-quality
+gate; histopathology is the reference standard. Setting: primary care and dermatology clinics.
+Population: adults with a lesion of concern, spanning the full range of skin tones (Fitzpatrick
+I–VI) and body sites. *(An imaging device where **skin-tone subgroup performance is the
+load-bearing fairness axis**, and the regulatory pathway is a recent De Novo / PMA — the imaging
+mirror of DR but with a harder equity question and histopathology ground truth.)*
+
+### Case 7 — Depression screening / detection
+An algorithm that estimates the **likelihood that an adult has a depressive disorder** from
+patient-reported responses and/or passively-collected behavioral or speech signals, deployed as a
+screening / triage aid in primary care or behavioral-health settings. Intended claim: flag
+patients who should receive a full clinical assessment (it does not diagnose). Input: structured
+questionnaire responses and/or behavioral/voice features; the reference standard is a validated
+instrument (e.g. PHQ-9) and/or a structured clinical interview by a clinician. Setting: primary
+care and telehealth. Population: adults across ages, sexes, and race/ethnicity. *(A behavioral-
+health case where **ground truth is a subjective, rating-scale / clinical-interview standard**
+rather than a biomarker or histopathology — a hard test for the Ground-Truth Strategy and
+Performance-Benchmark fields, and a regulatory pathway that is often Class II or an unsettled
+null.)*
+
+### Case 8 — Pneumonia detection / triage from chest X-ray
+An algorithm that analyzes **frontal chest radiographs** to **detect findings suspicious for
+pneumonia** and prioritize (triage) or flag (CADe) those studies for radiologist review, deployed
+in emergency-department and inpatient radiology workflows. Intended claim: shorten time-to-review
+for suspicious studies and/or assist detection — NOT to make an autonomous diagnosis. Input: DICOM
+chest radiographs, with an image-adequacy gate; the reference standard is expert radiologist
+adjudication (± follow-up imaging / clinical confirmation). Setting: hospital radiology, high study
+volume. Population: adults presenting for chest imaging across care settings. *(A high-volume
+radiology CAD case that tests the **triage (CADt) vs detection (CADe) vs diagnosis** distinction —
+a regulatory space with many cleared 510(k)s and De Novo triage clearances, so the FDA-record
+retrieval and the exact product-code match are heavily exercised.)*
+
+### Case 9 — Response prediction / companion diagnostic for pembrolizumab
+An algorithm-plus-assay that estimates whether a cancer patient is **likely to benefit from
+pembrolizumab (an anti-PD-1 immunotherapy)** — for example by scoring **PD-L1 expression, tumor
+mutational burden, or microsatellite-instability status** from tumor tissue or images — deployed as
+a **companion diagnostic** that selects patients for the drug. Intended claim: identify patients
+whose tumors are likely to respond, to guide treatment selection. Input: a tumor-tissue assay
+readout and/or digital-pathology image, with an assay/specimen-adequacy gate; the reference
+standard is the validated companion-diagnostic assay and clinical outcome. Setting: oncology, at
+treatment-selection. Population: patients with the relevant tumor types, across ancestries.
+*(The **drug-POSITIVE** mirror of warfarin's drug-null: pembrolizumab has a real biologic approval
+(BLA125514) AND an FDA-approved companion diagnostic on the PMA pathway (e.g. PD-L1 IHC 22C3
+pharmDx) — a case where `is_drug_case` co-exists with a device PMA, testing the Drugs@FDA/BLA +
+companion-diagnostic-PMA retrieval together.)*
+
+### Case 10 — Inpatient fall-risk prediction
+An algorithm that analyzes **routinely-collected EHR data (and optionally wearable/bed-sensor
+signals)** to **predict which hospitalized patients are at high risk of a fall**, deployed as an
+inpatient decision-support alert that prompts fall-prevention precautions. Intended claim: earlier,
+better-targeted fall-prevention for high-risk patients. Input: structured EHR variables (mobility
+scores, medications, prior falls, labs) ± sensor signals; the reference standard is documented
+in-hospital fall events. Setting: inpatient medical-surgical wards. Population: hospitalized adults
+across ages, sexes, and diagnoses. *(The **predictive-NULL** mirror of sepsis: a risk-prediction
+model whose regulatory status often turns on the **21st Century Cures §520(o) non-device-CDS**
+determination — the load-bearing residual caveat from the warfarin De Novo analysis, here made the
+central Regulatory-Pathway question.)*
+
 ---
 
 ## What to copy back for each case

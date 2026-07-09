@@ -5,3 +5,7 @@ __pycache__/
 
 .claude/
 docs_html/
+
+# Ablation harness raw retrieval snapshots (regenerable via `python ablation_harness.py --refresh`).
+# The finished results tables (eval_results/ablation_results.md / .json) ARE tracked.
+eval_results/contexts/
