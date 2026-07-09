@@ -17,7 +17,7 @@ app is the automated, programmatic mirror of that workflow.
 ## Key facts
 - **Model:** `claude-fable-5` (auto-fallback `claude-opus-4-8`). Fable needs 30-day data retention.
 - **Runtime engine:** Anthropic API + live registry APIs. **Not** a Claude Science API call (there is none).
-- **Repo:** https://github.com/victoriaxxwang/clinical-ai-eval-designer
+- **Repo:** https://github.com/victoriaxxwang/Clinical-AI-Eval-Designer — **PRIVATE**, live since 2026-07-09 (all commits through `fca4709` pushed; `origin` points here). Save future work with `git add -A && git commit -m "..."` then `git push`. Real `secrets.toml` is git-ignored and NOT on GitHub (only `.example` is).
 - **Run:** `python3 -m venv .venv && source .venv/bin/activate` → `pip install -r requirements.txt` → add key to `.streamlit/secrets.toml` → `streamlit run app.py`
 - **Deadline:** 2026-07-13 (Built with Claude: Life Sciences hackathon, Build track)
 
