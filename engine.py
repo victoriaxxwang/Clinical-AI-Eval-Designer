@@ -54,6 +54,26 @@ CONTEXT_CAP = 20000
 # Bounded so the OR-group stays small and every AND-ed method term still matters.
 MESH_MAX_TERMS = 5
 
+# "+hierarchy" (eval-only) child-descriptor fetch. MeSH models its hierarchy purely
+# through TREE NUMBERS (e.g. Retinal Diseases C11.768 → Diabetic Retinopathy
+# C11.768.257): a descriptor's IMMEDIATE children are the descriptors whose tree
+# number extends the parent's by exactly one 3-digit node (".NNN"). The NLM MeSH RDF
+# SPARQL endpoint is the one interface that exposes this directly; verified live
+# 2026-07-09 (Diabetes Mellitus → 8 children, Retinal Diseases → 23, leaf terms like
+# Diabetic Retinopathy / Atrial Fibrillation → 0). ``__DID__`` is substituted (not
+# ``.format`` — the query itself contains ``{}`` braces).
+_MESH_SPARQL_URL = "https://id.nlm.nih.gov/mesh/sparql"
+_MESH_CHILDREN_MAX = 40  # politeness cap; build_queries then trims to MESH_MAX_TERMS
+_MESH_CHILDREN_SPARQL = """PREFIX meshv: <http://id.nlm.nih.gov/mesh/vocab#>
+PREFIX mesh: <http://id.nlm.nih.gov/mesh/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?child ?label WHERE {
+  mesh:__DID__ meshv:treeNumber ?tn .
+  ?child meshv:treeNumber ?ctn .
+  ?child rdfs:label ?label .
+  FILTER(regex(str(?ctn), concat("^", str(?tn), "[.][0-9]{3}$")))
+} ORDER BY ?label LIMIT 40"""
+
 # Polite-pool identification for Crossref (asks for a UA with contact info).
 _CROSSREF_UA = ("ClinicalAIEvalDesigner/1.0 "
                 "(+https://github.com/victoriaxxwang/clinical-ai-eval-designer)")
@@ -331,15 +351,41 @@ def _mesh_children(descriptor_id):
     """Return the immediate NARROWER (child) MeSH headings for a descriptor — the
     data behind the eval-only "+hierarchy" expansion level.
 
-    DEFERRED SUB-STEP: MeSH parent→child edges live in the MeSH TREE (tree numbers),
-    which the ``esummary`` record used elsewhere here does NOT expose. Fetching them
-    needs a separate lookup (``efetch db=mesh`` for the tree numbers, then an
-    ``esearch`` per child tree-number, or the ``id.nlm.nih.gov`` tree endpoint) whose
-    response shape must be verified live before it is trusted — so this is wired but
-    not yet implemented. Returning ``[]`` makes "+hierarchy" degrade cleanly to
-    "canonical+synonyms" (never worse) until the tree lookup is built and tested.
+    MeSH parent→child edges live only in the MeSH TREE (tree numbers), which the
+    ``esummary`` record used elsewhere here does NOT expose. They are fetched from the
+    NLM MeSH RDF SPARQL endpoint (``id.nlm.nih.gov/mesh/sparql``): the query walks each
+    of the descriptor's tree numbers and returns every descriptor whose tree number
+    extends it by exactly one 3-digit node (its immediate children). Live-verified
+    2026-07-09 (see ``_MESH_CHILDREN_SPARQL``). Returns the child preferred headings,
+    de-duplicated and bounded; ``[]`` for a leaf term (no narrower descriptors) or on
+    any error/timeout — so "+hierarchy" degrades cleanly to "canonical+synonyms"
+    (never worse). Only called when ``normalize_mesh(with_children=True)`` resolves a
+    heading, i.e. at most one SPARQL call per generation, and only on the eval path.
     """
-    return []
+    did = (descriptor_id or "").strip()
+    if not did.startswith("D"):
+        return []  # only main topical descriptors (D…) sit in the disease trees
+    try:
+        r = requests.get(
+            _MESH_SPARQL_URL,
+            params={"query": _MESH_CHILDREN_SPARQL.replace("__DID__", did),
+                    "format": "JSON", "inference": "false"},
+            timeout=HTTP_TIMEOUT,
+            headers={"User-Agent": _CROSSREF_UA},
+        )
+        r.raise_for_status()
+        binds = ((r.json().get("results", {}) or {}).get("bindings", []) or [])
+    except (requests.RequestException, ValueError):
+        return []  # SPARQL unreachable / malformed → no children (degrade gracefully)
+    out, seen = [], set()
+    for b in binds:
+        label = ((b.get("label") or {}).get("value") or "").strip()
+        if label and label.lower() not in seen:
+            seen.add(label.lower())
+            out.append(label)
+        if len(out) >= _MESH_CHILDREN_MAX:
+            break
+    return out
 
 
 def normalize_mesh(candidates, with_children=False):
@@ -366,11 +412,12 @@ def normalize_mesh(candidates, with_children=False):
     query worse. Only two HTTP calls per generation (one esearch + one esummary) on the
     first hit, so it is well within NCBI's un-keyed rate limit.
 
-    ``with_children`` (the eval-only "+hierarchy" expansion level) requests the
-    descriptor's narrower/child MeSH headings. Those come from the MeSH TREE, which
-    esummary does not expose, so populating ``children`` needs a separate tree lookup
-    (deferred sub-step — see ``_mesh_children``). Until that lands ``children`` is
-    always empty, so "+hierarchy" safely degrades to "canonical+synonyms".
+    ``with_children`` (the eval-only "+hierarchy" expansion level) also fetches the
+    descriptor's narrower/child MeSH headings from the MeSH TREE via the RDF SPARQL
+    endpoint (see ``_mesh_children``) — one extra call, made only on the eval path when
+    a heading resolves. A leaf term (no narrower descriptors, e.g. Diabetic Retinopathy)
+    or a lookup outage yields ``children == []``, so "+hierarchy" safely degrades to
+    "canonical+synonyms" and is never worse than the shipped default.
     """
     for cand in (candidates or []):
         cand = (cand or "").strip()
@@ -416,7 +463,12 @@ def search_clinicaltrials(term, max_studies=6):
     try:
         r = requests.get(
             "https://clinicaltrials.gov/api/v2/studies",
-            params={"query.term": term, "pageSize": max_studies},
+            # sort=@relevance pins the DOCUMENTED relevance ranking. Without it the
+            # v2 API returns an undocumented default order; pinning the explicit
+            # relevance sort makes the snapshot's ordering defensible (a stated,
+            # reproducible key) without trading away retrieval quality the way a
+            # date/ID sort would. (Live-probed 2026-07-09: sort=NCTId → HTTP 400.)
+            params={"query.term": term, "pageSize": max_studies, "sort": "@relevance"},
             timeout=HTTP_TIMEOUT,
         )
         r.raise_for_status()
@@ -776,7 +828,15 @@ def _normalize_doi(doi):
 
 def _europepmc_records(term, max_results=15):
     """Europe PMC — returns PMID + DOI (+ PMCID) in one call and indexes preprints
-    (medRxiv/bioRxiv) and PMC, so its coverage is a superset of MEDLINE."""
+    (medRxiv/bioRxiv) and PMC, so its coverage is a superset of MEDLINE.
+
+    No explicit ``sort`` is pinned on purpose: Europe PMC's default IS its relevance
+    order, and (live-probed 2026-07-09) the literal token ``sort=relevance`` returns
+    an EMPTY result while the date/citation sorts change the returned set and hurt
+    relevance — so the default is both the reproducible order and the best-quality one.
+    (openFDA is likewise left unsorted: its default order was live-verified stable
+    across repeated calls, and a date-desc sort drops canonical records — e.g. the
+    Dexcom P150019 glucose PMA — for newer, less-canonical ones.)"""
     r = requests.get(
         "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
         params={"query": term, "format": "json", "pageSize": max_results,
@@ -805,7 +865,11 @@ def _openalex_records(term, max_results=15):
     widens coverage and cross-confirms papers the other providers already found."""
     r = requests.get(
         "https://api.openalex.org/works",
-        params={"search": term, "per_page": max_results, "mailto": _POLITE_MAILTO},
+        # sort=relevance_score:desc is byte-identical to OpenAlex's default order for a
+        # ``search=`` query (live-probed 2026-07-09) — pinning it explicitly guards the
+        # snapshot against any future change to that default, at zero quality cost.
+        params={"search": term, "per_page": max_results, "mailto": _POLITE_MAILTO,
+                "sort": "relevance_score:desc"},
         timeout=HTTP_TIMEOUT,
     )
     r.raise_for_status()

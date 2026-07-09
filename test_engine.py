@@ -739,19 +739,63 @@ def test_grounded_context_eval_knobs_thread_through(monkeypatch):
     assert captured["with_children"] is True   # "+hierarchy" asks the resolver for children
 
 
-def test_normalize_mesh_children_deferred_until_tree_fetch(monkeypatch):
-    # The result always carries a "children" list; the +hierarchy child-fetch is a
-    # deferred sub-step, so with_children=True currently yields [] and "+hierarchy"
-    # degrades cleanly to canonical+synonyms until the MeSH-tree lookup lands.
+def test_mesh_children_parses_sparql_tree(monkeypatch):
+    # _mesh_children walks the MeSH RDF SPARQL bindings → child preferred headings,
+    # de-duplicated; a leaf (empty bindings) → []; a non-D id never hits the network.
+    bindings = {"results": {"bindings": [
+        {"child": {"value": "http://id.nlm.nih.gov/mesh/D003922"},
+         "label": {"value": "Diabetes Mellitus, Type 1"}},
+        {"child": {"value": "http://id.nlm.nih.gov/mesh/D003924"},
+         "label": {"value": "Diabetes Mellitus, Type 2"}},
+        {"child": {"value": "http://id.nlm.nih.gov/mesh/D003924"},  # dup → collapsed
+         "label": {"value": "Diabetes Mellitus, Type 2"}},
+    ]}}
+    calls = []
+
+    def fake_get(url, **kwargs):
+        calls.append(url)
+        return FakeResp(bindings)
+    monkeypatch.setattr(engine.requests, "get", fake_get)
+    kids = engine._mesh_children("D003920")
+    assert kids == ["Diabetes Mellitus, Type 1", "Diabetes Mellitus, Type 2"]
+    assert calls and "id.nlm.nih.gov/mesh/sparql" in calls[0]
+    # a leaf descriptor → empty bindings → no children
+    monkeypatch.setattr(engine.requests, "get",
+                        lambda url, **k: FakeResp({"results": {"bindings": []}}))
+    assert engine._mesh_children("D003930") == []
+    # a non-descriptor id (qualifier, empty) short-circuits without any network call
+    calls.clear()
+    monkeypatch.setattr(engine.requests, "get",
+                        lambda *a, **k: (_ for _ in ()).throw(AssertionError("no HTTP")))
+    assert engine._mesh_children("Q000706") == [] and engine._mesh_children("") == []
+
+
+def test_mesh_children_survives_sparql_outage(monkeypatch):
+    # SPARQL unreachable → [] (never raises), so "+hierarchy" degrades to synonyms.
+    monkeypatch.setattr(engine.requests, "get",
+                        lambda *a, **k: (_ for _ in ()).throw(requests.ConnectionError()))
+    assert engine._mesh_children("D003920") == []
+
+
+def test_normalize_mesh_populates_children_when_requested(monkeypatch):
+    # with_children=True routes the resolved descriptor through _mesh_children;
+    # with_children=False (the shipped default) leaves children empty and never calls it.
     def fake_get(endpoint, params):
         if endpoint == "esearch":
             return FakeResp({"esearchresult": {"idlist": ["68008545"]}})
         return FakeResp({"result": {"68008545": {
             "ds_meshui": "D008545", "ds_meshterms": ["Melanoma", "Malignant Melanoma"]}}})
     monkeypatch.setattr(engine, "_eutils_mesh_get", fake_get)
+    seen = []
+    monkeypatch.setattr(engine, "_mesh_children",
+                        lambda did: seen.append(did) or ["Melanoma, Amelanotic"])
     res = engine.normalize_mesh(["melanoma"], with_children=True)
-    assert res["preferred"] == "Melanoma" and res["children"] == []
-    assert engine._mesh_children("D008545") == []
+    assert res["preferred"] == "Melanoma" and res["children"] == ["Melanoma, Amelanotic"]
+    assert seen == ["D008545"]        # the resolved descriptor id was passed through
+    # default path does NOT fetch children
+    seen.clear()
+    res2 = engine.normalize_mesh(["melanoma"])
+    assert res2["children"] == [] and seen == []
 
 
 @pytest.mark.skipif(os.environ.get("RUN_LIVE_GOLDEN") != "1",
@@ -763,6 +807,19 @@ def test_mesh_live_resolves_known_synonym():
     assert mesh and mesh["descriptor_id"] == "D009203"
     assert mesh["preferred"] == "Myocardial Infarction"
     assert any(s.lower() == "heart attack" for s in mesh["synonyms"])
+
+
+@pytest.mark.skipif(os.environ.get("RUN_LIVE_GOLDEN") != "1",
+                    reason="hits live NLM MeSH RDF SPARQL; set RUN_LIVE_GOLDEN=1 to run")
+def test_mesh_children_live_tree_fetch():
+    """LIVE gate (opt-in). The real MeSH RDF SPARQL endpoint returns a parent's
+    narrower descriptors (Diabetes Mellitus → its type-1/type-2 children) and an
+    empty list for a leaf term (Diabetic Retinopathy), which is what makes the
+    eval-only '+hierarchy' expansion actually widen a broad condition and correctly
+    no-op on a specific one."""
+    kids = engine._mesh_children("D003920")            # Diabetes Mellitus (a parent)
+    assert any("Type 2" in k for k in kids) and any("Type 1" in k for k in kids)
+    assert engine._mesh_children("D003930") == []      # Diabetic Retinopathy (a leaf)
 
 
 # --- 3. Golden retrieval-coverage gate (the HRV reference case) --------------
