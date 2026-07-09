@@ -637,9 +637,9 @@ def test_grounded_context_applies_and_records_mesh(monkeypatch):
     # Europe PMC receives the boolean OR-group (bool_term), and the relevance
     # providers receive the plain bag (term).
     captured = {}
-    monkeypatch.setattr(engine, "normalize_mesh", lambda cands: {
+    monkeypatch.setattr(engine, "normalize_mesh", lambda cands, **k: {
         "descriptor_id": "D013315", "preferred": "Stress, Psychological",
-        "synonyms": ["Psychological Stress", "Stress, Emotional"],
+        "synonyms": ["Psychological Stress", "Stress, Emotional"], "children": [],
         "input": "psychological stress"})
     monkeypatch.setattr(engine, "search_clinicaltrials", lambda t, **k: ("", "⚠️ none"))
     monkeypatch.setattr(engine, "search_openfda", lambda t, **k: ("", "⚠️ none"))
@@ -662,7 +662,7 @@ def test_grounded_context_applies_and_records_mesh(monkeypatch):
 
 def test_grounded_context_notes_when_mesh_not_applied(monkeypatch):
     # No heading resolved → the metadata says so explicitly (honest, not silent).
-    monkeypatch.setattr(engine, "normalize_mesh", lambda cands: None)
+    monkeypatch.setattr(engine, "normalize_mesh", lambda cands, **k: None)
     monkeypatch.setattr(engine, "search_clinicaltrials", lambda t, **k: ("", "⚠️ none"))
     monkeypatch.setattr(engine, "search_openfda", lambda t, **k: ("", "⚠️ none"))
     monkeypatch.setattr(engine, "search_openfda_safety", lambda t, **k: ("", "⚠️ none"))
@@ -670,6 +670,88 @@ def test_grounded_context_notes_when_mesh_not_applied(monkeypatch):
     monkeypatch.setattr(engine, "search_pubmed", lambda t, **k: ("", "⚠️ none"))
     ctx, _, _ = engine.build_grounded_context("m", "u", "p")
     assert "MeSH normalization: none" in ctx
+
+
+# --- 2e. Step 0: eval-only ablation knobs (defaults reproduce the shipped app) --
+
+def test_build_queries_mesh_expansion_levels():
+    # The three MeSH expansion levels widen the CONDITION OR-group progressively;
+    # the default arg reproduces the shipped "canonical+synonyms" exactly.
+    args = ("Classifies skin lesions from dermoscopy", "Melanoma detection", "Adults")
+    mesh = {"descriptor_id": "D008545", "preferred": "Melanoma",
+            "synonyms": ["Malignant Melanoma", "Melanomas"],
+            "children": ["Melanoma, Amelanotic"], "input": "melanoma"}
+    canon = engine.build_queries(*args, mesh=mesh, mesh_expansion="canonical")
+    syn = engine.build_queries(*args, mesh=mesh, mesh_expansion="canonical+synonyms")
+    hier = engine.build_queries(*args, mesh=mesh, mesh_expansion="+hierarchy")
+    # canonical = the preferred heading ONLY (no synonyms in the OR-group)
+    assert '"Melanoma"' in canon["ct"] and '"Malignant Melanoma"' not in canon["ct"]
+    # canonical+synonyms (shipped) adds the entry-term synonyms...
+    assert '"Malignant Melanoma"' in syn["ct"]
+    assert engine.build_queries(*args, mesh=mesh)["ct"] == syn["ct"]   # default == shipped
+    # ...and +hierarchy adds the narrower child descriptor on top of the synonyms
+    assert '"Melanoma, Amelanotic"' in hier["ct"] and '"Melanoma, Amelanotic"' not in syn["ct"]
+
+
+def test_search_literature_sources_selects_providers(monkeypatch):
+    called = []
+
+    def mk(name):
+        def fn(t, max_results=15):
+            called.append(name)
+            return [{"pmid": "", "doi": f"10.1/{name}", "title": name, "journal": "J",
+                     "year": "2026", "source_db": name, "alt_id": name}]
+        return fn
+    monkeypatch.setattr(engine, "_europepmc_records", mk("Europe PMC"))
+    monkeypatch.setattr(engine, "_openalex_records", mk("OpenAlex"))
+    monkeypatch.setattr(engine, "_semanticscholar_records", mk("Semantic Scholar"))
+    # only Europe PMC selected → the other two providers are never even queried
+    _, status = engine.search_literature("q", sources=["europepmc"])
+    assert called == ["Europe PMC"]
+    assert "OpenAlex" not in status and "Semantic Scholar" not in status
+    # None (the default) → all three, i.e. shipped behavior is unchanged
+    called.clear()
+    engine.search_literature("q")
+    assert set(called) == {"Europe PMC", "OpenAlex", "Semantic Scholar"}
+
+
+def test_grounded_context_eval_knobs_thread_through(monkeypatch):
+    # verify_literature / providers / mesh_expansion must reach search_literature and
+    # normalize_mesh unchanged — this is what the ablation harness turns.
+    captured = {}
+    monkeypatch.setattr(engine, "normalize_mesh",
+                        lambda cands, **k: captured.update(
+                            with_children=k.get("with_children")) or None)
+    monkeypatch.setattr(engine, "search_clinicaltrials", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_openfda", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_openfda_safety", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_pubmed", lambda t, **k: ("", "⚠️ none"))
+
+    def fake_lit(term, **k):
+        captured["verify"] = k.get("verify")
+        captured["sources"] = k.get("sources")
+        return ("", "⚠️ none")
+    monkeypatch.setattr(engine, "search_literature", fake_lit)
+    engine.build_grounded_context("m", "u", "p", verify_literature=False,
+                                  providers=["europepmc"], mesh_expansion="+hierarchy")
+    assert captured["verify"] is False
+    assert captured["sources"] == ["europepmc"]
+    assert captured["with_children"] is True   # "+hierarchy" asks the resolver for children
+
+
+def test_normalize_mesh_children_deferred_until_tree_fetch(monkeypatch):
+    # The result always carries a "children" list; the +hierarchy child-fetch is a
+    # deferred sub-step, so with_children=True currently yields [] and "+hierarchy"
+    # degrades cleanly to canonical+synonyms until the MeSH-tree lookup lands.
+    def fake_get(endpoint, params):
+        if endpoint == "esearch":
+            return FakeResp({"esearchresult": {"idlist": ["68008545"]}})
+        return FakeResp({"result": {"68008545": {
+            "ds_meshui": "D008545", "ds_meshterms": ["Melanoma", "Malignant Melanoma"]}}})
+    monkeypatch.setattr(engine, "_eutils_mesh_get", fake_get)
+    res = engine.normalize_mesh(["melanoma"], with_children=True)
+    assert res["preferred"] == "Melanoma" and res["children"] == []
+    assert engine._mesh_children("D008545") == []
 
 
 @pytest.mark.skipif(os.environ.get("RUN_LIVE_GOLDEN") != "1",

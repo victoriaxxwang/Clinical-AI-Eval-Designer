@@ -8,24 +8,30 @@ pure function of its inputs plus deterministic public-API calls: same input →
 same query → same records.
 
 Public API:
-    build_queries(model_desc, use_case, population, setting="", mesh=None) -> dict
-    normalize_mesh(candidates)  -> {descriptor_id, preferred, synonyms, input} | None
+    build_queries(model_desc, use_case, population, setting="", mesh=None,
+                  mesh_expansion="canonical+synonyms") -> dict
+    normalize_mesh(candidates, with_children=False)
+        -> {descriptor_id, preferred, synonyms, children, input} | None
     search_clinicaltrials(term) -> (text, status)
     search_openfda(keyword)        -> (text, status)  # device classification + 510(k)
     search_openfda_safety(keyword) -> (text, status)  # PMA + MAUDE adverse events + recalls
     search_openfda_drug(keyword)   -> (text, status)  # Drugs@FDA + SPL labeling + FAERS
     search_pubmed(term)         -> (text, status)
     search_europepmc(term)      -> (text, status)
-    search_literature(term, bool_term=None) -> (text, status)  # EuropePMC + OpenAlex + S2, merged
+    search_literature(term, bool_term=None, sources=None) -> (text, status)  # EuropePMC + OpenAlex + S2, merged
     crossref_verify(doi)        -> True | False | None
     coverage_gaps_note()        -> str
     fetch_url_text(url)         -> (text, status|None)
     build_grounded_context(model_desc, use_case, population, optional_url="", setting="",
-                           intervention_type="device")
+                           intervention_type="device",
+                           mesh_expansion="canonical+synonyms", providers=None,
+                           verify_literature=True)
         -> (context_text, statuses, retrieval_timestamp)
         # the Phase-1 "source records" half of the bundle, plus the UTC snapshot time.
         # intervention_type routes the FDA search: "device" (default) → classification/
         # 510(k)/PMA/MAUDE/recall; "drug" → Drugs@FDA/label/FAERS; "both" → all.
+        # mesh_expansion / providers / verify_literature are EVAL-ONLY ablation knobs;
+        # their defaults reproduce the shipped pipeline byte-for-byte.
 """
 
 import datetime
@@ -153,7 +159,8 @@ def _mesh_candidates(use_case, model_desc, anchor_tokens=(), bare_tokens=None,
     return cands[:max_candidates]
 
 
-def build_queries(model_desc, use_case, population="", setting="", mesh=None):
+def build_queries(model_desc, use_case, population="", setting="", mesh=None,
+                  mesh_expansion="canonical+synonyms"):
     """Route each registry to a focused, deterministic query.
 
     - ClinicalTrials.gov / PubMed: the top few disease + modality keywords
@@ -253,8 +260,20 @@ def build_queries(model_desc, use_case, population="", setting="", mesh=None):
     lit_query = query
     lit_bow = query
     if mesh and mesh.get("preferred"):
+        # MeSH EXPANSION LEVEL — an EVAL knob (shipped default "canonical+synonyms"):
+        #   "canonical"          → the preferred heading only (tightest / most precise)
+        #   "canonical+synonyms" → + entry-term synonyms (the shipped balance)
+        #   "+hierarchy"         → + narrower child descriptors (widest recall). The
+        #     children are populated upstream by normalize_mesh(with_children=True);
+        #     when absent this level degrades to "canonical+synonyms" (never worse).
+        level = (mesh_expansion or "canonical+synonyms").lower()
+        pool = [mesh["preferred"]]
+        if level in ("canonical+synonyms", "+hierarchy"):
+            pool += list(mesh.get("synonyms") or [])
+        if level == "+hierarchy":
+            pool += list(mesh.get("children") or [])
         cond_terms, seen = [], set()
-        for t in [mesh["preferred"]] + list(mesh.get("synonyms") or []):
+        for t in pool:
             if t and t.lower() not in seen:
                 seen.add(t.lower())
                 cond_terms.append(t)
@@ -308,7 +327,22 @@ def _eutils_mesh_get(endpoint, params):
     raise requests.HTTPError("NCBI E-utilities rate-limited (429) after one retry")
 
 
-def normalize_mesh(candidates):
+def _mesh_children(descriptor_id):
+    """Return the immediate NARROWER (child) MeSH headings for a descriptor — the
+    data behind the eval-only "+hierarchy" expansion level.
+
+    DEFERRED SUB-STEP: MeSH parent→child edges live in the MeSH TREE (tree numbers),
+    which the ``esummary`` record used elsewhere here does NOT expose. Fetching them
+    needs a separate lookup (``efetch db=mesh`` for the tree numbers, then an
+    ``esearch`` per child tree-number, or the ``id.nlm.nih.gov`` tree endpoint) whose
+    response shape must be verified live before it is trusted — so this is wired but
+    not yet implemented. Returning ``[]`` makes "+hierarchy" degrade cleanly to
+    "canonical+synonyms" (never worse) until the tree lookup is built and tested.
+    """
+    return []
+
+
+def normalize_mesh(candidates, with_children=False):
     """Map a clinical CONDITION to its canonical NLM MeSH heading + entry-term
     synonyms, so the literature/trial search covers the concept regardless of the
     wording the user typed ("heart attack" → "Myocardial Infarction" + synonyms;
@@ -326,11 +360,17 @@ def normalize_mesh(candidates):
     "Protein Aggregation" — exactly what we must avoid). The first candidate that
     resolves wins, so the result is deterministic.
 
-    Returns ``{"descriptor_id", "preferred", "synonyms": [...], "input"}`` or None
-    when nothing resolves / the lookup is unreachable. None means "use the raw
-    keywords" — this normalization can only ADD precision, never make the query
-    worse. Only two HTTP calls per generation (one esearch + one esummary) on the
+    Returns ``{"descriptor_id", "preferred", "synonyms": [...], "children": [...],
+    "input"}`` or None when nothing resolves / the lookup is unreachable. None means
+    "use the raw keywords" — this normalization can only ADD precision, never make the
+    query worse. Only two HTTP calls per generation (one esearch + one esummary) on the
     first hit, so it is well within NCBI's un-keyed rate limit.
+
+    ``with_children`` (the eval-only "+hierarchy" expansion level) requests the
+    descriptor's narrower/child MeSH headings. Those come from the MeSH TREE, which
+    esummary does not expose, so populating ``children`` needs a separate tree lookup
+    (deferred sub-step — see ``_mesh_children``). Until that lands ``children`` is
+    always empty, so "+hierarchy" safely degrades to "canonical+synonyms".
     """
     for cand in (candidates or []):
         cand = (cand or "").strip()
@@ -361,8 +401,9 @@ def normalize_mesh(candidates):
                 synonyms.append(t)
                 if len(synonyms) >= MESH_MAX_TERMS - 1:
                     break
+            children = _mesh_children(descriptor) if with_children else []
             return {"descriptor_id": descriptor, "preferred": preferred,
-                    "synonyms": synonyms, "input": cand}
+                    "synonyms": synonyms, "children": children, "input": cand}
         except (requests.RequestException, ValueError):
             # network error or malformed JSON → try the next candidate, else give up
             continue
@@ -878,7 +919,7 @@ def search_europepmc(term, max_results=15, verify=False):
     return text, status
 
 
-def search_literature(term, max_results=15, verify=False, bool_term=None):
+def search_literature(term, max_results=15, verify=False, bool_term=None, sources=None):
     """The literature entry point: query Europe PMC + OpenAlex + Semantic Scholar,
     MERGE their results de-duplicated by normalized DOI (else PMID), and format the
     union. This is the honest "search more databases" — three free indexes with
@@ -891,6 +932,11 @@ def search_literature(term, max_results=15, verify=False, bool_term=None):
     — get the plain ``term`` bag. When ``bool_term`` is None every provider gets
     ``term`` (today's behavior), so callers that don't normalize are unaffected.
 
+    ``sources`` (optional) restricts which providers are queried — an EVAL knob for
+    the provider-ablation axis. It is a collection of keys from {"europepmc",
+    "openalex", "s2"}; None (the default) queries all three (shipped behavior). This
+    is how the harness measures the marginal value of each added database.
+
     Providers are interleaved round-robin so each is represented before the
     ``max_results`` cap (otherwise a provider that always returns a full page would
     crowd the others out). Each provider is queried independently; one that raises
@@ -901,11 +947,17 @@ def search_literature(term, max_results=15, verify=False, bool_term=None):
     if not term:
         return "", "⚠️ Literature: empty query"
     boolq = bool_term or term
-    providers = [
-        ("Europe PMC", _europepmc_records, boolq),
-        ("OpenAlex", _openalex_records, term),
-        ("Semantic Scholar", _semanticscholar_records, term),
+    all_providers = [
+        ("Europe PMC", "europepmc", _europepmc_records, boolq),
+        ("OpenAlex", "openalex", _openalex_records, term),
+        ("Semantic Scholar", "s2", _semanticscholar_records, term),
     ]
+    want = None if sources is None else {str(s).lower() for s in sources}
+    providers = [(name, fn, provider_term)
+                 for name, key, fn, provider_term in all_providers
+                 if want is None or key in want]
+    if not providers:
+        return "", "⚠️ Literature: no providers selected"
     answered, failed = [], []
     for name, fn, provider_term in providers:
         try:
@@ -1057,7 +1109,9 @@ def coverage_gaps_note(intervention_type="device"):
 
 
 def build_grounded_context(model_desc, use_case, population, optional_url="", setting="",
-                           intervention_type="device"):
+                           intervention_type="device",
+                           mesh_expansion="canonical+synonyms", providers=None,
+                           verify_literature=True):
     """Query every registry (+ optional URL) and assemble the Phase-1 source
     records — the half of the Phase-1 output bundle the Phase-2 critics verify
     the draft against.
@@ -1094,9 +1148,11 @@ def build_grounded_context(model_desc, use_case, population, optional_url="", se
     # then rebuild the literature/trial query around it. None (ambiguous / non-MeSH
     # / lookup down) leaves the raw-keyword query untouched, so retrieval is never
     # worse than before normalization.
-    mesh = normalize_mesh(q.get("mesh_candidates"))
+    mesh = normalize_mesh(q.get("mesh_candidates"),
+                          with_children=(str(mesh_expansion).lower() == "+hierarchy"))
     if mesh:
-        q = build_queries(model_desc, use_case, population, setting, mesh=mesh)
+        q = build_queries(model_desc, use_case, population, setting, mesh=mesh,
+                          mesh_expansion=mesh_expansion)
     ct_text, ct_status = search_clinicaltrials(q["ct"])
 
     # openFDA DEVICE pathway (classification/510(k) + PMA/MAUDE/recall post-market
@@ -1118,7 +1174,8 @@ def build_grounded_context(model_desc, use_case, population, optional_url="", se
     # three merge-providers return nothing usable, so the literature section is never
     # empty just because the modern indexes hiccupped together.
     lit_text, lit_status = search_literature(
-        q.get("lit_bow") or q["pubmed"], verify=True, bool_term=q["pubmed"])
+        q.get("lit_bow") or q["pubmed"], verify=verify_literature,
+        bool_term=q["pubmed"], sources=providers)
     if not lit_text:
         pm_text, pm_status = search_pubmed(q["pubmed"])
         if pm_text:
