@@ -47,13 +47,15 @@ a validated genotyping platform; (c) **clinical-variable data quality** (age, we
 interacting drugs, indication).
 
 **Rationale:** The INR itself is a regulated measurement device: prothrombin-time testing is FDA
-product code **GJS**, class II, regulation **864.7750** [openFDA classification, retrieved]. Genotype
-input has cleared reference devices under product code **ODW** (CYP2C9/VKORC1 genotyping system, class
-II, reg **862.3360**): AutoGenomics INFINITI 2C9 & VKORC1 (K073014), Nanosphere Verigene warfarin
-metabolism NAT (K070804), Trimgen eQ-PCR LC kit (K073071), and Osmetech/GenMark eSensor (K073720;
-K110786, product code NSU / reg 862.2570). These cleared genotyping assays are the reference standard
-for the pharmacogenomic input; the dosing algorithm sits *downstream* of them. CPIC 2017
-(PMID 28198005 · 10.1002/cpt.668) specifies the allele set genotyping must cover.
+product code **GJS**, class II, regulation **864.7750** [openFDA classification, retrieved]; a concrete
+cleared point-of-care meter is the Roche **CoaguChek XS System (K062925)** (alternative: Coag-Sense
+**K183255**, 2019). Genotype input has cleared reference devices under product codes **ODW** (CYP2C9)
+and **ODV** (VKORC1) genotyping systems (class II, reg **862.3360**): AutoGenomics INFINITI 2C9 &
+VKORC1 (K073014), Nanosphere Verigene warfarin metabolism NAT (K070804), Trimgen eQ-PCR LC kit
+(K073071), and Osmetech/GenMark eSensor (K073720; K110786, product code NSU / reg 862.2570). These
+cleared genotyping assays are the reference standard for the pharmacogenomic input; the dosing
+algorithm sits *downstream* of them. CPIC 2017 (PMID 28198005 · 10.1002/cpt.668) specifies the allele
+set genotyping must cover.
 
 **Confidence:** HIGH (input devices and their regulatory identity are verified)
 **Expert review needed:** Clinical laboratory / assay-validation specialist to set the INR
@@ -152,9 +154,13 @@ code ODW/NSU: K073014, K070804, K073071, K073720, K110786) and (b) a coagulation
 instrument, CoagCare (K050821, product code KQG, reg 864.5400) — none is a dose-recommendation
 algorithm. **PMA** was queried: openFDA `device/pma` returns 4 warfarin records — all cardiovascular
 hardware (P990037 D-Stat hemostat, P000037 On-X valve low-dose-warfarin registry, P930038 Angio-Seal,
-P130013 Watchman LAA closure) — **none a dosing algorithm**. **De Novo could not be checked**: openFDA
-exposes no `/device/denovo` endpoint (404 even unfiltered), so that database was not queryable — the
-null claim explicitly does **not** cover De Novo. The reference drug is **Coumadin, Drugs@FDA
+P130013 Watchman LAA closure) — **none a dosing algorithm**. **De Novo is ruled out via
+classification**: openFDA has no `/device/denovo` endpoint, but every granted De Novo creates a new
+classification + product code that *does* appear in `device/classification` (verified this session —
+`submission_type_id:3` returns 113 De Novo records). Since no warfarin dose-recommendation product
+code exists, a De Novo-authorized dosing *device* is ruled out; the only residual is whether the
+function is marketed as non-device CDS under §520(o) (which by definition carries no product code).
+The reference drug is **Coumadin, Drugs@FDA
 application NDA009218, Bristol Myers Squibb** [retrieved via drugsfda] — this application record
 resolves, but its openFDA *drug label* returns 404 (Coumadin predates structured product labeling), so
 NDA009218 is not the retrievable source of the pharmacogenomic dosing content. The pharmacogenomic
@@ -162,8 +168,8 @@ dosing table lives on a **current warfarin sodium SPL label** that does resolve 
 `0cbce382-9c88-4f58-ae0f-532a841e8f95`, under application **ANDA040616**); the algorithm would be
 decision support *around* the labeled drug, not a new drug submission.
 
-**Confidence:** HIGH for the 510(k)+PMA null; the De Novo gap is stated, not claimed as searched; the
-exact CDS-vs-device determination requires regulatory counsel.
+**Confidence:** HIGH for the 510(k)+PMA null and the De Novo null (ruled out via classification); the
+exact CDS-vs-device determination under §520(o) requires regulatory counsel.
 **Expert review needed:** Regulatory affairs / FDA digital-health specialist for the §520(o) CDS
 determination.
 
@@ -210,7 +216,9 @@ from the PubMed record, was located and resolved via Crossref bibliographic sear
 | Record | Identifier (product code / K-number / Drugs@FDA application) | Grounded field(s) |
 |---|---|---|
 | Prothrombin-time (INR) test — reference for INR input signal | product code GJS · reg 864.7750 (class II) | 2, 8 |
-| CYP2C9/VKORC1 genotyping system — reference for genotype input | product code ODW · reg 862.3360 (class II) | 2 |
+| CoaguChek XS System — concrete cleared point-of-care INR meter (Roche) | K062925 (GJS) · reg 864.7750 | 2 |
+| CYP2C9 genotyping system — reference for CYP2C9 input | product code ODW · reg 862.3360 (class II) | 2 |
+| VKORC1 genotyping system — reference for VKORC1 input | product code ODV | 2 |
 | AutoGenomics INFINITI 2C9 & VKORC1 multiplex assay | K073014 (ODW) | 2 |
 | Nanosphere Verigene warfarin metabolism NAT | K070804 (ODW) | 2 |
 | Trimgen eQ-PCR LC warfarin genotyping kit | K073071 (ODW) | 2 |
@@ -226,8 +234,10 @@ The openFDA **drug label** endpoint returned **404 for NDA009218** (Coumadin pre
 product labeling); a current *warfarin sodium* SPL label does resolve (openFDA set_id
 `0cbce382-9c88-4f58-ae0f-532a841e8f95`, under **ANDA040616**) and carries the pharmacogenomic dosing
 table. **PMA** (`device/pma`) returns 4 warfarin records, all cardiovascular hardware (P990037,
-P000037, P930038, P130013) — none a dosing algorithm. **De Novo** (`/device/denovo`) is **not a
-queryable openFDA endpoint** (404 unfiltered) — the null claim does not cover De Novo.
+P000037, P930038, P130013) — none a dosing algorithm. **De Novo** has no `/device/denovo` endpoint,
+but De Novo grants surface in `device/classification` (`submission_type_id:3` = 113 records this
+session); no warfarin dose-recommendation product code exists there, so a De Novo-authorized dosing
+device is ruled out.
 
 ## Trial registry use (ClinicalTrials.gov API v2)
 
@@ -246,7 +256,8 @@ queryable openFDA endpoint** (404 unfiltered) — the null claim does not cover 
 2. **Regulatory NULL result:** **No FDA-cleared or -approved warfarin dose-recommendation algorithm
    was found this session.** Every warfarin-related 510(k) retrieved is a *genotyping assay* or a
    coagulation-management instrument — none is a dosing algorithm. PMA returns only cardiovascular
-   hardware; De Novo was not queryable.
+   hardware; De Novo is ruled out via classification (no dose-recommendation product code; De Novo
+   grants confirmed present under `submission_type_id:3`).
 3. **Established numeric benchmark:** **None exists as a regulatory standard.** TTR (Rosendaal method)
    is the accepted *metric*, but any specific TTR percentage is study-defined, not an FDA-recognized
    threshold. The genotype-guided benefit itself is contested (COAG null vs EU-PACT/GIFT positive) —
@@ -254,8 +265,10 @@ queryable openFDA endpoint** (404 unfiltered) — the null claim does not cover 
 
 ## Sources I wanted but could not access (coverage gaps)
 
-- **openFDA De Novo (`/device/denovo`)** is not a queryable endpoint (404 unfiltered); the NULL
-  predicate claim rests on the 510(k) + classification + PMA searches and does not cover De Novo.
+- **De Novo:** no `/device/denovo` endpoint, but ruled out indirectly via `device/classification`
+  (no dose-recommendation product code; De Novo grants confirmed present under `submission_type_id:3`,
+  113 records). Residual: whether the function is marketed as non-device CDS under §520(o) — a
+  policy/legal determination, not a database lookup.
 - **Full-text of the pivotal RCTs and CPIC guideline** — only PubMed metadata and Crossref records
   were resolved; exact per-trial TTR values and effect sizes were not extracted from full text (hence
   numbers left as [study-defined-placeholder]).
