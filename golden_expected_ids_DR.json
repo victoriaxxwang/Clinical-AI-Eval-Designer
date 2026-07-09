@@ -1,0 +1,107 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the diabetic-retinopathy autonomous-screening reference case. Companion to golden_expected_ids.json (HRV). Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), and precision = on-topic rate of what the pipeline returned. Every id below resolved live 2026-07-09 (PMIDs via E-utils, DOIs via Crossref; FDA codes + NCTs are verbatim openFDA / ClinicalTrials.gov v2 API responses).",
+  "reference_case": "Autonomous AI detection of more-than-mild diabetic retinopathy (mtmDR) on non-mydriatic fundus photographs; point-of-care screening in primary care",
+  "source_spec_artifact": "golden_validation_spec_DR.md",
+  "generated": "2026-07-09",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown. Unlike HRV (a regulatory NULL case), DR has named pivotal NCTs, so 'ncts' is a scored deterministic category here.",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA classification; K/DEN -> openFDA 510k/De Novo; NCT -> ClinicalTrials.gov v2. A required id that fails to resolve is a TEST FAILURE, not a silent drop.",
+    "regulatory_positive": "Unlike the HRV null, openFDA MUST return an established device class here: product code PIB, 21 CFR 886.1100, Class II, classification-founding De Novo DEN180001, plus PIB-predicate 510(k)s. The PRESENCE of PIB is the Field-7 assertion.",
+    "regulatory_null": "No PMA (Class III) authorization exists for this device type (it is Class II). No standalone FDA-authorized image-quality-gate device exists distinct from the integrated screening systems."
+  },
+  "required": {
+    "pmids": [
+      "31304320",
+      "34779843",
+      "36345378",
+      "38212308",
+      "42373309"
+    ],
+    "dois": [
+      "10.1001/jamanetworkopen.2021.34254",
+      "10.1016/j.xops.2022.100228",
+      "10.1038/s41467-023-44676-z",
+      "10.1038/s41746-018-0040-6",
+      "10.1136/bjo-2025-328991"
+    ],
+    "fda_product_codes": [
+      "PIB"
+    ],
+    "fda_den_numbers": [
+      "DEN180001"
+    ],
+    "fda_k_numbers": [
+      "K200667",
+      "K203629",
+      "K213037",
+      "K221183",
+      "K223357",
+      "K240058"
+    ],
+    "ncts": [
+      "NCT02963441",
+      "NCT03112005",
+      "NCT05131451",
+      "NCT05808699"
+    ]
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["31304320", "34779843", "38212308"],
+      "dois": ["10.1038/s41746-018-0040-6", "10.1001/jamanetworkopen.2021.34254", "10.1038/s41467-023-44676-z"],
+      "fda_den_numbers": ["DEN180001"],
+      "ncts": ["NCT02963441", "NCT03112005", "NCT05131451"]
+    },
+    "2_input_signal_validation": {
+      "pmids": ["31304320", "34779843", "42373309"],
+      "dois": ["10.1136/bjo-2025-328991"],
+      "ncts": ["NCT05808699"],
+      "note": "Imageability/gradeability gate as a headline operating characteristic; camera qualification per model."
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["31304320", "34779843", "36345378"],
+      "dois": ["10.1016/j.xops.2022.100228"],
+      "note": "No universal class-wide numeric standard. IDx-DR pivotal pre-specified endpoints (Se>85%, Sp>82.5%) are precedent only, not a codified threshold."
+    },
+    "4_ground_truth": {
+      "pmids": ["31304320", "34779843", "36345378"],
+      "note": "Independent masked reading-center reference (ETDRS severity scale + macular OCT for DME)."
+    },
+    "5_sample_size": {
+      "pmids": ["31304320", "34779843", "38212308"],
+      "ncts": ["NCT02963441", "NCT03112005", "NCT05131451"],
+      "note": "Precedent enrollments (900 / 942 / 164 actual); exact N is study-defined."
+    },
+    "6_subgroup": {
+      "pmids": ["31304320", "34779843", "36345378", "38212308"],
+      "ncts": ["NCT05131451", "NCT05808699"],
+      "note": "Skin tone / race-ethnicity, diabetes type, age, sex, and camera model. No retrieved source set a required per-skin-tone accuracy floor (gap)."
+    },
+    "7_regulatory": {
+      "fda_product_codes": ["PIB"],
+      "fda_den_numbers": ["DEN180001"],
+      "fda_k_numbers": ["K200667", "K223357", "K203629", "K213037", "K221183", "K240058"],
+      "note": "Class II, 21 CFR 886.1100; classification established by De Novo DEN180001; entrants clear via 510(k) against a PIB predicate."
+    },
+    "8_monitoring": {
+      "pmids": ["38212308", "42373309"],
+      "dois": ["10.1038/s41467-023-44676-z", "10.1136/bjo-2025-328991"],
+      "ncts": ["NCT05131451", "NCT05808699"],
+      "note": "Real-world imageability/referral/follow-through surveillance; camera re-qualification. No mandated cadence retrieved (gap)."
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "U.S. FDA Class II, product code PIB, 21 CFR 886.1100 (Diabetic Retinopathy Detection Device); classification established by De Novo DEN180001; current entrants clear via 510(k) against a PIB predicate",
+    "authorization_exists": true,
+    "no_pma_class_iii": true,
+    "no_standalone_image_quality_gate_device": true,
+    "no_established_numeric_benchmark": true,
+    "benchmark_precedent_only": "IDx-DR pivotal pre-specified Se>85% / Sp>82.5% (PMID 31304320); one trial's accepted endpoint, not a codified class-wide standard"
+  },
+  "coverage_gaps_expected": [
+    "FDA De Novo/510(k) narrative decision-summary PDFs (accessdata.fda.gov; FDA-accepted acceptance criteria not readable via openFDA)",
+    "Verified per-skin-tone accuracy floor (none exists; flagged for expert review)",
+    "Post-market surveillance cadence / drift thresholds for this device class (none retrieved)",
+    "Drugs@FDA / drug labeling (not applicable; software diagnostic, not a drug/biologic)"
+  ]
+}
