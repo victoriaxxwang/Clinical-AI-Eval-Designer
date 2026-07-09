@@ -8,14 +8,15 @@ pure function of its inputs plus deterministic public-API calls: same input →
 same query → same records.
 
 Public API:
-    build_queries(model_desc, use_case, population) -> dict
+    build_queries(model_desc, use_case, population, setting="", mesh=None) -> dict
+    normalize_mesh(candidates)  -> {descriptor_id, preferred, synonyms, input} | None
     search_clinicaltrials(term) -> (text, status)
     search_openfda(keyword)        -> (text, status)  # device classification + 510(k)
     search_openfda_safety(keyword) -> (text, status)  # PMA + MAUDE adverse events + recalls
     search_openfda_drug(keyword)   -> (text, status)  # Drugs@FDA + SPL labeling + FAERS
     search_pubmed(term)         -> (text, status)
     search_europepmc(term)      -> (text, status)
-    search_literature(term)     -> (text, status)   # Europe PMC + OpenAlex + Semantic Scholar, merged
+    search_literature(term, bool_term=None) -> (text, status)  # EuropePMC + OpenAlex + S2, merged
     crossref_verify(doi)        -> True | False | None
     coverage_gaps_note()        -> str
     fetch_url_text(url)         -> (text, status|None)
@@ -28,6 +29,7 @@ Public API:
 """
 
 import datetime
+import time
 from html.parser import HTMLParser
 
 import requests
@@ -40,6 +42,11 @@ HTTP_TIMEOUT = 12  # seconds per registry call
 # guards a pathological reference-URL. Larger than the old 9000 so a wide-but-
 # legitimate sweep (all sections + metadata + coverage note) is never truncated.
 CONTEXT_CAP = 20000
+
+# MeSH normalization: the condition term is expanded to at most this many terms
+# (canonical MeSH heading + top entry-term synonyms) in the literature/trial query.
+# Bounded so the OR-group stays small and every AND-ed method term still matters.
+MESH_MAX_TERMS = 5
 
 # Polite-pool identification for Crossref (asks for a UA with contact info).
 _CROSSREF_UA = ("ClinicalAIEvalDesigner/1.0 "
@@ -102,7 +109,51 @@ def _keywords(text, n):
     return out
 
 
-def build_queries(model_desc, use_case, population="", setting=""):
+def _mesh_candidates(use_case, model_desc, anchor_tokens=(), bare_tokens=None,
+                     max_candidates=5):
+    """Ordered list of condition phrases to try against MeSH, most-specific first.
+
+    MeSH headings are often multi-word ("Myocardial Infarction", "Lung Neoplasms",
+    "Stress, Psychological", "Diabetic Retinopathy"), so the candidates are ANCHORED
+    on the condition tokens and paired with an adjacent qualifier to form a bigram —
+    "stress" + "psychological" → "psychological stress" (resolves to Stress,
+    Psychological), where the bare word "stress" is ambiguous and resolves to nothing.
+    Anchoring on the condition — rather than taking every consecutive word pair — also
+    avoids junk bigrams like "daily life" accidentally resolving to an unrelated
+    heading (Activities of Daily Living).
+
+    ``anchor_tokens`` are the words a bigram must touch (the shared concept, or the
+    model's clinical terms when the use case is too terse to name the condition, e.g.
+    "DR screening"). ``bare_tokens`` — the single-word fallbacks tried after the
+    bigrams — are kept NARROW (shared / use_case only, defaulting to ``anchor_tokens``)
+    so generic model words like "lead" or "skin" can't resolve to an organ/substance
+    heading. use_case bigrams are tried before model bigrams (declared indication
+    first). Kept pure/offline: the lookup itself is ``normalize_mesh``. Returns ``[]``
+    (→ no lookup) when there is nothing to anchor on."""
+    anchor = {t for t in (anchor_tokens or []) if t}
+    bare = [t for t in (bare_tokens if bare_tokens is not None else anchor_tokens) if t]
+    if not anchor and not bare:
+        return []
+    uc = _keywords(use_case, 8)
+    md = _keywords(model_desc, 8)
+    cands = []
+
+    def add(x):
+        if x and len(x) > 2 and x not in cands:
+            cands.append(x)
+
+    # condition-anchored bigrams (a condition token + its adjacent qualifier),
+    # use_case first (declared indication), then model description (precise phrase).
+    for seq in (uc, md):
+        for a, b in zip(seq, seq[1:]):
+            if a in anchor or b in anchor:
+                add(f"{a} {b}")
+    for t in bare:                             # then the bare condition tokens
+        add(t)
+    return cands[:max_candidates]
+
+
+def build_queries(model_desc, use_case, population="", setting="", mesh=None):
     """Route each registry to a focused, deterministic query.
 
     - ClinicalTrials.gov / PubMed: the top few disease + modality keywords
@@ -120,6 +171,11 @@ def build_queries(model_desc, use_case, population="", setting=""):
       device_name → the General-Wellness product code (PWC), which is the correct
       primary regulatory bucket for a non-diagnostic consumer tool. Kept out of
       the literature query (like population, it over-constrains ranked search).
+    - `mesh` (optional): a resolved MeSH heading from ``normalize_mesh``. When given,
+      the literature/trial query is rebuilt around the canonical heading + its
+      synonyms (see the expansion block below); when None, queries are unchanged.
+      The dict always also returns ``mesh_candidates`` (what to look up) and
+      ``lit_bow`` (the relevance-provider query form).
     """
     # The condition/target vs the method/modality. The condition is what the model
     # and the use case SHARE (e.g. "stress"); the method/modality is what is
@@ -184,13 +240,133 @@ def build_queries(model_desc, use_case, population="", setting=""):
             drug_terms.append(k)
         if len(drug_terms) >= 4:
             break
+
+    # MeSH-expanded literature/trial query. build_queries stays PURE — the network
+    # lookup happens in build_grounded_context, which resolves ``mesh`` and re-calls
+    # this with it. When ``mesh`` is None (no heading resolved, or lookup skipped) the
+    # queries are byte-for-byte today's behavior, so retrieval never gets worse.
+    #   - lit_query (ct/pubmed/Europe PMC): a boolean OR of the canonical heading +
+    #     synonyms, AND-ed with the distinctive method term(s). Understood by the
+    #     boolean-capable engines (CT.gov Essie, PubMed ATM, Europe PMC).
+    #   - lit_bow (OpenAlex / Semantic Scholar): a plain relevance bag — canonical
+    #     heading + method — since those engines rank rather than parse booleans.
+    lit_query = query
+    lit_bow = query
+    if mesh and mesh.get("preferred"):
+        cond_terms, seen = [], set()
+        for t in [mesh["preferred"]] + list(mesh.get("synonyms") or []):
+            if t and t.lower() not in seen:
+                seen.add(t.lower())
+                cond_terms.append(t)
+            if len(cond_terms) >= MESH_MAX_TERMS:
+                break
+        # method = the distinctive specificity terms (recognized modality first),
+        # AND-ed so the synonym expansion widens the CONDITION without losing focus.
+        method = [k for k in distinctive if k in _MODALITY]
+        method += [k for k in distinctive if k not in method]
+        method = method[:2]
+        cond_or = " OR ".join(f'"{t}"' for t in cond_terms)
+        lit_query = f"({cond_or}) AND {' AND '.join(method)}" if method else cond_or
+        lit_bow = _clean(" ".join([mesh["preferred"]] + method), 200)
+
+    # Condition anchor for MeSH: prefer the shared concept; when the model and use
+    # case share nothing (a terse use_case like "DR screening"), anchor bigrams on
+    # the model's non-modality clinical terms so the real condition ("diabetic
+    # retinopathy", "atrial fibrillation") is still found. Bare-token fallback stays
+    # narrow (shared / use_case) so generic model words can't mis-resolve.
+    non_modality_distinctive = [k for k in distinctive if k not in _MODALITY]
+    mesh_anchor = shared or non_modality_distinctive
+    mesh_bare = shared or uc_kws
+
     return {
-        "ct": query,
-        "pubmed": query,
+        "ct": lit_query,
+        "pubmed": lit_query,
         "fda": device,
         "fda_terms": fda_terms or ([device] if device else []),
         "drug_terms": drug_terms or ([device] if device else []),
+        "lit_bow": lit_bow,
+        "mesh_candidates": _mesh_candidates(use_case, model_desc, mesh_anchor, mesh_bare),
     }
+
+
+def _eutils_mesh_get(endpoint, params):
+    """GET one NCBI E-utilities MeSH endpoint, respecting the un-keyed 3 req/sec
+    rate limit: a short pre-call delay keeps a multi-candidate sweep under the cap,
+    and a single retry recovers from a transient 429 (throttle) instead of losing the
+    candidate. Raises ``requests.RequestException`` if it still fails, so the caller
+    degrades gracefully to raw keywords. (One condition lookup per generation, so the
+    added delay is ~1s against a ~90s run.)"""
+    url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/{endpoint}.fcgi"
+    for attempt in range(2):
+        time.sleep(0.34)  # ≤ 3 requests/second (un-keyed E-utilities limit)
+        r = requests.get(url, params=params, timeout=HTTP_TIMEOUT)
+        if r.status_code == 429 and attempt == 0:
+            time.sleep(0.75)
+            continue
+        r.raise_for_status()
+        return r
+    raise requests.HTTPError("NCBI E-utilities rate-limited (429) after one retry")
+
+
+def normalize_mesh(candidates):
+    """Map a clinical CONDITION to its canonical NLM MeSH heading + entry-term
+    synonyms, so the literature/trial search covers the concept regardless of the
+    wording the user typed ("heart attack" → "Myocardial Infarction" + synonyms;
+    "lung cancer" → "Lung Neoplasms"). This is the one query-changing breadth item:
+    it normalizes the CONDITION only (not device/drug keywords — those aren't MeSH's
+    job), leaving every other retrieval path untouched.
+
+    ``candidates`` is the ordered phrase list from ``_mesh_candidates`` (bigrams
+    first). Each is resolved via NCBI E-utilities against the MeSH database with a
+    FIELD-QUALIFIED query — ``"{term}"[MeSH Terms]`` — which matches the controlled
+    vocabulary EXACTLY (entry-term synonyms included). That exact-match is what makes
+    this safe: a real heading resolves cleanly, while an ambiguous or non-MeSH token
+    (bare "stress", "MI", "afib") resolves to nothing and is skipped rather than
+    mis-mapped to a garbage heading (an unqualified search ranks "stress" onto
+    "Protein Aggregation" — exactly what we must avoid). The first candidate that
+    resolves wins, so the result is deterministic.
+
+    Returns ``{"descriptor_id", "preferred", "synonyms": [...], "input"}`` or None
+    when nothing resolves / the lookup is unreachable. None means "use the raw
+    keywords" — this normalization can only ADD precision, never make the query
+    worse. Only two HTTP calls per generation (one esearch + one esummary) on the
+    first hit, so it is well within NCBI's un-keyed rate limit.
+    """
+    for cand in (candidates or []):
+        cand = (cand or "").strip()
+        if len(cand) <= 2:
+            continue
+        try:
+            r = _eutils_mesh_get("esearch", {"db": "mesh", "retmode": "json",
+                                             "term": f'"{cand}"[MeSH Terms]', "retmax": 1})
+            ids = r.json().get("esearchresult", {}).get("idlist", []) or []
+            if not ids:
+                continue  # not an exact MeSH term → try the next candidate
+            r2 = _eutils_mesh_get("esummary", {"db": "mesh", "id": ids[0], "retmode": "json"})
+            item = (r2.json().get("result", {}) or {}).get(ids[0], {}) or {}
+            terms = [t for t in (item.get("ds_meshterms") or []) if t]
+            descriptor = item.get("ds_meshui", "") or ""
+            # Accept only main headings (D…) and supplementary concept records (C…),
+            # which are real conditions. Reject qualifiers/subheadings (Q…, e.g.
+            # "screening" maps to the subheading "diagnosis") and anything else — a
+            # subheading is never a condition and would misground the query.
+            if not terms or descriptor[:1] not in ("D", "C"):
+                continue
+            preferred = terms[0]
+            synonyms, seen = [], {preferred.lower()}
+            for t in terms[1:]:
+                if t.lower() in seen:
+                    continue
+                seen.add(t.lower())
+                synonyms.append(t)
+                if len(synonyms) >= MESH_MAX_TERMS - 1:
+                    break
+            return {"descriptor_id": descriptor, "preferred": preferred,
+                    "synonyms": synonyms, "input": cand}
+        except (requests.RequestException, ValueError):
+            # network error or malformed JSON → try the next candidate, else give up
+            continue
+    return None
 
 
 def search_clinicaltrials(term, max_studies=6):
@@ -702,12 +878,18 @@ def search_europepmc(term, max_results=15, verify=False):
     return text, status
 
 
-def search_literature(term, max_results=15, verify=False):
+def search_literature(term, max_results=15, verify=False, bool_term=None):
     """The literature entry point: query Europe PMC + OpenAlex + Semantic Scholar,
     MERGE their results de-duplicated by normalized DOI (else PMID), and format the
     union. This is the honest "search more databases" — three free indexes with
     different coverage (biomedical, general scholarly, CS/engineering) cross-confirm
     each other, and a paper found by several is tagged with all of them.
+
+    ``bool_term`` (optional) is a boolean-syntax query (a MeSH synonym OR-group from
+    ``build_queries``); it is sent to Europe PMC, which parses AND/OR/quoted phrases,
+    while OpenAlex and Semantic Scholar — relevance rankers that don't parse booleans
+    — get the plain ``term`` bag. When ``bool_term`` is None every provider gets
+    ``term`` (today's behavior), so callers that don't normalize are unaffected.
 
     Providers are interleaved round-robin so each is represented before the
     ``max_results`` cap (otherwise a provider that always returns a full page would
@@ -718,15 +900,16 @@ def search_literature(term, max_results=15, verify=False):
     """
     if not term:
         return "", "⚠️ Literature: empty query"
+    boolq = bool_term or term
     providers = [
-        ("Europe PMC", _europepmc_records),
-        ("OpenAlex", _openalex_records),
-        ("Semantic Scholar", _semanticscholar_records),
+        ("Europe PMC", _europepmc_records, boolq),
+        ("OpenAlex", _openalex_records, term),
+        ("Semantic Scholar", _semanticscholar_records, term),
     ]
     answered, failed = [], []
-    for name, fn in providers:
+    for name, fn, provider_term in providers:
         try:
-            answered.append((name, fn(term, max_results=max_results)))
+            answered.append((name, fn(provider_term, max_results=max_results)))
         except requests.RequestException:
             failed.append(name)
     if not answered:
@@ -886,6 +1069,11 @@ def build_grounded_context(model_desc, use_case, population, optional_url="", se
     An explicit selector (rather than inferring the pathway from free text) keeps the
     input→output mapping auditable — the regulatory pathway is declared, not guessed.
 
+    The condition is MeSH-normalized (``normalize_mesh``) before the literature/trial
+    search so the same clinical concept is retrieved regardless of the wording typed;
+    the resolved heading is recorded in the Retrieval Metadata for auditability, and a
+    non-resolving term silently falls back to the raw keywords.
+
     Returns ``(context_text, statuses, retrieval_timestamp)``. The timestamp is the
     UTC instant the evidence was pulled: registries update over time, so the
     regulator-grade guarantee is not "re-running gives the same rows" but "this
@@ -901,6 +1089,14 @@ def build_grounded_context(model_desc, use_case, population, optional_url="", se
     retrieval_timestamp = datetime.datetime.now(datetime.timezone.utc).strftime(
         "%Y-%m-%dT%H:%M:%SZ")
     q = build_queries(model_desc, use_case, population, setting)
+    # MeSH-normalize the CONDITION (the one network step that changes the query
+    # itself): resolve the typed wording to the canonical NLM heading + synonyms,
+    # then rebuild the literature/trial query around it. None (ambiguous / non-MeSH
+    # / lookup down) leaves the raw-keyword query untouched, so retrieval is never
+    # worse than before normalization.
+    mesh = normalize_mesh(q.get("mesh_candidates"))
+    if mesh:
+        q = build_queries(model_desc, use_case, population, setting, mesh=mesh)
     ct_text, ct_status = search_clinicaltrials(q["ct"])
 
     # openFDA DEVICE pathway (classification/510(k) + PMA/MAUDE/recall post-market
@@ -921,7 +1117,8 @@ def build_grounded_context(model_desc, use_case, population, optional_url="", se
     # (DOIs Crossref-verified). PubMed E-utilities are a last-ditch fallback if all
     # three merge-providers return nothing usable, so the literature section is never
     # empty just because the modern indexes hiccupped together.
-    lit_text, lit_status = search_literature(q["pubmed"], verify=True)
+    lit_text, lit_status = search_literature(
+        q.get("lit_bow") or q["pubmed"], verify=True, bool_term=q["pubmed"])
     if not lit_text:
         pm_text, pm_status = search_pubmed(q["pubmed"])
         if pm_text:
@@ -934,6 +1131,13 @@ def build_grounded_context(model_desc, use_case, population, optional_url="", se
         f"- Intervention type: {it}",
         f"- Literature/trials query: {q['pubmed']!r}",
     ]
+    if mesh:
+        meta_lines.append(
+            f"- MeSH normalization: {mesh['input']!r} → \"{mesh['preferred']}\" "
+            f"({mesh['descriptor_id']}) + {len(mesh.get('synonyms') or [])} synonyms")
+    else:
+        meta_lines.append("- MeSH normalization: none (condition not an exact MeSH "
+                          "heading, or lookup unavailable) — raw keywords used")
     if want_device:
         meta_lines.append(f"- openFDA device terms: {q.get('fda_terms')}")
     if want_drug:

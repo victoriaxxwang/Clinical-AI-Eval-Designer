@@ -533,6 +533,156 @@ def test_grounded_context_falls_back_to_pubmed_when_literature_empty(monkeypatch
     assert statuses[3].startswith("✅ PubMed")  # literature slot (idx 3); fallback surfaced
 
 
+# --- 2d. Tier B (4): MeSH normalization (condition → canonical heading + synonyms) --
+
+def test_mesh_candidates_prefers_bigrams_then_unigrams():
+    # Multi-word MeSH headings ("Lung Neoplasms") need a bigram to resolve, so the
+    # candidate list must try consecutive-word phrases BEFORE single words.
+    cands = engine._mesh_candidates("Lung cancer screening", "Detects lung nodules on chest CT",
+                                    ["lung"])
+    assert "lung cancer" in cands                 # condition-anchored bigram present
+    assert " " in cands[0]                         # a multi-word phrase is tried first
+    # every surviving unigram is ranked after all bigrams (specific → general)
+    bigram_idx = [i for i, c in enumerate(cands) if " " in c]
+    unigram_idx = [i for i, c in enumerate(cands) if " " not in c]
+    assert not unigram_idx or max(bigram_idx) < min(unigram_idx)
+    assert all(len(c) > 2 for c in cands)         # no 1-2 char junk
+    assert len(cands) <= 4                         # bounded → at most a few lookups
+
+
+def test_normalize_mesh_resolves_synonym_to_canonical(monkeypatch):
+    # "heart attack" (an entry-term synonym) must map to the canonical heading
+    # Myocardial Infarction (D009203) with its synonyms, deduped against the
+    # preferred label. Mirrors the live NCBI MeSH esearch→esummary shape.
+    def fake_get(url, **k):
+        if "esearch" in url:
+            return FakeResp({"esearchresult": {"idlist": ["68009203"]}})
+        return FakeResp({"result": {"68009203": {
+            "ds_meshui": "D009203",
+            "ds_meshterms": ["Myocardial Infarction", "Heart Attack", "Myocardial Infarct",
+                             "Myocardial Infarction", "Cardiovascular Stroke", "Heart Attacks"]}}})
+    monkeypatch.setattr(engine.requests, "get", fake_get)
+    mesh = engine.normalize_mesh(["heart attack", "attack"])
+    assert mesh["descriptor_id"] == "D009203"
+    assert mesh["preferred"] == "Myocardial Infarction"
+    assert "Heart Attack" in mesh["synonyms"]
+    assert "Myocardial Infarction" not in mesh["synonyms"]   # preferred not duplicated
+    assert mesh["input"] == "heart attack"                    # first candidate that resolved
+    assert len(mesh["synonyms"]) <= engine.MESH_MAX_TERMS - 1  # bounded expansion
+
+
+def test_normalize_mesh_rejects_qualifier_result(monkeypatch):
+    # A generic word ("screening") can map to a MeSH QUALIFIER/subheading (a Q… id,
+    # e.g. "diagnosis") — never a condition. normalize_mesh must reject any non-D/C
+    # descriptor so a subheading can't misground the query.
+    def fake_get(url, **k):
+        if "esearch" in url:
+            return FakeResp({"esearchresult": {"idlist": ["82000175"]}})
+        return FakeResp({"result": {"82000175": {
+            "ds_meshui": "Q000175", "ds_meshterms": ["diagnosis"]}}})
+    monkeypatch.setattr(engine.requests, "get", fake_get)
+    assert engine.normalize_mesh(["screening"]) is None
+
+
+def test_mesh_candidates_uses_model_terms_when_usecase_is_generic():
+    # A terse use_case ("DR screening") names no condition; the real one ("diabetic
+    # retinopathy") lives in the model description. Anchoring bigrams on the model's
+    # clinical terms must surface it, tried BEFORE the generic bare "screening".
+    cands = engine._mesh_candidates(
+        "DR screening", "Detects diabetic retinopathy from fundus photographs",
+        ["diabetic", "retinopathy"], ["screening"])
+    assert "diabetic retinopathy" in cands
+    assert cands[0] == "diabetic retinopathy"   # condition bigram first, not "screening"
+
+
+def test_normalize_mesh_skips_ambiguous_and_empty(monkeypatch):
+    # An ambiguous/non-MeSH token (bare "stress", "MI") returns an empty idlist →
+    # normalize_mesh must return None (graceful skip), never a garbage heading.
+    monkeypatch.setattr(engine.requests, "get",
+                        lambda *a, **k: FakeResp({"esearchresult": {"idlist": []}}))
+    assert engine.normalize_mesh(["stress", "acute stress"]) is None
+    assert engine.normalize_mesh([]) is None          # nothing to look up
+    assert engine.normalize_mesh(["ab"]) is None       # too short → skipped, no call
+
+
+def test_normalize_mesh_survives_lookup_outage(monkeypatch):
+    # NLM/NCBI unreachable → None (fall back to raw keywords), never an exception.
+    def boom(*a, **k):
+        raise requests.ConnectionError("mesh down")
+    monkeypatch.setattr(engine.requests, "get", boom)
+    assert engine.normalize_mesh(["melanoma"]) is None
+
+
+def test_build_queries_expands_condition_when_mesh_given():
+    args = ("Classifies skin lesions from dermoscopy", "Melanoma detection", "Adults")
+    base = engine.build_queries(*args)
+    mesh = {"descriptor_id": "D008545", "preferred": "Melanoma",
+            "synonyms": ["Malignant Melanoma", "Melanomas"], "input": "melanoma"}
+    exp = engine.build_queries(*args, mesh=mesh)
+    # without mesh: the raw-keyword query is unchanged (back-compat, no quotes/OR)
+    assert '"Melanoma"' not in base["ct"] and " OR " not in base["ct"]
+    # with mesh: a boolean OR-group over canonical + synonyms, method AND-ed in
+    assert '"Melanoma"' in exp["ct"] and '"Malignant Melanoma"' in exp["ct"]
+    assert " OR " in exp["ct"] and " AND " in exp["ct"]
+    assert exp["ct"] == exp["pubmed"]
+    assert "dermoscopy" in exp["ct"]                   # distinctive modality kept as focus
+    # relevance-provider form is a plain bag: canonical first, no boolean operators
+    assert exp["lit_bow"].startswith("Melanoma") and " OR " not in exp["lit_bow"]
+    # candidates for the resolver are always surfaced (bigram-first)
+    assert base["mesh_candidates"] and "melanoma" in base["mesh_candidates"]
+
+
+def test_grounded_context_applies_and_records_mesh(monkeypatch):
+    # End-to-end wiring: a resolved heading is recorded in the metadata (auditable),
+    # Europe PMC receives the boolean OR-group (bool_term), and the relevance
+    # providers receive the plain bag (term).
+    captured = {}
+    monkeypatch.setattr(engine, "normalize_mesh", lambda cands: {
+        "descriptor_id": "D013315", "preferred": "Stress, Psychological",
+        "synonyms": ["Psychological Stress", "Stress, Emotional"],
+        "input": "psychological stress"})
+    monkeypatch.setattr(engine, "search_clinicaltrials", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_openfda", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_openfda_safety", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_pubmed", lambda t, **k: ("", "⚠️ none"))
+
+    def fake_lit(term, **k):
+        captured["term"] = term
+        captured["bool_term"] = k.get("bool_term")
+        return ("", "⚠️ none")
+    monkeypatch.setattr(engine, "search_literature", fake_lit)
+
+    ctx, _, _ = engine.build_grounded_context(
+        "infers psychological stress from photoplethysmography", "stress detection", "adults")
+    assert "MeSH normalization:" in ctx
+    assert '"Stress, Psychological"' in ctx and "D013315" in ctx   # heading + descriptor logged
+    assert " OR " in captured["bool_term"] and "Stress, Psychological" in captured["bool_term"]
+    assert " OR " not in captured["term"]                          # relevance bag, no booleans
+
+
+def test_grounded_context_notes_when_mesh_not_applied(monkeypatch):
+    # No heading resolved → the metadata says so explicitly (honest, not silent).
+    monkeypatch.setattr(engine, "normalize_mesh", lambda cands: None)
+    monkeypatch.setattr(engine, "search_clinicaltrials", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_openfda", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_openfda_safety", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_literature", lambda t, **k: ("", "⚠️ none"))
+    monkeypatch.setattr(engine, "search_pubmed", lambda t, **k: ("", "⚠️ none"))
+    ctx, _, _ = engine.build_grounded_context("m", "u", "p")
+    assert "MeSH normalization: none" in ctx
+
+
+@pytest.mark.skipif(os.environ.get("RUN_LIVE_GOLDEN") != "1",
+                    reason="hits live NLM/NCBI MeSH; set RUN_LIVE_GOLDEN=1 to run")
+def test_mesh_live_resolves_known_synonym():
+    """LIVE gate (opt-in). The real NCBI MeSH lookup maps the casual synonym
+    'heart attack' to the canonical heading Myocardial Infarction (D009203)."""
+    mesh = engine.normalize_mesh(["heart attack"])
+    assert mesh and mesh["descriptor_id"] == "D009203"
+    assert mesh["preferred"] == "Myocardial Infarction"
+    assert any(s.lower() == "heart attack" for s in mesh["synonyms"])
+
+
 # --- 3. Golden retrieval-coverage gate (the HRV reference case) --------------
 #
 # Reframed per COMPARISON.md → Lesson 2: exact-PMID/DOI reproduction is the WRONG
