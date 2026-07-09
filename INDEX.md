@@ -104,7 +104,7 @@ the model's distinctive terms and (2) openFDA uses one narrow keyword. New top-p
 - [x] **MeSH normalization** — DONE 2026-07-09 (Tier B 4; `normalize_mesh` via NCBI MeSH db, field-qualified exact match, condition-anchored bigrams, qualifier rejection, rate-limited, graceful skip; boolean OR-expansion of the literature/trial query + audit line in metadata; disease-agnostic, live-verified across 6 indications)
 - [ ] **SKIP:** WHO ICTRP (flaky API) and direct medRxiv API (date-window, not keyword) — get preprints via Europe PMC instead
 - [ ] **ENGINE HARDENING (own window, from Case 4 — decision for Victoria):** guarantee the bare condition token always reaches the query + MeSH lookup (seed from `use_case`, prepend bare token to `_mesh_candidates`), so (A) mechanism-first phrasing can't zero out retrieval and (B) broad-parent conditions actually resolve → makes `+hierarchy` testable. Small code change but needs full test re-run + pilot-3 regression → schedule standalone, not bundled.
-- [ ] (optional) Save `golden_validation_spec_sepsis.md` for demo parity with DR/warfarin — the Case-4 answer key JSON already grounds the harness, so this is nice-to-have only (content lives in the JSON's `field_grounding`).
+- [x] Save `golden_validation_spec_sepsis.md` for demo parity with DR/warfarin — **DONE** (committed c4b54ca; identifiers cross-checked identical to the golden key).
 - [ ] Write the vetted decisions into `SOURCES.md`
 - [ ] Push local git repo to GitHub (`git push -u origin main`)
 - [x] Consolidate architecture into one canonical `ARCHITECTURE.md` (v3)
