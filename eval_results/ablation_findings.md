@@ -1,6 +1,6 @@
 # Door B — Ablation findings (pilot-3 slate)
 
-_2026-07-09 (Case 8 pneumonia added 2026-07-09). 8 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression / pneumonia) × 6 configs, scored **precision + recall**
+_2026-07-09 (Case 9 pembrolizumab added 2026-07-09). 9 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression / pneumonia / pembrolizumab) × 6 configs, scored **precision + recall**
 vs the hand-verified goldens. Live retrieval snapshots cached under
 `eval_results/contexts/` (git-ignored, regenerable). The scored table is the
 auto-generated `eval_results/ablation_results.md` (rebuild anytime with
@@ -291,11 +291,63 @@ pneumonia) are capped by query targeting and no provider/MeSH/verify knob moves 
 independent sweep found **zero** cross-case pmid/doi/nct overlap (no new `METHODOLOGY_SHARED` entries
 needed), even though it shares the *discipline* (imaging AI) with DR and melanoma. Clean separation.
 
+## Case 9 (pembrolizumab) — the landmark-RCT-lit hypothesis, tested and *rejected*; a positive case that lands exactly one device on two axes
+Pembrolizumab CDx selection (a **companion-diagnostic algorithm-plus-assay** that reads tumor tissue
+to select cancer patients for pembrolizumab — the patient-selection decision support, *not* an
+autonomous image diagnosis) is the slate's first **hybrid device + biologic** case, authored
+`intervention_type="both"` so the sweep fires *both* the device pathway (the CDx assays) and the
+drug/biologic pathway (the KEYTRUDA BLAs). It is **regulatory-POSITIVE** — the PD-L1 IHC companion
+diagnostics are PMA-approved and pembrolizumab itself is BLA-licensed — **with a standalone-image-
+predictor null twist** (no cleared device is an autonomous *image* classifier for this selection
+task). Authored condition-forward. All 39 scored identifiers — 12 PMID / 12 DOI / 4 NCT / 3 CDx
+product codes (PLS/PQP/QKQ) / 5 PMAs (P150013/P160002/P170019/P190032/P200006) / DEN170058 / 2 BLAs
+(BLA125514/BLA761467 carried in `fda_nda_numbers`) — re-verified live 2026-07-09 before the sweep.
+(The three gate-rejected candidates P170028 / OWH / QPV were kept **out** of the scored key, in a
+non-scored `gate_rejected_not_scored` block.)
+
+This case was reserved to test **one specific hypothesis**: unlike the curated-standards corpora of
+HRV/melanoma/depression/pneumonia, pembrolizumab's golden literature is **landmark KEYNOTE RCTs**
+(NEJM/JCO) — the kind of highly-cited paper a relevance-ranked search *might* actually surface. If
+any zero-lit case were going to break the query-targeting ceiling, it was this one.
+
+**The hypothesis is rejected — pembrolizumab joins the ceiling.** Literature **0/12 golden** of ~28
+retrieved across all six configs; `lit_epmc_only` (26 retrieved) and `lit_epmc_openalex` (28) both 0,
+so **OpenAlex has nothing to discriminate here either**. The reason is instructive and *not* "the
+papers are too obscure": the query is **diagnostic-forward** (companion-diagnostic / patient-selection
+/ PD-L1), while the KEYNOTE papers are indexed as **drug-efficacy** trials — so even landmark,
+heavily-cited RCTs don't rank into a query about the *selection algorithm* rather than the *drug's
+outcome*. The mismatch is topical, not popularity. **Cross-case statement is unchanged: OpenAlex is
+the discriminator in exactly the 4 cases whose golden lit is retrievable at all (DR, warfarin, sepsis,
+AFib); now 5 of 9 cases — HRV, melanoma, depression, pneumonia, and pembrolizumab — are capped at
+query targeting before any provider/MeSH/verify knob can matter.**
+
+**Deterministic 2/15, config-invariant — and the two hits are the *same device*.** The only golden
+identifiers recovered are product code **PQP** (1/3) and PMA **P200006** (1/5) — both of which belong
+to the **one** PD-L1 IHC pharmDx assay that a "cancer / PD-L1 / companion diagnostic" query naturally
+ranks into. So a *positive* regulatory case surfaces exactly one device, landing it on both its
+product-code axis and its PMA axis. Everything else misses for the by-now-familiar targeting reasons:
+the other CDx assays (different codes PLS/QKQ, PMAs P150013/P160002/P170019/P190032), **DEN170058**
+(0 DEN retrieved), the four KEYNOTE **NCTs** (0/4 — retrieved a single unrelated recent trial), and —
+notably — **both KEYTRUDA BLAs** (0/2; the drug/drugsfda sweep returned `application=M019`, not
+BLA125514/761467). The BLA miss is the drug-side face of the same ceiling: a diagnostic-forward query
+never keys on "pembrolizumab / KEYTRUDA," so the biologic application doesn't surface even with the
+drug pathway enabled.
+
+**(MeSH) `+hierarchy` == baseline again** — inert, consistent with every prior case; with 0 golden
+lit the axis can't move the score here regardless. Nothing about pembrolizumab changes the deferred-
+engine-fix conclusion.
+
+**Process note.** Pembrolizumab's only cross-case literature overlap is **TRIPOD+AI** (PMID 38626948 /
+DOI 10.1136/bmj-2023-078378), already on the `METHODOLOGY_SHARED` allowlist from melanoma↔sepsis — a
+discipline-wide reporting standard, *expected* to recur, **not** a copy-paste collision. No new
+allowlist entries needed; the independent sweep passes (39/39 re-resolved live, offline consistency
+PASS).
+
 ## What ships
 - **Keep the shipped defaults** (canonical+synonyms / all-3-providers / verify-on):
-  validated safe on 8 cases; OpenAlex earns its place **wherever golden lit is retrievable at
-  all (4 of 8; HRV + melanoma + depression + pneumonia zero out at query targeting first)**;
-  MeSH + Crossref inert-but-harmless.
+  validated safe on 9 cases; OpenAlex earns its place **wherever golden lit is retrievable at
+  all (4 of 9 — DR/warfarin/sepsis/AFib; HRV + melanoma + depression + pneumonia + pembrolizumab
+  zero out at query targeting first)**; MeSH + Crossref inert-but-harmless.
 - **The MeSH `+hierarchy` axis remains UNVALIDATED** — it is a no-op on all four broad terms that
   reached the slate (sepsis, melanoma, depression, pneumonia), but for the two that *should* have
   tested it decisively (sepsis, pneumonia) the no-op is caused by **Finding B**, not by the axis
@@ -305,7 +357,7 @@ needed), even though it shares the *discipline* (imaging AI) with DR and melanom
   (B) always try the **bare condition token** in MeSH so broad parents resolve. One small fix covers
   both; scheduled as its own window (ship + full regression), **not** bundled. After it lands,
   **re-run pneumonia** — it is the case that will finally exercise `+hierarchy` for real.
-- **Deterministic recall is capped by query *targeting*, not config**, on all 8 cases: named
+- **Deterministic recall is capped by query *targeting*, not config**, on all 9 cases: named
   records (pivotal NCTs, specific 510(k)s) and **function-named FDA codes** (QFM et al., named by
   function not disease) don't rank in generic registry searches. The lever is a curated
   known-record seed layer, a Phase-2 feature — **not** a retrieval knob.

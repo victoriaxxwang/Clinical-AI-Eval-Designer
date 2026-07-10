@@ -240,6 +240,31 @@ CASES = {
         "population": "Adults presenting for chest imaging in ED and inpatient settings",
         "setting": "High-volume hospital radiology (emergency department and inpatient) chest-radiograph triage",
     },
+    "pembrolizumab": {
+        # Case 9. Slate's FIRST hybrid DEVICE+BIOLOGIC case -> intervention_type
+        # ="both": the golden spans the DEVICE path (CDx assay codes PLS/PQP +
+        # image code QKQ + 5 PMAs P150013/P160002/P170019/P190032/P200006 + De
+        # Novo DEN170058) AND the BIOLOGIC path (pembrolizumab BLA125514/761467,
+        # carried in fda_nda_numbers since that's the drug-application category
+        # the harness scores). Regulatory-POSITIVE (CDx assays + drug all
+        # authorized) with a standalone-image-predictor null twist (no
+        # authorization for an image-only immunotherapy-response predictor as its
+        # own CDx). model_desc is CONDITION-FORWARD (leads with the biomarker /
+        # patient-selection function + the drug name) so Case-4 Finding A cannot
+        # bite. Whether '+hierarchy' diverges is read empirically from the sweep.
+        "golden": "golden_expected_ids_pembrolizumab.json",
+        "intervention_type": "both",
+        "model_desc": ("Companion-diagnostic algorithm-plus-assay that selects cancer patients "
+                       "for pembrolizumab (anti-PD-1 immunotherapy) by scoring a tumor biomarker "
+                       "(PD-L1 immunohistochemistry tumor-proportion score, tumor mutational "
+                       "burden, or microsatellite-instability / MMR status) from tumor tissue or "
+                       "digital-pathology images, outputting a test-positive vs test-negative call "
+                       "linked to pembrolizumab benefit."),
+        "use_case": ("Companion-diagnostic patient selection for pembrolizumab immunotherapy: "
+                     "identify PD-L1-high / TMB-high / MSI-H tumors likely to benefit"),
+        "population": "Adults with solid tumors evaluated for pembrolizumab across tumor types, ancestries, and specimen types",
+        "setting": "Oncology / molecular-pathology companion-diagnostic testing to direct immunotherapy",
+    },
 }
 
 

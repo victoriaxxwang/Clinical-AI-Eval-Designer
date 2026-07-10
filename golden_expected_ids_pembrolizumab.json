@@ -1,0 +1,153 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the Case 9 reference case: an algorithm-plus-assay COMPANION DIAGNOSTIC (CDx) selecting cancer patients for pembrolizumab (anti-PD-1). Companion to the HRV/DR/warfarin/sepsis/AFib/melanoma/depression/pneumonia goldens. This is the slate's FIRST hybrid DEVICE+BIOLOGIC case (intervention_type='both'): the scored FDA landscape spans the DEVICE path (CDx assay product codes PLS/PQP + digital-pathology image code QKQ + five PMAs P150013/P160002/P170019/P190032/P200006 + De Novo DEN170058) AND the BIOLOGIC/drug path (pembrolizumab BLAs 125514/761467). Regulatory-POSITIVE (the CDx assays and the drug are all authorized) with a STANDALONE-IMAGE-PREDICTOR null twist: no FDA authorization exists for a standalone algorithm that predicts pembrolizumab response directly from a digital-pathology image WITHOUT an underlying authorized assay - the authorized devices are the assays (PLS/PQP PMAs) and image-management software (QKQ). Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes / PMA / DEN / BLA / NCT EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), precision = on-topic rate. Every id in 'required' resolved live 2026-07-09 (PMIDs via E-utils esummary, DOIs via Crossref works, product codes via openFDA device/classification, PMAs via openFDA device/pma, DEN via openFDA device/510k k_number field, BLAs via openFDA drug/drugsfda application_number field, NCTs via ClinicalTrials.gov v2).",
+  "reference_case": "Algorithm-plus-assay companion diagnostic (CDx) selecting cancer patients for pembrolizumab (anti-PD-1): the algorithm's output (PD-L1 score / TMB / MSI status) is the test, and its clinical validity is established by linking the test-positive vs test-negative strata to pembrolizumab treatment benefit. Analytical validation of the assay/algorithm gates the clinical-validity analysis; a specimen-adequacy gate is a pre-analytic inclusion criterion.",
+  "source_spec_artifact": "golden_validation_spec_pembrolizumab.md",
+  "generated": "2026-07-09",
+  "intervention_type": "both",
+  "condition_forward": true,
+  "mesh_note": "Condition authored condition-forward ('cancer patient selection for pembrolizumab / PD-L1 / MSI-H / TMB-high companion diagnostic'), so Case-4 Finding A cannot bite. This is a hybrid device+biologic case; MeSH divergence on the '+hierarchy' axis is read empirically from the sweep, not asserted in advance.",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown following each source's role in the spec's SOURCE INVENTORY 'Grounded field(s)' columns. Pembrolizumab has a scored 'ncts' category (4 pivotal KEYNOTE trials that ground Study Design and Sample Size). It carries 'fda_product_codes' (PLS/PQP/QKQ), 'fda_pma_numbers' (5 CDx-assay PMAs), 'fda_den_numbers' (DEN170058 MSK-IMPACT De Novo precedent), and 'fda_nda_numbers' (the two pembrolizumab BLAs). NOTE: the two BLA biologic-application numbers are carried in the 'fda_nda_numbers' category because that is the DRUG-APPLICATION category the harness scores (extractor application=([A-Z]+\\d+)) and the verify tool validates (FORMAT ^(NDA|BLA|ANDA)\\d+$, resolver openFDA drug/drugsfda application_number) - openFDA renders KEYTRUDA as application_number BLA125514 / BLA761467, so the BLA prefix is retained.",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA device/classification; PMA -> openFDA device/pma (pma_number field; a PMA returns its supplement family, total>=1); DEN (De Novo) -> openFDA device/510k (De Novo grants indexed with a DEN k_number - verified live: DEN170058 returns MSK-IMPACT); BLA -> openFDA drug/drugsfda (application_number field; verified live: BLA125514 KEYTRUDA, BLA761467 KEYTRUDA QLEX, sponsor Merck Sharp Dohme); NCT -> ClinicalTrials.gov v2. A required id that fails to resolve is a TEST FAILURE, not a silent drop.",
+    "regulatory_positive_with_standalone_image_null": "POSITIVE: the CDx assays and the drug are all FDA-authorized - PD-L1 IHC assay class code PLS (Class III) with PMAs P150013 (22C3 pharmDx, Agilent) and P160002 (VENTANA SP142, Ventana); NGS oncology-panel class code PQP (Class III) with PMAs P170019 (FoundationOne CDx), P190032 and P200006 (FoundationOne Liquid CDx, Foundation Medicine); De Novo DEN170058 (MSK-IMPACT, the tumor-profiling reference precedent); digital-pathology image viewing/management software code QKQ (Class II); and pembrolizumab BLA125514 (KEYTRUDA) / BLA761467 (KEYTRUDA QLEX), Merck. STANDALONE-IMAGE-PREDICTOR NULL TWIST: openFDA device searches for device_name 'immunotherapy' and 'whole slide imaging' returned NO authorization for a standalone algorithm that predicts pembrolizumab response directly from a digital-pathology image without an underlying authorized assay - the authorized devices are the ASSAYS (PLS/PQP PMAs) and the image-management software (QKQ), not an image-only immunotherapy-response predictor as its own CDx. This pushes such a system toward co-development CDx PMA (or a PMA supplement) co-labeled with the drug.",
+    "gate_rejected_ids": "Three candidate identifiers surfaced during golden authoring were REJECTED before write and are deliberately NOT in this key (kept out to avoid over-crediting the pipeline for records the golden does not actually assert): PMA P170028 and product codes OWH and QPV. They are recorded here for audit only and must never be scored."
+  },
+  "required": {
+    "pmids": [
+      "27718847",
+      "32919526",
+      "31682550",
+      "33264544",
+      "31725351",
+      "27333219",
+      "27913228",
+      "29800747",
+      "32217756",
+      "38626948",
+      "40954311",
+      "31308507"
+    ],
+    "dois": [
+      "10.1056/NEJMoa1606774",
+      "10.1016/S1470-2045(20)30445-9",
+      "10.1200/JCO.19.02105",
+      "10.1056/NEJMoa2017699",
+      "10.1200/JCO.19.02107",
+      "10.1097/PAI.0000000000000408",
+      "10.1016/j.jtho.2016.11.2228",
+      "10.1016/j.jtho.2018.05.013",
+      "10.1136/jitc-2019-000147",
+      "10.1136/bmj-2023-078378",
+      "10.1038/s41591-025-03953-8",
+      "10.1038/s41591-019-0508-1"
+    ],
+    "ncts": [
+      "NCT02142738",
+      "NCT02628067",
+      "NCT02563002",
+      "NCT02460198"
+    ],
+    "fda_product_codes": [
+      "PLS",
+      "PQP",
+      "QKQ"
+    ],
+    "fda_pma_numbers": [
+      "P150013",
+      "P160002",
+      "P170019",
+      "P190032",
+      "P200006"
+    ],
+    "fda_den_numbers": [
+      "DEN170058"
+    ],
+    "fda_nda_numbers": [
+      "BLA125514",
+      "BLA761467"
+    ]
+  },
+  "gate_rejected_not_scored": {
+    "description": "Candidate identifiers surfaced during authoring but rejected before write; NOT in 'required', NOT scored, recorded for a complete audit trail. Version-check confirms single-pass authoring: no scored id was ever added or changed by a review round.",
+    "fda_pma_numbers": [
+      {"id": "P170028", "scored": false, "reason": "Rejected before write - not asserted by the final golden spec; excluded to avoid over-crediting the pipeline."}
+    ],
+    "fda_product_codes": [
+      {"id": "OWH", "scored": false, "reason": "Rejected before write - not the operative CDx/image code for the system under eval."},
+      {"id": "QPV", "scored": false, "reason": "Rejected before write - not the operative CDx/image code for the system under eval."}
+    ]
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["27718847", "32919526", "31682550", "33264544", "38626948", "40954311"],
+      "dois": ["10.1056/NEJMoa1606774", "10.1016/S1470-2045(20)30445-9", "10.1200/JCO.19.02105", "10.1056/NEJMoa2017699", "10.1136/bmj-2023-078378", "10.1038/s41591-025-03953-8"],
+      "ncts": ["NCT02142738", "NCT02628067", "NCT02563002"],
+      "note": "Biomarker-stratified RCT template (KEYNOTE-024, 27718847/NCT02142738) + tissue-agnostic single-arm basket (KEYNOTE-158, 32919526/31682550/NCT02628067) + randomized MSI-H colorectal (KEYNOTE-177, 33264544/NCT02563002). Reporting per TRIPOD+AI (38626948) for the prediction-model component and STARD-AI (40954311) for the diagnostic-accuracy component."
+    },
+    "2_signal_validation": {
+      "pmids": ["27333219", "27913228", "29800747", "32217756", "31308507"],
+      "dois": ["10.1097/PAI.0000000000000408", "10.1016/j.jtho.2016.11.2228", "10.1016/j.jtho.2018.05.013", "10.1136/jitc-2019-000147", "10.1038/s41591-019-0508-1"],
+      "fda_product_codes": ["PLS"],
+      "fda_pma_numbers": ["P150013", "P160002"],
+      "note": "Analytical validation is the pre-condition: 22C3 CDx development (27333219), Blueprint PD-L1 assay non-interchangeability Phase 1/2 (27913228/29800747), TMB cross-panel harmonization (32217756), clinical-grade WSI quality controls (31308507). The regulated CDx assay input is code PLS with PMAs P150013 (22C3 pharmDx) / P160002 (SP142)."
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["27718847", "32919526"],
+      "dois": ["10.1056/NEJMoa1606774", "10.1016/S1470-2045(20)30445-9"],
+      "note": "Two tiers: analytical agreement vs the reference CDx assay and clinical validity (differential benefit in test-positive vs test-negative strata). Observed effect sizes in KEYNOTE-024 (27718847) and KEYNOTE-158 TMB-high (32919526) are historical context for powering, NOT acceptance thresholds - no universal FDA numeric floor exists."
+    },
+    "4_ground_truth": {
+      "pmids": ["31682550", "33264544", "31725351"],
+      "dois": ["10.1200/JCO.19.02105", "10.1056/NEJMoa2017699", "10.1200/JCO.19.02107"],
+      "fda_product_codes": ["PLS", "PQP"],
+      "fda_pma_numbers": ["P150013", "P170019"],
+      "fda_den_numbers": ["DEN170058"],
+      "note": "Two reference standards: (a) the validated CDx assay (PD-L1 IHC 22C3 P150013 code PLS; FoundationOne CDx P170019 code PQP; MSK-IMPACT De Novo DEN170058) read under its scoring algorithm; (b) clinical outcome on pembrolizumab (RECIST response / survival) per KEYNOTE-158/177/164 (31682550/33264544/31725351). MSI/MMR reference conventions covered in the KEYNOTE-158/164 reports."
+    },
+    "5_sample_size": {
+      "pmids": ["27718847", "33264544"],
+      "dois": ["10.1056/NEJMoa1606774", "10.1056/NEJMoa2017699"],
+      "ncts": ["NCT02142738", "NCT02628067", "NCT02563002", "NCT02460198"],
+      "note": "Power the clinical-validity comparison on the treatment-effect endpoint in the test-positive stratum, not raw classifier accuracy. Retrieved enrollment anchors: KEYNOTE-024 305 (NCT02142738), KEYNOTE-177 307 (NCT02563002), KEYNOTE-164 124 (NCT02460198), KEYNOTE-158 basket 1609 (NCT02628067) - all retrieved-from-source this session."
+    },
+    "6_subgroup": {
+      "pmids": ["32919526", "31682550", "27913228", "29800747", "32217756", "38626948", "40954311"],
+      "dois": ["10.1016/S1470-2045(20)30445-9", "10.1200/JCO.19.02105", "10.1016/j.jtho.2016.11.2228", "10.1016/j.jtho.2018.05.013", "10.1136/jitc-2019-000147", "10.1136/bmj-2023-078378", "10.1038/s41591-025-03953-8"],
+      "ncts": ["NCT02628067"],
+      "note": "Pre-specify performance across tumor type (critical for tissue-agnostic claims - KEYNOTE-158 basket 32919526/31682550/NCT02628067), assay/scanner platform (mandated by PD-L1 non-interchangeability 27913228/29800747 and TMB panel-dependence 32217756), ancestry, sex, age, specimen type. STARD-AI (40954311) and TRIPOD+AI (38626948) both require subgroup/fairness reporting."
+    },
+    "7_regulatory": {
+      "fda_product_codes": ["PLS", "PQP", "QKQ"],
+      "fda_pma_numbers": ["P150013", "P160002", "P170019", "P190032", "P200006"],
+      "fda_den_numbers": ["DEN170058"],
+      "fda_nda_numbers": ["BLA125514", "BLA761467"],
+      "note": "Class III PMA companion diagnostic is the established pathway. PD-L1 IHC = code PLS (P150013/P160002); NGS CDx panel = code PQP (P170019/P190032/P200006); a De Novo route exists for a novel NGS tumor-profiling reference (MSK-IMPACT DEN170058); the digital-pathology image-management component is separately Class II (code QKQ). Co-developed and co-labeled with pembrolizumab BLA125514 (KEYTRUDA) / BLA761467 (KEYTRUDA QLEX)."
+    },
+    "8_monitoring": {
+      "pmids": ["27913228", "29800747", "32217756", "38626948", "40954311"],
+      "dois": ["10.1016/j.jtho.2016.11.2228", "10.1016/j.jtho.2018.05.013", "10.1136/jitc-2019-000147", "10.1136/bmj-2023-078378", "10.1038/s41591-025-03953-8"],
+      "fda_product_codes": ["QKQ"],
+      "note": "Continuous specimen-adequacy-gate monitoring, assay/scanner lot-to-lot and platform drift surveillance, periodic re-concordance vs the reference CDx assay, subgroup-stratified tracking, and FDA MDR/recall linkage. Assay non-interchangeability and platform drift (27913228/29800747; TMB harmonization 32217756) mean a CDx that passed at launch can degrade; TRIPOD+AI (38626948) and STARD-AI (40954311) both call for post-deployment monitoring; openFDA device adverse-event/recall endpoints (same infra used to verify the QKQ/PMA records) supply the surveillance data."
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "Class III PMA companion diagnostic co-developed and co-labeled with pembrolizumab. PD-L1 IHC -> code PLS (P150013/P160002); NGS TMB/MSI panel -> code PQP (P170019/P190032/P200006); De Novo precedent for a novel NGS tumor-profiling reference -> DEN170058; the digital-pathology image-handling component -> Class II code QKQ. Drug side: pembrolizumab BLA125514 / BLA761467.",
+    "authorization_exists": true,
+    "is_device_case": true,
+    "is_drug_case": true,
+    "is_biologic_cdx_case": true,
+    "no_standalone_image_only_immunotherapy_response_predictor_authorization": true,
+    "no_established_numeric_benchmark": true,
+    "benchmark_precedent_only": "No universal FDA-published numeric accuracy floor or effect-size acceptance threshold exists for this CDx device class; observed KEYNOTE effect sizes are historical context for powering, not standards. All acceptance thresholds must be pre-registered per submission."
+  },
+  "regulatory_null_evidence": {
+    "claim": "No FDA marketing authorization exists for a STANDALONE algorithm that predicts pembrolizumab response directly from a digital-pathology IMAGE without an underlying authorized assay. The authorized devices are the assays (PLS/PQP PMAs) and image-management software (QKQ); an image-only immunotherapy-response predictor as its own CDx was not located.",
+    "how_verified": "openFDA device searches for device_name 'immunotherapy' and 'whole slide imaging' returned no matching authorization for a standalone image-input immunotherapy-response predictor this session. The positive codes PLS/PQP/QKQ, PMAs P150013/P160002/P170019/P190032/P200006, De Novo DEN170058 and BLAs 125514/761467 are the authorized adjacent landscape, all scored in 'required'."
+  },
+  "coverage_gaps_expected": [
+    "FDA 'List of Cleared or Approved Companion Diagnostic Devices' - a curated FDA web page, not an API endpoint; individual PMA/DEN records verified via openFDA but the consolidated drug-pairing label linkage not machine-queryable",
+    "Full-text structured KEYTRUDA label CDx/indication section - set_id 097d166f-b73b-41d3-9b37-7653cd2a0c41 resolved but the exact biomarker cutoffs (TPS/CPS thresholds) not parsed, so not asserted as retrieved",
+    "CDRH Summaries of Safety and Effectiveness (SSED PDFs) - per-PMA analytical PPA/NPA numbers are PDFs outside the openFDA JSON schema, not retrieved",
+    "NCCN / CAP-ASCP molecular-testing guidelines - not available through the four permitted APIs; MSI/PD-L1 testing conventions grounded via PubMed primary literature instead"
+  ]
+}

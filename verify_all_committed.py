@@ -57,6 +57,7 @@ CASES = {
     "melanoma": ("golden_expected_ids_melanoma.json",  "golden_validation_spec_melanoma.md"),
     "depression": ("golden_expected_ids_depression.json", "golden_validation_spec_depression.md"),
     "pneumonia": ("golden_expected_ids_pneumonia.json",  "golden_validation_spec_pneumonia.md"),
+    "pembrolizumab": ("golden_expected_ids_pembrolizumab.json", "golden_validation_spec_pembrolizumab.md"),
 }
 
 FORMAT = {
