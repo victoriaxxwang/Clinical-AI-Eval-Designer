@@ -138,6 +138,27 @@ CASES = {
         "population": "Hospitalized adults on medical and surgical wards and in the ICU",
         "setting": "Inpatient hospital early-warning / clinical decision support",
     },
+    "AFib": {
+        # Case 5. LEAF condition ("Atrial Fibrillation" MeSH D001281 has no narrower
+        # children) so "+hierarchy" correctly NO-OPS here (== canonical+synonyms) —
+        # expected/benign, NOT the broad-parent hierarchy test (that's sepsis/pneumonia).
+        # Regulatory-POSITIVE device case (QDA/QDB Class II 510(k)/De Novo) with a
+        # null twist (no autonomous-diagnosis authorization; no PMA). intervention_type
+        # ="device". model_desc is CONDITION-FORWARD ("Atrial fibrillation … algorithm")
+        # so "AFib"/"atrial fibrillation" reaches build_queries before the top-12 keyword
+        # cap (Case-4 Finding A); a mechanism-first phrasing would bury the condition.
+        "golden": "golden_expected_ids_AFib.json",
+        "intervention_type": "device",
+        "model_desc": ("Atrial fibrillation (AFib) screening and notification algorithm that "
+                       "analyzes a single-lead ECG waveform and a photoplethysmography (PPG) "
+                       "irregular-rhythm signal recorded on a consumer wrist-worn wearable to "
+                       "flag possible atrial fibrillation and notify the wearer for clinical "
+                       "confirmation."),
+        "use_case": ("Direct-to-consumer wearable atrial fibrillation screening and "
+                     "irregular-rhythm notification prompting clinical confirmation"),
+        "population": "Adults without prior AFib diagnosis across ages, skin tones, wrist sizes, and activity states",
+        "setting": "Over-the-counter / direct-to-consumer, ambulatory unsupervised (non-diagnostic)",
+    },
 }
 
 
@@ -191,6 +212,7 @@ EXTRACTORS = {
     "fda_product_codes": lambda c: set(re.findall(r"product_code=([A-Z0-9]{3})", c)),
     "fda_k_numbers": lambda c: set(re.findall(r"k_number=(K\d+)", c)),
     "fda_den_numbers": lambda c: set(re.findall(r"k_number=(DEN\d+)", c)),
+    "fda_pma_numbers": lambda c: set(re.findall(r"pma_number=(P\d+)", c)),
     "fda_nda_numbers": lambda c: set(re.findall(r"application=([A-Z]+\d+)", c)),
     "ncts": lambda c: set(re.findall(r"(NCT\d{8})", c)),
 }

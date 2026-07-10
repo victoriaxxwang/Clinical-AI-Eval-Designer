@@ -1,0 +1,136 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the direct-to-consumer wearable AFib screening/notification reference case (Case 5). Companion to the HRV/DR/warfarin/sepsis goldens. This is a DEVICE case (intervention_type=device) and is regulatory-POSITIVE (the QDA/QDB Class II device types exist with active 510(k) lineages) carrying a regulatory-NULL TWIST: no new De Novo is needed for a new entrant, no PMA applies, and there is NO FDA authorization for an autonomous DTC AFib *diagnosis* (both codes are explicitly 'not intended to provide a diagnosis'). Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes / K / DEN / NCT EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), precision = on-topic rate. Every id in 'required' resolved live 2026-07-09 (PMIDs via E-utils esummary, DOIs via Crossref, product codes + K-numbers + De Novos via openFDA, NCTs via ClinicalTrials.gov v2).",
+  "reference_case": "OTC/DTC algorithm analyzing a single-lead ECG waveform (product code QDA) plus a PPG irregular-rhythm signal (product code QDB) on a consumer wearable to flag possible atrial fibrillation and notify the wearer; screening/notification prompting clinical confirmation, NOT a diagnosis; ambulatory unsupervised setting; adults without prior AFib.",
+  "source_spec_artifact": "golden_validation_spec_AFib.md",
+  "generated": "2026-07-09",
+  "condition_forward": true,
+  "mesh_note": "'Atrial Fibrillation' (MeSH D001281) is a LEAF descriptor (no narrower children in the MeSH tree), so the '+hierarchy' ablation axis correctly NO-OPS on this case (== canonical+synonyms). This is expected/benign, not a failure (INDEX: AFib=LEAF). The broad-parent hierarchy test lives in sepsis/pneumonia.",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown following each source's role in the spec's SOURCE INVENTORY. Like DR/warfarin/sepsis, AFib has a scored 'ncts' category (4 named load-bearing pivotal/validation trials: Apple Heart, Fitbit validation, mSToPS, Heartline). No 'fda_nda_numbers'/'fda_pma_numbers' category (device case, no drug, no PMA).",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA device/classification; K -> openFDA device/510k; DEN (De Novo) -> openFDA device/510k (De Novo grants are indexed in the 510k dataset with a DEN k_number - verified live: DEN180044/DEN180042 return Apple QDA/QDB); NCT -> ClinicalTrials.gov v2. A required id that fails to resolve is a TEST FAILURE, not a silent drop.",
+    "regulatory_positive_with_null_twist": "POSITIVE: the two device types are FDA-authorized Class II with multiple legally-marketed 510(k) predicates (QDA 21 CFR 870.2345 ECG-software / QDB 21 CFR 870.2790 PPG-analysis-software), each originated by a 2018 Apple De Novo (DEN180044 -> QDA; DEN180042 -> QDB). NULL TWIST: (a) a new DTC entrant needs only a 510(k), NOT a new De Novo (the classifications already exist); (b) NO PMA applies (a PMA citation here would be a false positive); (c) there is NO existing clearance for an autonomous DTC AFib DIAGNOSIS - both product-code definitions state the device 'is not intended to provide a diagnosis', so a diagnostic (vs screening/notification) claim has no pathway in these codes."
+  },
+  "required": {
+    "pmids": [
+      "31722151",
+      "36148649",
+      "33865810",
+      "36003419",
+      "29998336",
+      "41182224",
+      "34448706",
+      "40212135",
+      "35076659",
+      "40968160",
+      "41875538"
+    ],
+    "dois": [
+      "10.1056/NEJMoa1901183",
+      "10.1161/CIRCULATIONAHA.122.060291",
+      "10.1016/j.ahj.2021.04.003",
+      "10.1001/jamahealthforum.2022.2419",
+      "10.1001/jama.2018.8102",
+      "10.1016/j.jacadv.2025.102133",
+      "10.2196/28974",
+      "10.1097/MS9.0000000000003155",
+      "10.1001/jama.2021.23732",
+      "10.1007/s00421-025-05977-x",
+      "10.1088/1361-6579/ae56ae"
+    ],
+    "ncts": [
+      "NCT03335800",
+      "NCT04176926",
+      "NCT02506244",
+      "NCT04276441"
+    ],
+    "fda_product_codes": [
+      "QDA",
+      "QDB"
+    ],
+    "fda_den_numbers": [
+      "DEN180044",
+      "DEN180042"
+    ],
+    "fda_k_numbers": [
+      "K201168",
+      "K200948",
+      "K221774",
+      "K230292",
+      "K243236",
+      "K240795",
+      "K212516",
+      "K212372"
+    ]
+  },
+  "regulatory_null_evidence": {
+    "note": "Proof-of-ABSENCE assertions - NOT required app retrievals (their absence is the finding, not a recall target).",
+    "no_pma": "Device is 510(k)/De Novo, not PMA. openFDA device/pma is intentionally NOT queried; any P-number here would be a false positive.",
+    "no_new_denovo_needed": "The QDA/QDB classifications already exist (2018), so a new DTC entrant files a 510(k) against a legally-marketed predicate; a fresh De Novo is not required.",
+    "no_autonomous_diagnosis_authorization": "Both QDA and QDB are defined as 'not intended to provide a diagnosis'. No FDA clearance exists for an autonomous DTC AFib DIAGNOSIS device in these codes - a diagnostic claim would fall outside QDA/QDB and require its own De Novo/PMA. This is the Field-7 null assertion."
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["31722151", "36148649", "33865810", "29998336"],
+      "dois": ["10.1056/NEJMoa1901183", "10.1161/CIRCULATIONAHA.122.060291", "10.1016/j.ahj.2021.04.003", "10.1001/jama.2018.8102"],
+      "ncts": ["NCT03335800", "NCT04176926", "NCT02506244", "NCT04276441"],
+      "note": "Two-arm design (PPG irregular-rhythm-notification screening pathway + on-demand single-lead ECG classifier) mirroring the two authorized product families. Precedent: Apple Heart Study (31722151; NCT03335800 N=419,927) notification-then-patch-confirmation; Fitbit Heart Study (36148649; design 33865810; validation NCT04176926 N=472); mSToPS (29998336; NCT02506244 N=6,135) and Heartline (NCT04276441 N=34,244) set the large pragmatic screening-yield context distinct from the smaller signal-validation cohort."
+    },
+    "2_input_signal_validation": {
+      "pmids": ["31722151", "36148649", "40212135"],
+      "dois": ["10.1056/NEJMoa1901183", "10.1161/CIRCULATIONAHA.122.060291", "10.1097/MS9.0000000000003155"],
+      "fda_product_codes": ["QDA", "QDB"],
+      "note": "Two separate inputs each needing its own quality gate: single-lead ECG waveform vs reference ECG (QDA 'creates, analyzes, and displays electrocardiograph data') and the PPG IRN tachogram (QDB 'analyzes photoplethysmograph data for identifying irregular heart rhythms'). Both pivotal studies report a first-class 'unclassifiable' fraction (31722151; 36148649). ECG- vs PPG-input accuracy differs materially, so each is validated on its own (40212135)."
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["41182224", "34448706", "40212135", "31722151"],
+      "dois": ["10.1016/j.jacadv.2025.102133", "10.2196/28974", "10.1097/MS9.0000000000003155", "10.1056/NEJMoa1901183"],
+      "note": "Report sensitivity/specificity/PPV with 95% CIs, separately per arm, at expected population prevalence (PPV governs the low-prevalence DTC screening claim). Literature gives a performance ENVELOPE, not a mandated cutoff: 2025 smartwatch SR/MA (41182224) + 2021 arrhythmia diagnostic-accuracy SR (34448706), high pooled sens/spec with wide heterogeneity; Apple Heart headline PPV (31722151); ECG-vs-PPG divergence (40212135). All numeric targets are study-defined-placeholder."
+    },
+    "4_ground_truth": {
+      "pmids": ["31722151", "36148649", "33865810", "29998336", "35076659"],
+      "dois": ["10.1056/NEJMoa1901183", "10.1161/CIRCULATIONAHA.122.060291", "10.1016/j.ahj.2021.04.003", "10.1001/jama.2018.8102", "10.1001/jama.2021.23732"],
+      "note": "Time-synchronized reference-ECG standard, blinded cardiologist adjudication. PPG arm: post-notification ambulatory ECG patch (Apple Heart 31722151; Fitbit 36148649; design 33865810); patch-as-reference validated by mSToPS (29998336). USPSTF (35076659) confirms clinician-confirmed ECG - not a wearable - is the diagnostic reference standard."
+    },
+    "5_sample_size": {
+      "pmids": ["29998336", "35076659"],
+      "dois": ["10.1001/jama.2018.8102", "10.1001/jama.2021.23732"],
+      "ncts": ["NCT03335800", "NCT04176926", "NCT02506244", "NCT04276441"],
+      "note": "Two-tier sizing anchored to precedent enrollments (all retrieved-from-source): signal/classifier-validation cohort in the hundreds (Fitbit validation NCT04176926 N=472); screening-yield/effectiveness cohort far larger (Apple Heart NCT03335800 N=419,927; Heartline NCT04276441 N=34,244; mSToPS NCT02506244 N=6,135). Low asymptomatic-AFib prevalence (USPSTF 35076659) drives the large screening N. Exact N is protocol-defined (CI width x prevalence)."
+    },
+    "6_subgroup": {
+      "pmids": ["40968160", "41875538", "40212135", "31722151", "36148649", "35076659"],
+      "dois": ["10.1007/s00421-025-05977-x", "10.1088/1361-6579/ae56ae", "10.1097/MS9.0000000000003155", "10.1056/NEJMoa1901183", "10.1161/CIRCULATIONAHA.122.060291", "10.1001/jama.2021.23732"],
+      "note": "Prespecify performance AND the unclassifiable/gate rate across skin tone (Fitzpatrick), wrist size/anthropometry, age, sex, activity/motion state. Skin tone + motion are highest priority for wrist PPG: pigmentation affects PPG accuracy/data quality (40968160), fairness/bias in wrist-PPG HR estimation is an explicit axis (41875538), motion dominates the unclassifiable fraction (31722151; 36148649). A differential gate rate is itself a fairness failure. ECG- vs PPG-arm subgroup effects differ (40212135)."
+    },
+    "7_regulatory": {
+      "fda_product_codes": ["QDA", "QDB"],
+      "fda_den_numbers": ["DEN180044", "DEN180042"],
+      "fda_k_numbers": ["K201168", "K200948", "K221774", "K230292", "K243236", "K240795", "K212516", "K212372"],
+      "note": "510(k) clearance as Class II citing established codes + a legally-marketed predicate: QDA (ECG-software OTC, 21 CFR 870.2345) for the ECG classifier, QDB (PPG-analysis-software OTC, 21 CFR 870.2790) for the IRN feature. De Novo NOT required for a new entrant (classifications exist, originated by Apple DEN180044 -> QDA and DEN180042 -> QDB, 2018-09-11). QDA 510(k) lineage: K201168 (Samsung), K200948 (Fitbit), K221774 (Garmin), K230292 (Samsung), K243236 (WHOOP), K240795 (Withings). QDB 510(k) lineage: K212516 (Apple IRNF), K212372 (Fitbit IRN). Both codes state 'not intended to provide a diagnosis' - a diagnostic claim has no pathway here (null twist)."
+    },
+    "8_monitoring": {
+      "pmids": ["31722151", "36148649", "36003419", "35076659"],
+      "dois": ["10.1056/NEJMoa1901183", "10.1161/CIRCULATIONAHA.122.060291", "10.1001/jamahealthforum.2022.2419", "10.1001/jama.2021.23732"],
+      "fda_product_codes": ["QDA", "QDB"],
+      "note": "Post-market surveillance: real-world false-notification rate + PPV drift at population prevalence; unclassifiable/gate rate trended over OS/firmware/hardware revisions; subgroup performance monitoring; MDR/MAUDE adverse-event reporting; algorithm change-control plan (software devices, frequent updates - PCCP may apply). Dominant risks are PPV erosion + over-notification (the metrics the pivotals foregrounded: 31722151; 36148649); cost-effectiveness is sensitive to the false-positive/confirmation cascade (36003419); USPSTF 'insufficient' verdict (35076659) means real-world benefit/harm evidence accrues post-market."
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "Class II, 510(k) clearance; product codes QDA (21 CFR 870.2345, on-demand ECG arm) and QDB (21 CFR 870.2790, PPG irregular-rhythm-notification arm), with multiple legally-marketed predicates available. No PMA required.",
+    "authorization_exists": true,
+    "is_drug_case": false,
+    "new_denovo_required_for_entrant": false,
+    "denovo_origin": "QDA and QDB were established by Apple De Novos DEN180044 and DEN180042 respectively (2018-09-11); subsequent entrants clear via 510(k).",
+    "no_pma": true,
+    "no_autonomous_diagnosis_authorization": true,
+    "no_established_numeric_benchmark": true,
+    "benchmark_precedent_only": "Sensitivity/specificity/PPV with 95% CIs are the accepted metrics but no FDA-mandated threshold governs the class; literature (41182224, 34448706) gives a wide-heterogeneity envelope, not a standard. USPSTF issued an 'I' (insufficient-evidence) statement on AFib screening in asymptomatic adults (35076659) - no guideline-endorsed performance bar either. Every numeric target is study-defined-placeholder."
+  },
+  "coverage_gaps_expected": [
+    "Drugs@FDA / drug labeling: not applicable (no drug/biologic) - intentionally not queried, not a gap",
+    "openFDA device/pma: not queried (510(k)/De Novo device); no P-number cited (a PMA citation would be a false positive)",
+    "510(k) & De Novo full-text summary/decision PDFs + FDA guidance documents (accessdata.fda.gov): openFDA exposes only structured metadata; labeled indications, tested subgroup counts, and in-document performance numbers could not be verified and are not cited as standards",
+    "FDA MAUDE (adverse-event) device-specific event counts: referenced conceptually in Field 8 but not queried this session",
+    "Manufacturer clinical/validation reports and IFU documents: not accessible; no proprietary performance figures cited"
+  ]
+}

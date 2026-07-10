@@ -1,6 +1,6 @@
 # Door B — Ablation findings (pilot-3 slate)
 
-_2026-07-09. 4 cases (HRV / DR / warfarin / sepsis) × 6 configs, scored **precision + recall**
+_2026-07-09 (Case 5 AFib added 2026-07-09). 5 cases (HRV / DR / warfarin / sepsis / AFib) × 6 configs, scored **precision + recall**
 vs the hand-verified goldens. Live retrieval snapshots cached under
 `eval_results/contexts/` (git-ignored, regenerable). The scored table is the
 auto-generated `eval_results/ablation_results.md` (rebuild anytime with
@@ -107,9 +107,39 @@ pilot-3 regression, so it is **not** bundled here. Logged for Victoria to schedu
 standalone window. Until then: author every case condition-forward and accept that the
 broad-parent hierarchy axis is not yet exercisable end-to-end.
 
+## Case 5 (AFib) — leaf-term hierarchy no-op + the targeting ceiling, on a *positive* case
+AFib (DTC wearable single-lead-ECG + PPG irregular-rhythm notification) is the first
+**regulatory-POSITIVE device case with a null twist**: the QDA/QDB Class II codes exist with
+active 510(k) lineages, but there is no authorization for an autonomous DTC *diagnosis* and
+no PMA. It was authored **condition-forward** (Finding A avoided by construction). All 38
+golden identifiers re-verified live 2026-07-09 before the sweep.
+
+**Literature — OpenAlex is the discriminator again (now 4 of 5 cases).** Baseline recovers
+exactly one golden paper, the landmark **Apple Heart Study** (PMID 31722151 / DOI
+10.1056/NEJMoa1901183) — and `lit_epmc_only` drops it to **0**, while `lit_epmc_openalex`
+restores it. Same signature as DR (IDx-DR), warfarin (PMID 28198005), and sepsis (TREWScore):
+Europe PMC alone misses the single most important paper; OpenAlex is the add that recovers it.
+Crossref-verify and the MeSH level leave the lit set unchanged (2 golden hits either way).
+
+**MeSH `+hierarchy` no-ops — as designed (leaf term).** "Atrial Fibrillation" (MeSH D001281)
+is a **leaf** descriptor (no narrower children), so `mesh_hierarchy == baseline` here. This is
+the *benign* no-op the design predicted (INDEX: AFib=LEAF), distinct from sepsis's Finding-B
+no-op (there the token never reached lookup). The genuine broad-parent hierarchy test still
+awaits pneumonia (Case 8) **after** the engine-hardening fix lands.
+
+**Deterministic 0/16 — the targeting ceiling, confirmed on a positive case.** Every scored
+FDA/NCT identifier missed across all six configs: product codes QDA/QDB (0/2), De Novos
+DEN180044/DEN180042 (0/2), the eight named 510(k) predicates (0/8), and the four pivotal
+NCTs (0/4). The QDA/QDB *classification* device-names ("Electrocardiograph Software For
+Over-The-Counter Use" / "Photoplethysmograph Analysis Software") don't contain the condition,
+so a generic "atrial fibrillation + wearable" openFDA/CT.gov search never ranks them. This is
+the **same query-targeting ceiling** as warfarin/DR/sepsis — and it now holds even when the
+regulatory answer is a clean *positive*, reinforcing that the missing lever is seeding known
+device names / product codes / trial acronyms, **not** any config knob.
+
 ## What ships
 - **Keep the shipped defaults** (canonical+synonyms / all-3-providers / verify-on):
-  validated safe on 4 cases; OpenAlex earns its place (now 3 of 4); MeSH + Crossref
+  validated safe on 5 cases; OpenAlex earns its place (now **4 of 5**); MeSH + Crossref
   inert-but-harmless.
 - **Two engine-hardening items are now queued** from Case 4 (see above): (A) seed the
   condition from `use_case` so mechanism-first phrasing can't zero out retrieval, and
