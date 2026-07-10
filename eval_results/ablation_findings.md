@@ -1,6 +1,6 @@
 # Door B — Ablation findings (pilot-3 slate)
 
-_2026-07-09 (Case 6 melanoma added 2026-07-09). 6 cases (HRV / DR / warfarin / sepsis / AFib / melanoma) × 6 configs, scored **precision + recall**
+_2026-07-09 (Case 7 depression added 2026-07-09). 7 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression) × 6 configs, scored **precision + recall**
 vs the hand-verified goldens. Live retrieval snapshots cached under
 `eval_results/contexts/` (git-ignored, regenerable). The scored table is the
 auto-generated `eval_results/ablation_results.md` (rebuild anytime with
@@ -183,11 +183,58 @@ both specs' Field-1 study-design inventory. Handled exactly like shared FDA devi
 a named `METHODOLOGY_SHARED` allowlist marks these as expected shared vocabulary, while any
 *other* cross-case literature overlap still FAILs the sweep.
 
+## Case 7 (depression) — the targeting ceiling as a *feature*: it lands the named landscape, misses the cross-indication precedent
+Depression (a PHQ-9 / speech / passive-sensing **screening-triage** SaMD that flags adults for
+assessment, does not diagnose) is a **regulatory-NULL case for the system under eval**: an openFDA
+sweep returns **no product code, 510(k), De Novo, or PMA for a depression screening/detection
+algorithm**. The scored FDA landscape is deliberately adjacent — depression *treatment* stimulators
+(JXK, MUZ), a depression *therapy* software code (SAP; clearance K231209 Rejoyn), a behavioral-health
+*pilot placeholder* (SIE), and the **De Novo precedent pathway drawn from other psychiatric
+indications**: DEN200069 Cognoa ASD → code QPF (autism; 510(k) K243558 Canvas Dx) and DEN110019 NEBA
+→ code NCG (ADHD-EEG). Authored **condition-forward** (Finding A avoided). All 42 identifiers
+(15 PMID / 15 DOI / 6 codes / 2 K / 2 DEN / 2 NCT) re-verified live 2026-07-09 before the sweep.
+
+**Deterministic 4/12 — the most *legible* targeting-ceiling result yet.** The query lands exactly
+the three **depression-NAMED** codes — **JXK, MUZ, SAP** (3 of 6) — plus the small pilot trial
+**NCT07220343** (n=25). It misses **precisely** the identifiers whose names *don't carry the word
+"depression"*: **QPF and NCG** (the De Novo precedent codes live under **autism** and **ADHD-EEG**,
+invisible to a depression query), the named grants **DEN200069 / DEN110019** (0 DEN retrieved at
+all) and **K231209 / K243558** (0 of 6 retrieved K-numbers are golden), and the larger trial
+**NCT06792175** (n=500). This is the targeting ceiling stated crisply: **a keyword search recovers
+the on-condition landscape but cannot reach the *cross-indication regulatory precedent* that is the
+entire analytical point of a null case.** No config touches it — baseline == every other config at
+4/12. (This is the value-add a human/curated layer provides over generic retrieval, not a knob.)
+
+**Literature 0 across all six configs — depression joins HRV + melanoma at the ceiling.** Baseline
+recovers **zero** golden papers (~29 retrieved), so the provider axis again has nothing to
+discriminate: `lit_epmc_only` (28 retrieved) and `lit_epmc_openalex` (29) are both 0, same as
+baseline. The updated cross-case statement is now: **OpenAlex is the discriminator in every case
+whose golden literature is retrievable at all (4 of 7 — DR, warfarin, sepsis, AFib); in the other 3
+(HRV, melanoma, depression) the ceiling is query targeting and no provider/MeSH/verify knob moves
+it.** Why depression zeroes out: its golden lit is a curated **methodology + reference-instrument**
+set (STARD, TRIPOD+AI, DECIDE-AI, QUADAS-2, Riley sample-size, the PHQ-9 validation + IPD
+meta-analysis, and the Obermeyer fairness precedent) — the same golden=landmark/standard vs.
+retrieval=recent mismatch as HRV and melanoma, not a provider gap.
+
+**MeSH `+hierarchy` inert again.** `mesh_hierarchy` == `mesh_canonical` == baseline (identical
+retrieved-set sizes and 0 golden lit). "Depression" (D003863) / "Depressive Disorder" (D003866) do
+carry children, but as with melanoma, with 0 golden-lit overlap the score cannot move regardless, so
+this is **not** a decisive `+hierarchy` test. **Pneumonia (Case 8)** — a broad parent *with*
+retrievable golden lit — remains the one that will actually exercise the axis, after the engine fix.
+
+**Process note (verify tool caught two more methodology overlaps).** The independent sweep flagged
+depression↔melanoma sharing **QUADAS-2** (PMID 22007046) and depression↔sepsis sharing **DECIDE-AI
+(BMJ 2022)** (PMID 35584845). Both are discipline-wide reporting/risk-of-bias *standards*, not
+disease-specific findings — added to the `METHODOLOGY_SHARED` allowlist (which now holds DECIDE-AI in
+both its Nat-Med and BMJ instances, TRIPOD+AI, and QUADAS-2). Any *other* cross-case literature
+overlap still FAILs the sweep.
+
 ## What ships
 - **Keep the shipped defaults** (canonical+synonyms / all-3-providers / verify-on):
-  validated safe on 6 cases; OpenAlex earns its place **wherever golden lit is retrievable at
-  all (4 of 6; HRV + melanoma zero out at query targeting first)**; MeSH + Crossref
-  inert-but-harmless (MeSH `+hierarchy` now inert on **two** broad-parents, sepsis and melanoma).
+  validated safe on 7 cases; OpenAlex earns its place **wherever golden lit is retrievable at
+  all (4 of 7; HRV + melanoma + depression zero out at query targeting first)**; MeSH + Crossref
+  inert-but-harmless (MeSH `+hierarchy` now inert on **two** broad-parents, sepsis and melanoma,
+  plus a third broad term, depression, that can't test it for lack of retrievable golden lit).
 - **Two engine-hardening items are now queued** from Case 4 (see above): (A) seed the
   condition from `use_case` so mechanism-first phrasing can't zero out retrieval, and
   (B) always try the bare condition token in MeSH so broad parents resolve. One small

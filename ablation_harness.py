@@ -182,6 +182,32 @@ CASES = {
         "population": "Adults presenting with suspicious skin lesions across skin tones and lesion types",
         "setting": "Primary-care / non-dermatology point-of-care skin-cancer triage (adjunctive, non-standalone)",
     },
+    "depression": {
+        # Case 7. Regulatory-NULL (for the system under eval): NO FDA product
+        # code / 510(k) / De Novo / PMA exists for a depression SCREENING/detection
+        # algorithm. Scored codes are the adjacent landscape — treatment stimulators
+        # (JXK, MUZ), a therapy-software code (SAP; clearance K231209 Rejoyn), a
+        # behavioral-health pilot placeholder (SIE), and the De Novo precedent
+        # pathway from OTHER psychiatric-aid indications (DEN200069 Cognoa ASD -> QPF,
+        # 510(k) K243558 Canvas Dx; DEN110019 NEBA -> NCG). No PMA, no NDA (SaMD).
+        # model_desc is CONDITION-FORWARD ("Depression / depressive-disorder
+        # screening …") so the condition reaches build_queries before the top-12
+        # keyword cap (Case-4 Finding A). Literature is a curated methodology +
+        # reference-instrument set (STARD/TRIPOD+AI/DECIDE-AI/QUADAS-2/Riley + PHQ-9
+        # validation & IPD meta-analysis + Obermeyer) — same targeting-ceiling
+        # profile as HRV/melanoma; a generic query is not expected to rank it top-15.
+        "golden": "golden_expected_ids_depression.json",
+        "intervention_type": "device",
+        "model_desc": ("Depression / depressive-disorder screening and triage algorithm that "
+                       "estimates the likelihood of a depressive disorder in adults from "
+                       "patient-reported questionnaire responses (digital PHQ-9) and/or passively "
+                       "collected behavioral and speech signals, flagging patients for full "
+                       "clinical assessment (screen/triage aid; does not diagnose)."),
+        "use_case": ("Adjunctive depression screening / triage decision support that flags adults "
+                     "for full clinical assessment against a validated instrument and interview"),
+        "population": "Adults across ages, sexes, and race/ethnicity in primary-care and telehealth",
+        "setting": "Primary-care and telehealth depression screening (adjunctive, non-diagnostic)",
+    },
 }
 
 

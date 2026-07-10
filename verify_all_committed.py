@@ -55,6 +55,7 @@ CASES = {
     "sepsis":   ("golden_expected_ids_sepsis.json",    "golden_validation_spec_sepsis.md"),
     "AFib":     ("golden_expected_ids_AFib.json",      "golden_validation_spec_AFib.md"),
     "melanoma": ("golden_expected_ids_melanoma.json",  "golden_validation_spec_melanoma.md"),
+    "depression": ("golden_expected_ids_depression.json", "golden_validation_spec_depression.md"),
 }
 
 FORMAT = {
@@ -78,6 +79,10 @@ METHODOLOGY_SHARED = {
     ("dois",  "10.1038/s41591-022-01772-9"),     # DECIDE-AI
     ("pmids", "38626948"),                        # TRIPOD+AI  (BMJ 2024)
     ("dois",  "10.1136/bmj-2023-078378"),        # TRIPOD+AI
+    ("pmids", "22007046"),                        # QUADAS-2   (Ann Intern Med 2011) — melanoma <-> depression
+    ("dois",  "10.7326/0003-4819-155-8-201110180-00009"),  # QUADAS-2
+    ("pmids", "35584845"),                        # DECIDE-AI  (BMJ 2022) — sepsis <-> depression
+    ("dois",  "10.1136/bmj-2022-070904"),        # DECIDE-AI  (BMJ)
 }
 
 UA = {"User-Agent": "clinical-eval-verify/1.0 (mailto:wang.victoriax@gmail.com)"}

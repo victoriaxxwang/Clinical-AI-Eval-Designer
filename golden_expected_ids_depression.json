@@ -1,0 +1,123 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the depression screening / triage decision-support reference case (Case 7). Companion to the HRV/DR/warfarin/sepsis/AFib/melanoma goldens. This is a DEVICE / Software-as-a-Medical-Device case (intervention_type=device) and is regulatory-NULL for the system under evaluation: there is NO FDA product code, 510(k), De Novo grant, or PMA for a depression SCREENING/DETECTION algorithm. The scored FDA codes are the adjacent-but-different landscape - depression-named TREATMENT stimulators (JXK cranial electrotherapy, MUZ implanted autonomic nerve, both class 3), a depression THERAPY software code (SAP, class 2, therapeutic not screening; clearances K231209 Rejoyn), a behavioral-health PILOT placeholder with no regulation number (SIE), and the De Novo PRECEDENT PATHWAY for a novel psychiatric assessment/diagnosis aid demonstrated by two other-indication grants: DEN200069 Cognoa ASD Diagnosis Aid -> created code QPF (autism; subsequent 510(k) K243558 Canvas Dx), and DEN110019 NEBA System -> created code NCG (neuropsychiatric EEG aid, ADHD). No same-purpose depression-screening predicate exists, which pushes THIS device toward De Novo. Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes / K / DEN / NCT EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), precision = on-topic rate. Every id in 'required' resolved live 2026-07-09 (PMIDs via E-utils esummary, DOIs via Crossref works, product codes via openFDA device/classification, K & DEN via openFDA device/510k, NCTs via ClinicalTrials.gov v2).",
+  "reference_case": "Depression screening / triage aid: an algorithm estimating the likelihood of a depressive disorder in adults from patient-reported questionnaire responses (e.g. digital PHQ-9) and/or passively collected behavioral/speech signals, deployed as a screen/flag-for-assessment aid (does NOT diagnose). Reference standard = validated instrument (PHQ-9) plus a clinician structured/semistructured diagnostic interview. Non-standalone decision support; the pivotal endpoint is the screen-positive flag's diagnostic accuracy against the reference standard, not an isolated model AUC.",
+  "source_spec_artifact": "golden_validation_spec_depression.md",
+  "generated": "2026-07-09",
+  "intervention_type": "device",
+  "condition_forward": true,
+  "mesh_note": "Condition authored condition-forward ('depression / depressive disorder screening'), so Case-4 Finding A cannot bite. 'Depression' maps to MeSH 'Depression' (D003863) and 'Depressive Disorder' (D003866); whether the '+hierarchy' axis diverges here is determined empirically by the sweep and written up in ablation_findings.md - not asserted in advance. Note the literature here is a curated methodology + reference-instrument set (STARD/TRIPOD+AI/DECIDE-AI/QUADAS-2/Riley + PHQ-9 validation & IPD meta-analysis + Obermeyer fairness precedent), the same targeting-ceiling profile as HRV/melanoma - a generic 'depression screening' query is not expected to rank these into the top-15.",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown following each source's role in the spec's SOURCE INVENTORY. Like DR/warfarin/sepsis/AFib/melanoma, depression has a scored 'ncts' category, but ONLY the 2 load-bearing enrollment-magnitude anchors (NCT07220343 n=25 pilot; NCT06792175 n=500) that Field 5 uses as concrete small-vs-large-cohort magnitude context. The three CT.gov keyword COUNTS the spec cites (76 / 118 / 33 studies) are landscape context, not identifiers, and are not scored. Depression has NO 'fda_pma_numbers' (no PMA in this space) and NO 'fda_nda_numbers' (device/SaMD, not a drug or biologic).",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA device/classification; K (510k) -> openFDA device/510k k_number; DEN (De Novo) -> openFDA device/510k (De Novo grants indexed with a DEN k_number - verified live: DEN200069 returns Cognoa ASD Diagnosis Aid, DEN110019 returns NEBA System); NCT -> ClinicalTrials.gov v2. A required id that fails to resolve is a TEST FAILURE, not a silent drop.",
+    "regulatory_null_for_screening": "NULL: an openFDA device/classification + device/510k sweep this session returned NO product code, 510(k), De Novo, or PMA for a depression SCREENING/DETECTION algorithm. The scored codes are the adjacent landscape: JXK/MUZ = depression TREATMENT stimulators (class 3); SAP = depression THERAPY software (class 2, reg 882.5801; clearance K231209 Rejoyn is a digital therapeutic, not a screen); SIE = a behavioral-health PILOT placeholder (class N, no regulation number, not an authorization). QPF (reg 882.1491, from DEN200069 Cognoa ASD; 510(k) K243558 Canvas Dx) and NCG (reg 882.1440, from DEN110019 NEBA) are the De Novo PRECEDENT pathway for novel psychiatric assessment/diagnosis aids in OTHER indications (autism, ADHD-EEG) - they demonstrate the pathway a depression-screening SaMD would follow, but neither authorizes depression screening. This makes De Novo (not 510(k) to an existing predicate) the anchored U.S. pathway and makes signal-validation (Field 2) + a justified operating point (Field 3) pivotal, since no established numeric accuracy benchmark exists."
+  },
+  "required": {
+    "pmids": [
+      "28137831",
+      "38626949",
+      "34244270",
+      "22007046",
+      "35584845",
+      "36639172",
+      "11556941",
+      "32128436",
+      "37960563",
+      "30967483",
+      "26813211",
+      "26815331",
+      "34031906",
+      "33150684",
+      "31649194"
+    ],
+    "dois": [
+      "10.1136/bmjopen-2016-012799",
+      "10.1136/bmj.q824",
+      "10.1136/bmjopen-2020-048008",
+      "10.7326/0003-4819-155-8-201110180-00009",
+      "10.1136/bmj-2022-070904",
+      "10.1016/j.crad.2022.09.131",
+      "10.1046/j.1525-1497.2001.016009606.x",
+      "10.1002/lio2.354",
+      "10.3390/s23218866",
+      "10.1136/bmj.l1476",
+      "10.1001/jama.2015.18392",
+      "10.1001/jamapsychiatry.2015.3281",
+      "10.1002/sim.9025",
+      "10.1002/sim.8766",
+      "10.1126/science.aax2342"
+    ],
+    "ncts": [
+      "NCT07220343",
+      "NCT06792175"
+    ],
+    "fda_product_codes": [
+      "JXK",
+      "MUZ",
+      "SAP",
+      "SIE",
+      "QPF",
+      "NCG"
+    ],
+    "fda_k_numbers": [
+      "K231209",
+      "K243558"
+    ],
+    "fda_den_numbers": [
+      "DEN200069",
+      "DEN110019"
+    ]
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["28137831", "38626949", "34244270", "22007046", "35584845", "36639172"],
+      "dois": ["10.1136/bmjopen-2016-012799", "10.1136/bmj.q824", "10.1136/bmjopen-2020-048008", "10.7326/0003-4819-155-8-201110180-00009", "10.1136/bmj-2022-070904", "10.1016/j.crad.2022.09.131"]
+    },
+    "2_signal_validation": {
+      "pmids": ["11556941", "32128436", "37960563"],
+      "dois": ["10.1046/j.1525-1497.2001.016009606.x", "10.1002/lio2.354", "10.3390/s23218866"]
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["30967483", "38626949"],
+      "dois": ["10.1136/bmj.l1476", "10.1136/bmj.q824"]
+    },
+    "4_ground_truth": {
+      "pmids": ["11556941", "26813211", "26815331", "30967483", "22007046"],
+      "dois": ["10.1046/j.1525-1497.2001.016009606.x", "10.1001/jama.2015.18392", "10.1001/jamapsychiatry.2015.3281", "10.1136/bmj.l1476", "10.7326/0003-4819-155-8-201110180-00009"]
+    },
+    "5_sample_size": {
+      "pmids": ["34031906", "33150684", "30967483"],
+      "dois": ["10.1002/sim.9025", "10.1002/sim.8766", "10.1136/bmj.l1476"],
+      "ncts": ["NCT07220343", "NCT06792175"]
+    },
+    "6_subgroup": {
+      "pmids": ["31649194", "30967483", "38626949"],
+      "dois": ["10.1126/science.aax2342", "10.1136/bmj.l1476", "10.1136/bmj.q824"]
+    },
+    "7_regulatory": {
+      "fda_product_codes": ["JXK", "MUZ", "SAP", "SIE", "QPF", "NCG"],
+      "fda_k_numbers": ["K231209", "K243558"],
+      "fda_den_numbers": ["DEN200069", "DEN110019"]
+    },
+    "8_monitoring": {
+      "pmids": ["35584845", "36639172", "31649194", "26813211"],
+      "dois": ["10.1136/bmj-2022-070904", "10.1016/j.crad.2022.09.131", "10.1126/science.aax2342", "10.1001/jama.2015.18392"]
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "Software as a Medical Device diagnostic/assessment aid; the anchored U.S. pathway is De Novo classification (novel device type, class II expected) as demonstrated by the Cognoa ASD (DEN200069 -> QPF) and NEBA (DEN110019 -> NCG) psychiatric-aid precedents - NOT a 510(k) against an existing depression-screening predicate.",
+    "no_depression_screening_authorization_exists": true,
+    "no_established_numeric_benchmark": true,
+    "nearest_depression_code_is_therapy_not_screening": "SAP (Computerized Behavioral Therapy Device for Depressive Disorders) is therapeutic; depression-named cleared devices JXK/MUZ are treatment stimulators."
+  },
+  "regulatory_null_evidence": {
+    "claim": "No FDA product code, 510(k) clearance, De Novo grant, or PMA exists for a depression SCREENING/DETECTION algorithm. The only depression-specific software code (SAP) is for THERAPY, and depression-named cleared devices (JXK, MUZ) are treatment stimulators.",
+    "how_verified": "openFDA device/classification and device/510k searched this session for depression-screening/detection software: returned only treatment devices (JXK, MUZ), a therapy software code (SAP; clearance K231209 Rejoyn), and a behavioral-health pilot placeholder (SIE, class N, no regulation number). The De Novo precedent for a novel psychiatric assessment/diagnosis aid comes from OTHER indications - DEN200069 Cognoa ASD -> QPF (autism; 510(k) K243558 Canvas Dx) and DEN110019 NEBA -> NCG (neuropsychiatric EEG, ADHD) - all scored in 'required' as the adjacent-but-different-purpose landscape. openFDA has no dedicated device/de_novo endpoint (404); De Novo grants are recoverable only as DEN k_numbers within device/510k, so De Novo coverage is indirect. No same-purpose depression-screening predicate was found."
+  },
+  "coverage_gaps_expected": [
+    "Full-text of the cited methodology guidelines (STARD/TRIPOD+AI/DECIDE-AI/QUADAS-2/Riley) - only PubMed metadata + Crossref records verified, not line-by-line content",
+    "FDA De Novo decision-summary PDFs for DEN200069 / DEN110019 (openFDA summary text field not retrieved)",
+    "A definitive FDA classification determination for THIS device (a regulatory judgment obtainable only via an FDA pre-submission, not a database fact)",
+    "Drugs@FDA / drug labeling / FAERS (not applicable - software/SaMD, not a drug or biologic)",
+    "openFDA device/udi, device/registrationlisting, device/event (MAUDE), enforcement endpoints returned 404 in the generating environment - no UDI / registration / adverse-event cross-check"
+  ]
+}
