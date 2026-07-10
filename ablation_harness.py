@@ -208,6 +208,38 @@ CASES = {
         "population": "Adults across ages, sexes, and race/ethnicity in primary-care and telehealth",
         "setting": "Primary-care and telehealth depression screening (adjunctive, non-diagnostic)",
     },
+    "pneumonia": {
+        # Case 8. Regulatory-POSITIVE at the class level with a pneumonia-SPECIFICITY
+        # null twist: the operative pathway EXISTS and is directly retrieved — Class II
+        # 510(k) under the radiological CAD software framework, product code QFM
+        # (892.2080, CADt triage) with QAS (notification variant) + QDQ/QBS (892.2090
+        # CADe/CADx family), plus a real cleared-predicate pool (K211733 Lunit /
+        # K241439 VUNO / K222179 Annalise / K232410 SmartChest / K192320 HealthCXR /
+        # K193300 AIMI-Triage). NULL twist: no cleared device or code is SPECIFIC TO
+        # pneumonia (they target pneumothorax/effusion/trauma/general-CXR-triage). No
+        # DEN (openFDA device/denovo 404), no PMA, no NDA. NCTs are CONTEXT-ONLY (not
+        # scored). model_desc is CONDITION-FORWARD ("chest-radiograph pneumonia
+        # triage / detection …") so Case-4 Finding A cannot bite. Pneumonia is the
+        # slate's 2nd BROAD-PARENT (MeSH Pneumonia D011014) WITH retrievable golden
+        # lit -> the decisive '+hierarchy' test — BUT it is expected to re-hit Case-4
+        # Finding B: _mesh_candidates(max_candidates=5) fills all 5 slots with anchored
+        # bigrams and truncates the bare token "pneumonia" before the MeSH lookup, so
+        # '+hierarchy' has no parent to expand and should no-op == baseline until the
+        # deferred engine-hardening fix lands. Documented empirically in the sweep.
+        "golden": "golden_expected_ids_pneumonia.json",
+        "intervention_type": "device",
+        "model_desc": ("Chest-radiograph pneumonia triage and detection software that analyzes "
+                       "frontal chest radiographs (DICOM) to detect findings suspicious for "
+                       "pneumonia and either prioritize the study on the radiologist worklist "
+                       "(computer-assisted triage) or flag the finding for reader attention "
+                       "(computer-assisted detection); shortens time-to-review and/or assists "
+                       "detection — does not autonomously diagnose."),
+        "use_case": ("Chest-radiograph pneumonia triage / CADe decision support that prioritizes "
+                     "suspicious studies on the radiologist worklist and flags findings for reader "
+                     "attention against an expert-radiologist reference standard"),
+        "population": "Adults presenting for chest imaging in ED and inpatient settings",
+        "setting": "High-volume hospital radiology (emergency department and inpatient) chest-radiograph triage",
+    },
 }
 
 

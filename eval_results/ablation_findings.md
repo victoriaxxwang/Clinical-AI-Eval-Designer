@@ -1,6 +1,6 @@
 # Door B — Ablation findings (pilot-3 slate)
 
-_2026-07-09 (Case 7 depression added 2026-07-09). 7 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression) × 6 configs, scored **precision + recall**
+_2026-07-09 (Case 8 pneumonia added 2026-07-09). 8 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression / pneumonia) × 6 configs, scored **precision + recall**
 vs the hand-verified goldens. Live retrieval snapshots cached under
 `eval_results/contexts/` (git-ignored, regenerable). The scored table is the
 auto-generated `eval_results/ablation_results.md` (rebuild anytime with
@@ -229,16 +229,83 @@ disease-specific findings — added to the `METHODOLOGY_SHARED` allowlist (which
 both its Nat-Med and BMJ instances, TRIPOD+AI, and QUADAS-2). Any *other* cross-case literature
 overlap still FAILs the sweep.
 
+## Case 8 (pneumonia) — the decisive `+hierarchy` test is *blocked by Finding B*, exactly as predicted
+Pneumonia CXR triage/CADe (software that reads frontal chest radiographs to flag findings suspicious
+for pneumonia and prioritize the worklist — *not* autonomous diagnosis) was reserved as **the one
+case that could actually exercise the MeSH `+hierarchy` axis**: it is the slate's 2nd broad-parent
+condition (MeSH **Pneumonia D011014**, 9 narrower children incl. Community-Acquired / Bacterial /
+Aspiration) *and* — unlike melanoma/depression — its golden literature is a real imaging corpus, so
+in principle a widened OR-group could pull in more of it. It is **regulatory-POSITIVE at the class
+level with a pneumonia-specificity null twist**: the operative pathway exists and is directly
+retrievable — Class II 510(k), **QFM** (21 CFR 892.2080, CADt prioritization) with **QAS**
+(notification variant) and the **892.2090** CADe/CADx family (**QDQ / QBS**), plus a real cleared
+predicate pool (K211733 Lunit / K241439 VUNO / K222179 Annalise / K232410 SmartChest / K192320
+HealthCXR / K193300 AIMI-Triage) — but **no cleared device or code names *pneumonia* as its target
+finding** (they target pneumothorax / effusion / trauma / general triage). Authored
+**condition-forward** (Finding A avoided). All 62 identifiers (26 PMID / 26 DOI / 4 codes / 6 K)
+re-verified live 2026-07-09 before the sweep.
+
+**Everything zeros — and every zero is query *targeting*, config-invariant.** Deterministic **0/10**
+and literature **0/26** across all six configs.
+
+**(1) `+hierarchy` == baseline — Finding B confirmed a 2nd time; the axis is *still* untested.** This
+is the headline. Pneumonia was built to test `+hierarchy`, and `mesh_hierarchy` == `mesh_canonical`
+== `baseline` (identical retrieved sets, 0 golden lit). The snapshot's metadata line reads
+`MeSH normalization: none … raw keywords used`. Root cause is exactly Case-4 Finding B: the pipeline's
+`_mesh_candidates(max_candidates=5)` fills all five slots with condition-anchored **bigrams** —
+`['chest radiograph', 'radiograph pneumonia', 'pneumonia triage', 'triage cade', 'triage analyzes']`
+— and the **bare token "pneumonia" is crowded off the list before the NCBI lookup**. None of those
+five bigrams is a MeSH heading, so `normalize_mesh` resolves to nothing and `+hierarchy` has **no
+parent to expand**. Proven directly: `normalize_mesh(['pneumonia'])` returns the broad parent with
+**9 children**, but the five bigrams the shipped path actually generates return none. So the case
+reserved to exercise the axis **cannot** exercise it until the engine fix lands — Finding B now
+blocks the `+hierarchy` conclusion on *both* broad-parents that were supposed to test it (sepsis and
+pneumonia). This makes the deferred engine-hardening fix the single load-bearing prerequisite for
+ever validating `+hierarchy`.
+
+**(2) Deterministic FDA 0/10 — the CAD-software codes are unreachable by a disease query, by
+construction.** The openFDA sweep searched device_name for `['analyzes', 'high', 'volume', 'hospital',
+'chest']` and returned generic radiography-**hardware** codes (FMS, JEH, JWO, KDI, …) — **never** the
+CAD-**software** codes QFM/QAS/QDQ/QBS, and **0** of the 6 named 510(k)s. The reason is structural and
+worth stating plainly: FDA names these codes by *function*, not disease — QFM is "Radiological
+Computer-Assisted **Prioritization** Software For Lesions," which contains **no disease token at
+all**. A condition-forward query (or any disease keyword) therefore *cannot* surface QFM; only a
+"computer-assisted / prioritization / triage" function token would. (A minor query-hygiene wart rides
+along — `device` fell through to the filler verb "analyzes" because the CADt modality isn't in the
+`_MODALITY` allowlist — but fixing that would not help, since the target device_names carry no disease
+word to match on either.) This is the same **named-record / function-named-code targeting ceiling**
+seen on every deterministic case since sepsis, here in its cleanest form.
+
+**(3) Literature 0/26 — pneumonia joins the ceiling; providers have nothing to discriminate.** The
+lit/ct query is clean and condition-forward (`chest radiograph pneumonia triage`), yet baseline
+recovers **zero** golden papers (~26–28 retrieved), so `lit_epmc_only` and `lit_epmc_openalex` are
+both 0 — no provider signal. The golden set is a curated **imaging-methodology + reporting-standard**
+corpus (CLAIM, STARD-AI, the MRMC/CADe-CADx evaluation framework, dataset-shift + lifecycle-monitoring
+papers, and a few pneumonia-detection-accuracy studies) — the same *golden = landmark/standard* vs.
+*retrieval = recent-topical* mismatch as HRV/melanoma/depression, not a provider gap. **Updated
+cross-case statement: OpenAlex is the discriminator in every case whose golden literature is
+retrievable at all (4 of 8 — DR, warfarin, sepsis, AFib); the other 4 (HRV, melanoma, depression,
+pneumonia) are capped by query targeting and no provider/MeSH/verify knob moves them.**
+
+**Process note.** Pneumonia's scored literature is **fully disjoint** from all seven prior cases — the
+independent sweep found **zero** cross-case pmid/doi/nct overlap (no new `METHODOLOGY_SHARED` entries
+needed), even though it shares the *discipline* (imaging AI) with DR and melanoma. Clean separation.
+
 ## What ships
 - **Keep the shipped defaults** (canonical+synonyms / all-3-providers / verify-on):
-  validated safe on 7 cases; OpenAlex earns its place **wherever golden lit is retrievable at
-  all (4 of 7; HRV + melanoma + depression zero out at query targeting first)**; MeSH + Crossref
-  inert-but-harmless (MeSH `+hierarchy` now inert on **two** broad-parents, sepsis and melanoma,
-  plus a third broad term, depression, that can't test it for lack of retrievable golden lit).
-- **Two engine-hardening items are now queued** from Case 4 (see above): (A) seed the
-  condition from `use_case` so mechanism-first phrasing can't zero out retrieval, and
-  (B) always try the bare condition token in MeSH so broad parents resolve. One small
-  fix covers both; scheduled as its own window (ship + full regression), **not** bundled.
-- **Remaining slate (Cases 5–10)** are authored **condition-forward** so Finding A can't
-  bite. **Pneumonia (Case 8)** is the second broad-parent — it will re-confirm Finding B
-  until the engine fix lands, after which it becomes the real `+hierarchy` test.
+  validated safe on 8 cases; OpenAlex earns its place **wherever golden lit is retrievable at
+  all (4 of 8; HRV + melanoma + depression + pneumonia zero out at query targeting first)**;
+  MeSH + Crossref inert-but-harmless.
+- **The MeSH `+hierarchy` axis remains UNVALIDATED** — it is a no-op on all four broad terms that
+  reached the slate (sepsis, melanoma, depression, pneumonia), but for the two that *should* have
+  tested it decisively (sepsis, pneumonia) the no-op is caused by **Finding B**, not by the axis
+  being genuinely inert. **`+hierarchy` cannot be judged until the engine fix lands.**
+- **The engine-hardening fix is now the single load-bearing prerequisite** (from Cases 4 + 8):
+  (A) seed the condition from `use_case` so mechanism-first phrasing can't zero out retrieval, and
+  (B) always try the **bare condition token** in MeSH so broad parents resolve. One small fix covers
+  both; scheduled as its own window (ship + full regression), **not** bundled. After it lands,
+  **re-run pneumonia** — it is the case that will finally exercise `+hierarchy` for real.
+- **Deterministic recall is capped by query *targeting*, not config**, on all 8 cases: named
+  records (pivotal NCTs, specific 510(k)s) and **function-named FDA codes** (QFM et al., named by
+  function not disease) don't rank in generic registry searches. The lever is a curated
+  known-record seed layer, a Phase-2 feature — **not** a retrieval knob.

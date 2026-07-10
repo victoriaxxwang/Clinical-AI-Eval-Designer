@@ -1,0 +1,178 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the chest-radiograph pneumonia triage / CADe reference case (Case 8). Companion to the HRV/DR/warfarin/sepsis/AFib/melanoma/depression goldens. This is a DEVICE / Software-as-a-Medical-Device imaging case (intervention_type=device) and is regulatory-POSITIVE at the CLASS level with a pneumonia-SPECIFICITY null twist: the operative U.S. pathway EXISTS and is directly retrievable - Class II 510(k) under the radiological computer-assisted software framework, product code QFM (Radiological Computer-Assisted Prioritization Software For Lesions, 21 CFR 892.2080) for the triage/CADt claim, with QAS (notification variant, same 892.2080) and the 892.2090 CADe/CADx detection family (QDQ lesions-suspicious-for-cancer, QBS fracture) as the adjacent codes - AND there is a real predicate pool of cleared CXR-triage 510(k)s under QFM (Lunit/VUNO/Annalise/Milvue/Zebra/RadLogics). The NULL is narrower than HRV/warfarin/depression: NO cleared 510(k) and NO product code is SPECIFIC TO PNEUMONIA CXR triage/CADe - the cleared QFM devices target pneumothorax, effusion, trauma, or general CXR triage, so a pneumonia-CADe claim has no exact predicate code and may require De Novo or predication-by-analogy (to be confirmed with FDA). openFDA has no device/denovo endpoint (404), so the founding De Novo grants for QFM/QAS/QDQ/QBS could not be verified this session and are NOT cited. Case 8 is the slate's 2nd BROAD-PARENT condition (pneumonia) WITH retrievable golden literature, so it is the decisive test of the '+hierarchy' MeSH axis - BUT it will re-hit Case-4 Finding B (the bare condition token 'pneumonia' is crowded off the 5 model-anchored MeSH candidate slots before lookup) until the deferred engine-hardening fix lands, so '+hierarchy' is expected to still no-op; this is documented honestly in the sweep, not asserted-away. Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes / K EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), precision = on-topic rate. Every id in 'required' resolved live 2026-07-09 (26/26 PMIDs via E-utils esummary, 26/26 DOIs via Crossref works, 4/4 product codes via openFDA device/classification, 6/6 K-numbers via openFDA device/510k).",
+  "reference_case": "Chest-radiograph pneumonia triage / CADe: software analyzing frontal chest radiographs (DICOM) to detect findings suspicious for pneumonia and either prioritize the study on the radiologist worklist (computer-assisted triage, CADt) or flag the finding for reader attention (computer-assisted detection, CADe). Intended-use claim = shorten time-to-review and/or assist detection, NOT autonomous diagnosis. Reference standard = expert radiologist adjudication (>=2-3 readers, pre-specified tie-break) +/- follow-up imaging / clinical-microbiologic confirmation. Setting = high-volume hospital radiology (ED + inpatient); population = adults presenting for chest imaging. The pivotal endpoint is claim-matched: time-to-notification for the triage claim, MRMC reader sensitivity/specificity for the detection claim - standalone AUC alone does NOT substitute for the workflow/detection claim.",
+  "source_spec_artifact": "golden_validation_spec_pneumonia.md",
+  "generated": "2026-07-09",
+  "intervention_type": "device",
+  "condition_forward": true,
+  "mesh_note": "Condition authored condition-forward ('chest-radiograph pneumonia triage / detection'), so Case-4 Finding A (mechanism-first phrasing burying the condition past the keyword window) cannot bite. 'Pneumonia' maps to MeSH 'Pneumonia' (D011014), a BROAD PARENT under Respiratory Tract Infections / Lung Diseases with narrower children (bacterial/viral/aspiration/pneumococcal etc.), which is EXACTLY why pneumonia was reserved as the decisive '+hierarchy' test. HOWEVER: Case-4 Finding B is expected to bite here - _mesh_candidates(max_candidates=5) fills all 5 slots with model-anchored bigrams (e.g. 'chest radiograph', 'radiograph pneumonia', 'pneumonia triage', 'pneumonia detection', ...) and truncates the BARE token 'pneumonia' before the NCBI MeSH lookup, so the canonical descriptor never resolves and '+hierarchy' has no parent to expand -> it is expected to no-op == baseline. Whether that prediction holds is written up empirically in ablation_findings.md from the sweep, NOT asserted here. The literature here is a curated imaging-methodology + reporting-standard set (CLAIM / STARD-AI / MRMC / CADe-CADx-framework / dataset-shift + a handful of pneumonia-detection-accuracy papers), the same targeting-ceiling profile risk as DR/melanoma - a generic 'chest radiograph pneumonia' query is not guaranteed to rank these into the top-15; the sweep measures actual recall.",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown following each source's role in the spec's SOURCE INVENTORY 'Grounded field(s)' column. Pneumonia has NO scored 'ncts': the 5 ClinicalTrials.gov records the spec cites (NCT05117320 / NCT06456203 / NCT06075836 / NCT05963945 / NCT05594485) were used for design/enrollment CONTEXT ONLY - explicitly 'not as performance-benchmark sources and not as reference-standard authorities' - so they are recorded in the non-scored 'context_only_identifiers' block, not in 'required'. Pneumonia has NO 'fda_den_numbers' (openFDA device/denovo 404 this session; founding De Novo grants unverifiable, none cited), NO 'fda_pma_numbers' (software/SaMD, no Class III PMA), and NO 'fda_nda_numbers' (imaging device, not a drug/biologic).",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA device/classification; K (510k) -> openFDA device/510k k_number. A required id that fails to resolve is a TEST FAILURE, not a silent drop. All 62 required ids re-resolved live 2026-07-09.",
+    "regulatory_positive_with_pneumonia_specificity_null": "POSITIVE at class level: QFM (892.2080, Class II) is the directly-retrieved operative code for the CADt/triage claim and its classification text limits the device to prioritization/notification ('does not provide ... information from the image analysis other than triage and notification') - matching the not-autonomous-diagnosis claim exactly; QAS is the notification-only variant (same regulation); QDQ/QBS are the 892.2090 CADe/CADx detection-family neighbors. A real predicate pool of QFM CXR-triage 510(k)s is cleared (K211733 Lunit, K241439 VUNO, K222179 Annalise, K232410 SmartChest/Milvue, K192320 HealthCXR/Zebra, K193300 AIMI-Triage/RadLogics). NULL twist: NONE of these cleared devices - and no retrieved product code - is SPECIFIC TO PNEUMONIA; they target pneumothorax/effusion/trauma/general-CXR-triage. So a pneumonia-CADe claim has no exact predicate code and may need De Novo or predication-by-analogy at FDA's discretion. De Novo grants: openFDA device/denovo returns 404, so the founding DEN- numbers for QFM/QAS/QDQ/QBS were NOT verifiable and are NOT cited (a coverage gap, not an omission)."
+  },
+  "required": {
+    "pmids": [
+      "37124638",
+      "40397031",
+      "34201775",
+      "37602253",
+      "41058960",
+      "29064756",
+      "32842797",
+      "34706849",
+      "36121622",
+      "34350409",
+      "32768045",
+      "33861150",
+      "35420306",
+      "39141433",
+      "35054267",
+      "34142868",
+      "36204545",
+      "37529539",
+      "35483438",
+      "33937821",
+      "32514173",
+      "34183345",
+      "37361549",
+      "40876698",
+      "38422379",
+      "39763559"
+    ],
+    "dois": [
+      "10.1148/ryct.220163",
+      "10.1007/s00330-025-11674-2",
+      "10.3390/brainsci11070832",
+      "10.3389/fneur.2023.1177723",
+      "10.1093/radadv/umaf021",
+      "10.2214/AJR.17.18185",
+      "10.1080/17434440.2020.1813566",
+      "10.1016/j.acra.2021.09.016",
+      "10.1007/s11604-022-01330-w",
+      "10.1148/ryai.2021200190",
+      "10.1016/j.compbiomed.2020.103898",
+      "10.1259/bjr.20201263",
+      "10.1007/s00330-022-08771-x",
+      "10.1093/bjr/tqae149",
+      "10.3390/diagnostics12010101",
+      "10.1259/bjr.20210435",
+      "10.1148/ryai.210299",
+      "10.1177/20552076231191055",
+      "10.1016/j.jacr.2022.03.013",
+      "10.1148/ryai.2020200029",
+      "10.1038/s41591-020-0941-1",
+      "10.1136/bmjopen-2020-047709",
+      "10.1117/1.JMI.10.5.051804",
+      "10.1016/j.jbi.2025.104902",
+      "10.1093/jamia/ocae036",
+      "10.1101/2024.12.27.24319685"
+    ],
+    "fda_product_codes": [
+      "QFM",
+      "QAS",
+      "QDQ",
+      "QBS"
+    ],
+    "fda_k_numbers": [
+      "K211733",
+      "K241439",
+      "K222179",
+      "K232410",
+      "K192320",
+      "K193300"
+    ]
+  },
+  "context_only_identifiers": {
+    "description": "Identifiers cited in the pneumonia spec for context but deliberately NOT scored. The harness reads only the 'required' block (ablation_harness.py:256), so nothing here is counted as a hit or a miss. Recorded for a complete audit trail.",
+    "ncts": [
+      {
+        "id": "NCT05117320",
+        "scored": false,
+        "role": "design/enrollment context",
+        "reason": "AI to Improve Chest X-ray Reading in Acute Dyspnoeic Patients - RCT (INTERVENTIONAL), enrollment 33. Cited to illustrate a randomized reader-effect design for Fields 1/5. The spec states the CT.gov records were used 'for design/enrollment context only - not as performance-benchmark sources and not as reference-standard authorities', so scoring it would penalize correct pipeline behavior."
+      },
+      {
+        "id": "NCT06456203",
+        "scored": false,
+        "role": "design/enrollment context",
+        "reason": "AI for Chest Radiography: Impact on Economics, Patient Outcomes and Radiology Service Delivery - INTERVENTIONAL, enrollment 10,000. Large prospective effectiveness design exemplar (Fields 1/5), context-only."
+      },
+      {
+        "id": "NCT06075836",
+        "scored": false,
+        "role": "design/enrollment context",
+        "reason": "Utility of an AI-based CXR Interpretation Tool in Assisting Diagnostic Accuracy, Speed, and Confidence - OBSERVATIONAL, enrollment 33. Reader-assist/speed endpoint exemplar (Fields 1/5), context-only."
+      },
+      {
+        "id": "NCT05963945",
+        "scored": false,
+        "role": "design/enrollment context",
+        "reason": "Multi-Reader Retrospective Study, Carebot AI CXR - OBSERVATIONAL, enrollment 956. Multi-reader retrospective design/case-set-scale exemplar (Fields 1/5), context-only."
+      },
+      {
+        "id": "NCT05594485",
+        "scored": false,
+        "role": "design/enrollment context",
+        "reason": "CXR Abnormality Detection Using AI (Carebot), retrospective - OBSERVATIONAL, enrollment 127. Design/enrollment-scale exemplar (Fields 1/5), context-only."
+      }
+    ]
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["37124638", "40397031", "34201775", "37602253", "41058960", "29064756", "32842797", "34706849", "36121622"],
+      "dois": ["10.1148/ryct.220163", "10.1007/s00330-025-11674-2", "10.3390/brainsci11070832", "10.3389/fneur.2023.1177723", "10.1093/radadv/umaf021", "10.2214/AJR.17.18185", "10.1080/17434440.2020.1813566", "10.1016/j.acra.2021.09.016", "10.1007/s11604-022-01330-w"],
+      "fda_k_numbers": ["K211733", "K241439", "K222179", "K232410", "K192320", "K193300"]
+    },
+    "2_signal_validation": {
+      "pmids": ["35420306", "39141433", "35054267"],
+      "dois": ["10.1007/s00330-022-08771-x", "10.1093/bjr/tqae149", "10.3390/diagnostics12010101"]
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["37124638", "40397031", "34706849", "36121622", "34350409", "32768045", "33861150"],
+      "dois": ["10.1148/ryct.220163", "10.1007/s00330-025-11674-2", "10.1016/j.acra.2021.09.016", "10.1007/s11604-022-01330-w", "10.1148/ryai.2021200190", "10.1016/j.compbiomed.2020.103898", "10.1259/bjr.20201263"]
+    },
+    "4_ground_truth": {
+      "pmids": ["34142868", "36204545", "33937821"],
+      "dois": ["10.1259/bjr.20210435", "10.1148/ryai.210299", "10.1148/ryai.2020200029"]
+    },
+    "5_sample_size": {
+      "pmids": ["29064756", "32842797", "34350409"],
+      "dois": ["10.2214/AJR.17.18185", "10.1080/17434440.2020.1813566", "10.1148/ryai.2021200190"]
+    },
+    "6_subgroup": {
+      "pmids": ["34350409", "36204545", "37529539", "35483438"],
+      "dois": ["10.1148/ryai.2021200190", "10.1148/ryai.210299", "10.1177/20552076231191055", "10.1016/j.jacr.2022.03.013"]
+    },
+    "7_regulatory": {
+      "pmids": ["33937821", "32514173", "34183345", "37361549"],
+      "dois": ["10.1148/ryai.2020200029", "10.1038/s41591-020-0941-1", "10.1136/bmjopen-2020-047709", "10.1117/1.JMI.10.5.051804"],
+      "fda_product_codes": ["QFM", "QAS", "QDQ", "QBS"],
+      "fda_k_numbers": ["K211733", "K241439", "K222179", "K232410", "K192320", "K193300"]
+    },
+    "8_monitoring": {
+      "pmids": ["37361549", "40876698", "38422379", "39763559"],
+      "dois": ["10.1117/1.JMI.10.5.051804", "10.1016/j.jbi.2025.104902", "10.1093/jamia/ocae036", "10.1101/2024.12.27.24319685"]
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "US Class II, 510(k) software device under the radiological computer-assisted software framework. Triage (CADt) claim -> product code QFM, 21 CFR 892.2080; notification-only variant -> QAS (same regulation). Detection (CADe) claim -> the 892.2090 CADe/CADx family (Class II), with QDQ/QBS as retrieved examples in that regulation.",
+    "pneumonia_specific_code_is_null": true,
+    "no_established_numeric_benchmark": true,
+    "operative_pathway_is_positive": "Unlike HRV/warfarin/depression (regulatory NULL), the CLASS-level pathway here is POSITIVE and directly retrievable: QFM/892.2080 with a real cleared-predicate pool (K211733/K241439/K222179/K232410/K192320/K193300). The null is confined to pneumonia-SPECIFICITY - no cleared device or code names pneumonia as its target finding.",
+    "de_novo_unverifiable": "openFDA device/denovo returns 404; the founding De Novo grants that created QFM/QAS/QDQ/QBS could not be verified this session and are deliberately NOT cited (coverage gap, not an omission)."
+  },
+  "regulatory_null_evidence": {
+    "claim": "No FDA product code and no cleared 510(k) is SPECIFIC TO PNEUMONIA chest-radiograph triage/CADe. The class-level pathway EXISTS (QFM/892.2080 for CADt; 892.2090 QDQ/QBS for CADe) with a real predicate pool, but every cleared QFM CXR-triage device targets pneumothorax, pleural effusion, trauma, or general CXR triage - not pneumonia. A pneumonia-CADe claim therefore has no exact predicate code and may require De Novo classification or predication-by-analogy, to be confirmed with FDA.",
+    "how_verified": "openFDA device/classification returned QFM/QAS (892.2080) and QDQ/QBS (892.2090) as the operative Class II codes; openFDA device/510k returned the QFM predicate pool (K211733 Lunit INSIGHT CXR Triage, K241439 VUNO Med-Chest X-ray Triage, K222179 Annalise Enterprise CXR Triage Trauma, K232410 SmartChest/Milvue, K192320 HealthCXR/Zebra, K193300 AIMI-Triage CXR PTX/RadLogics) - all resolve to the named device, applicant, and decision date, and none names pneumonia as its target finding. openFDA has no device/denovo endpoint (404), so De Novo founding grants for these codes are unverifiable via the API and are not cited. 510(k) free-text summary PDFs (which would confirm each device's specific target findings and reported operating points) are not reachable via the API, so the pneumonia-specificity null rests on the structured classification/510k metadata retrieved."
+  },
+  "coverage_gaps_expected": [
+    "openFDA device/denovo endpoint returns 404 - the founding De Novo (DEN-) grants that created QFM/QAS/QDQ/QBS could not be verified; none are cited",
+    "FDA 510(k) summary PDFs / decision summaries - openFDA returns structured metadata but not the free-text describing each cleared device's specific target findings or reported test statistics; confirming which QFM devices list pneumonia/consolidation as a target requires the per-K summary documents",
+    "FDA AI/ML-enabled device list & PCCP/GMLP guidance text - narrative FDA guidance not retrieved as primary sources; regulatory framing rests on peer-reviewed regulatory-science literature (PMID 37361549)",
+    "EU MDR / CE-mark records - no European regulatory database queried; the pathway above is US FDA only",
+    "Drugs@FDA / drug labeling / FAERS - not applicable (software/imaging device, not a drug or biologic); intentionally not used",
+    "Full-text of the cited methodology guidelines (CLAIM / STARD-AI / MRMC-framework) - only PubMed metadata + Crossref DOI resolution verified, not line-by-line content",
+    "PMID 39763559 (10.1101/2024.12.27.24319685) is a medRxiv PREPRINT - resolves at Crossref but is flagged not-peer-reviewed wherever cited"
+  ]
+}

@@ -56,6 +56,7 @@ CASES = {
     "AFib":     ("golden_expected_ids_AFib.json",      "golden_validation_spec_AFib.md"),
     "melanoma": ("golden_expected_ids_melanoma.json",  "golden_validation_spec_melanoma.md"),
     "depression": ("golden_expected_ids_depression.json", "golden_validation_spec_depression.md"),
+    "pneumonia": ("golden_expected_ids_pneumonia.json",  "golden_validation_spec_pneumonia.md"),
 }
 
 FORMAT = {
