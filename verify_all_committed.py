@@ -58,6 +58,7 @@ CASES = {
     "depression": ("golden_expected_ids_depression.json", "golden_validation_spec_depression.md"),
     "pneumonia": ("golden_expected_ids_pneumonia.json",  "golden_validation_spec_pneumonia.md"),
     "pembrolizumab": ("golden_expected_ids_pembrolizumab.json", "golden_validation_spec_pembrolizumab.md"),
+    "fall_risk": ("golden_expected_ids_fall_risk.json", "golden_validation_spec_fall_risk.md"),
 }
 
 FORMAT = {
@@ -85,6 +86,13 @@ METHODOLOGY_SHARED = {
     ("dois",  "10.7326/0003-4819-155-8-201110180-00009"),  # QUADAS-2
     ("pmids", "35584845"),                        # DECIDE-AI  (BMJ 2022) — sepsis <-> depression
     ("dois",  "10.1136/bmj-2022-070904"),        # DECIDE-AI  (BMJ)
+    # Canonical methodology-CAUTION landmarks (not checklists, but the field's
+    # single shared reference for a specific cross-cutting methodological point —
+    # an independent author writing each spec fresh arrives at the same citation).
+    ("pmids", "31649194"),                        # Obermeyer 2019 (Science) — THE algorithmic-bias/subgroup-equity reference — depression <-> fall_risk
+    ("dois",  "10.1126/science.aax2342"),        # Obermeyer 2019
+    ("pmids", "34152373"),                        # Wong 2021 Epic Sepsis Model external validation — THE deployed-model-degradation caution — sepsis <-> fall_risk
+    ("dois",  "10.1001/jamainternmed.2021.2626"),# Wong 2021 (JAMA Intern Med)
 }
 
 UA = {"User-Agent": "clinical-eval-verify/1.0 (mailto:wang.victoriax@gmail.com)"}

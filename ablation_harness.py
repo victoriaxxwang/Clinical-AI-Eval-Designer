@@ -265,6 +265,30 @@ CASES = {
         "population": "Adults with solid tumors evaluated for pembrolizumab across tumor types, ancestries, and specimen types",
         "setting": "Oncology / molecular-pathology companion-diagnostic testing to direct immunotherapy",
     },
+    "fall_risk": {
+        # Case 10 (FINAL). REGULATORY-NULL for the system under eval: no FDA product
+        # code / De Novo / 510(k) / PMA for a predictive EHR-based inpatient fall-RISK
+        # CDS algorithm. Scored FDA ids are the ADJACENT fall-related HARDWARE only
+        # (codes SEC/PJO/PJP/KMI/SBO + De Novo DEN240021 that created SEC + cleared
+        # 510(k)s K141877/K233096); NO PMA (LWP-positive-control-verified null), NO
+        # NDA. intervention_type="device". model_desc is CONDITION-FORWARD (leads with
+        # "Inpatient fall-risk prediction ...") so Case-4 Finding A cannot bite. The 7
+        # trials are context-only (non-scored). Whether '+hierarchy' diverges (Accidental
+        # Falls heading) is read empirically from the sweep, not asserted in advance.
+        "golden": "golden_expected_ids_fall_risk.json",
+        "intervention_type": "device",
+        "model_desc": ("Inpatient fall-risk prediction decision-support algorithm that analyzes "
+                       "routinely-collected electronic health record data (mobility and gait scores, "
+                       "fall-risk-increasing medications, prior-fall history, labs) and optional "
+                       "wearable or bed-sensor signals to predict which hospitalized adults are at "
+                       "high risk of an in-hospital fall, and alerts nursing teams to start "
+                       "fall-prevention precautions."),
+        "use_case": ("Inpatient fall-risk prediction clinical decision support that flags "
+                     "hospitalized adults at high risk of an in-hospital fall and prompts "
+                     "fall-prevention precautions"),
+        "population": "Hospitalized adults across ages, sexes, and diagnoses on medical-surgical inpatient wards",
+        "setting": "Inpatient medical-surgical wards; nurse-facing fall-prevention alerting workflow",
+    },
 }
 
 

@@ -1,6 +1,6 @@
 # Door B — Ablation findings (pilot-3 slate)
 
-_2026-07-09 (Case 9 pembrolizumab added 2026-07-09). 9 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression / pneumonia / pembrolizumab) × 6 configs, scored **precision + recall**
+_2026-07-09 (Case 10 fall-risk added 2026-07-09 — **SLATE COMPLETE, 10 of 10**). 10 cases (HRV / DR / warfarin / sepsis / AFib / melanoma / depression / pneumonia / pembrolizumab / fall-risk) × 6 configs, scored **precision + recall**
 vs the hand-verified goldens. Live retrieval snapshots cached under
 `eval_results/contexts/` (git-ignored, regenerable). The scored table is the
 auto-generated `eval_results/ablation_results.md` (rebuild anytime with
@@ -343,11 +343,62 @@ discipline-wide reporting standard, *expected* to recur, **not** a copy-paste co
 allowlist entries needed; the independent sweep passes (39/39 re-resolved live, offline consistency
 PASS).
 
+## Case 10 (fall-risk) — the regulatory-NULL control, and the tenth confirmation of the ceiling
+
+Fall-risk is the slate's clearest **regulatory-NULL** case, reserved to test the opposite corner from
+pembrolizumab's positive control: the system under evaluation is an **inpatient fall-risk _prediction_
+algorithm** (EHR-driven decision support), and **no FDA authorization exists for it** — no 510(k), no
+De Novo, no PMA for the predictive model itself. The golden's FDA identifiers are therefore **adjacent
+prevention _hardware_**, carried deliberately as the regulatory landscape, not as an authorization for
+the algorithm: product codes SEC (Class II wearable fall-injury-prevention airbag, 21 CFR 890.3780),
+PJO / PJP / KMI / SBO (Class I bed-exit / patient-position / pressure-sensor hardware, 880.2400), plus
+three named devices — DEN240021 (Active Protective Tango Belt), K141877 (Leaf patient-monitoring),
+K233096 (PressureAlert). The correct answer for the *system under eval* is **"no authorization,"** and
+the eval reports exactly that.
+
+**Deterministic 3/8, config-invariant — and every hit is adjacent hardware, never an authorization.**
+The only golden identifiers recovered are product codes **SEC / PJO / PJP** (3 of 5); **KMI and SBO
+miss**, and **DEN240021 (0/1) plus both K-numbers (0/2) never rank** (0 retrieved on each). This is the
+regulatory-null thesis landing cleanly: a "fall-risk prediction / inpatient" query surfaces only the
+most *literally-named* prevention codes (SEC = "fall injury prevention"; PJO/PJP = generic bed/position
+hardware) and **nothing that _is_ the predictive system — because nothing is**. The named devices miss
+for the same query-targeting reason as every prior case (the Tango Belt, Leaf, and PressureAlert don't
+key on a *prediction* query), which is exactly why a curated known-record seed layer is Phase 2, not a
+knob. The 3 codes that do land are the regulatory *context*, correctly flagged as adjacent, not as
+approval of the model.
+
+**Literature ~3%, config-invariant, OpenAlex inert.** One golden paper is recovered — **PMID 30777849
+/ DOI 10.2196/11505** (a JMIR digital-health fall study), the *same* paper on both the PMID and DOI
+axes — of ~28 retrieved; `lit_epmc_only` returns the identical hit, so **OpenAlex has nothing to
+discriminate here**. The other 29 golden papers are the by-now-familiar mismatch: the fall-risk golden
+is a **methodology / reporting-standard + geriatric fall-scale (Morse, Hendrich, STRATIFY) + validation
+-methodology** corpus, indexed as scale-derivation and prognostic-methodology work, while the query is a
+condition-forward *prediction-algorithm* search — the landmark/standards-vs-recent-topical gap seen on
+melanoma, depression, and pneumonia. **Fall-risk is the tenth case, and the sixth to zero out at query
+targeting before any provider/MeSH/verify knob can matter** (HRV, melanoma, depression, pneumonia,
+pembrolizumab, fall-risk).
+
+**(MeSH) `+hierarchy` == baseline again** — inert, consistent with all nine prior cases; with a single
+golden lit hit the axis cannot move the score regardless of whether the cause here is Finding B or plain
+query targeting. Nothing about fall-risk changes the deferred-engine-fix conclusion.
+
+**Process note.** Fall-risk had **three** cross-case literature overlaps, all *expected* shared
+vocabulary rather than copy-paste: **TRIPOD+AI** (PMID 38626948 / DOI 10.1136/bmj-2023-078378, already
+allowlisted — the discipline-wide reporting standard now recurring across four cases), plus two
+**canonical methodology-caution landmarks** newly added to `METHODOLOGY_SHARED` — **Obermeyer 2019**
+(PMID 31649194 / DOI 10.1126/science.aax2342, *Science*; shared depression↔fall-risk — the field's
+single reference point for algorithmic bias / subgroup equity) and **Wong 2021 Epic Sepsis external
+validation** (PMID 34152373 / DOI 10.1001/jamainternmed.2021.2626, *JAMA Intern Med*; shared
+sepsis↔fall-risk — the field's canonical deployed-model-degradation caution). Each is cited for the
+*same cross-cutting methodological role* every time it appears; an independent methodologist authoring
+each spec fresh arrives at the same citation, so these are shared vocabulary, not collisions. The
+independent sweep passes (68/68 scored ids re-resolved live, offline consistency PASS, all 10 cases).
+
 ## What ships
 - **Keep the shipped defaults** (canonical+synonyms / all-3-providers / verify-on):
-  validated safe on 9 cases; OpenAlex earns its place **wherever golden lit is retrievable at
-  all (4 of 9 — DR/warfarin/sepsis/AFib; HRV + melanoma + depression + pneumonia + pembrolizumab
-  zero out at query targeting first)**; MeSH + Crossref inert-but-harmless.
+  validated safe on all 10 cases; OpenAlex earns its place **wherever golden lit is retrievable at
+  all (4 of 10 — DR/warfarin/sepsis/AFib; HRV + melanoma + depression + pneumonia + pembrolizumab +
+  fall-risk zero out at query targeting first)**; MeSH + Crossref inert-but-harmless.
 - **The MeSH `+hierarchy` axis remains UNVALIDATED** — it is a no-op on all four broad terms that
   reached the slate (sepsis, melanoma, depression, pneumonia), but for the two that *should* have
   tested it decisively (sepsis, pneumonia) the no-op is caused by **Finding B**, not by the axis
@@ -357,7 +408,10 @@ PASS).
   (B) always try the **bare condition token** in MeSH so broad parents resolve. One small fix covers
   both; scheduled as its own window (ship + full regression), **not** bundled. After it lands,
   **re-run pneumonia** — it is the case that will finally exercise `+hierarchy` for real.
-- **Deterministic recall is capped by query *targeting*, not config**, on all 9 cases: named
-  records (pivotal NCTs, specific 510(k)s) and **function-named FDA codes** (QFM et al., named by
-  function not disease) don't rank in generic registry searches. The lever is a curated
-  known-record seed layer, a Phase-2 feature — **not** a retrieval knob.
+- **Deterministic recall is capped by query *targeting*, not config**, on all 10 cases: named
+  records (pivotal NCTs, specific 510(k)s, De Novo grants) and **function-named FDA codes** (QFM et al.,
+  named by function not disease) don't rank in generic registry searches. Fall-risk sharpens this into
+  a **regulatory-null** corollary: when the system under eval has no authorization of its own, the eval
+  surfaces only *adjacent* device codes and correctly reports "no approval for this model." The lever
+  for the named-record misses is a curated known-record seed layer, a Phase-2 feature — **not** a
+  retrieval knob.

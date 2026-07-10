@@ -1,0 +1,175 @@
+{
+  "description": "Golden identifier set the automated pipeline should retrieve/resolve for the Case 10 reference case (the FINAL case of the 10-case slate): an EHR-based (± wearable/bed-sensor) predictive decision-support algorithm that flags hospitalized adults at high risk of an in-hospital fall and prompts fall-prevention precautions. Companion to the HRV/DR/warfarin/sepsis/AFib/melanoma/depression/pneumonia/pembrolizumab goldens. REGULATORY-NULL for the system under evaluation: there is NO FDA product code, De Novo, 510(k), or PMA for a predictive EHR-based inpatient fall-RISK CDS algorithm. The scored FDA landscape is the ADJACENT fall-related HARDWARE only: Class II Wearable Fall Injury Prevention Device (SEC, via De Novo DEN240021 = Active Protective Tango Belt) + four Class I alarm/sensor/monitor codes (PJO/PJP/KMI/SBO, all 21 CFR 880.2400) + two cleared hardware 510(k)s (K141877 Leaf Patient Monitoring KMI; K233096 PressureAlert SBO). No PMA exists for SEC/PJO/SBO (verified against the LWP positive control -> 2,368 PMA records, so the empty result is a genuine null, not a query error); no NDA/biologic. Use in the ablation harness: score recall = golden ids present in the bundle's records (FDA codes / K / DEN EXACT; literature as a >=K resolvable-ID floor per COMPARISON.md Lesson 2), precision = on-topic rate. Every id in 'required' resolved live 2026-07-09 (PMIDs via E-utils esummary, DOIs via Crossref works, product codes via openFDA device/classification, DEN via openFDA device/510k k_number field, K via openFDA device/510k).",
+  "reference_case": "Inpatient fall-risk prediction decision-support algorithm: analyzes routinely-collected EHR data (mobility/gait scores, culprit medications, prior-fall history, labs; optionally wearable/bed-sensor signals) to predict which hospitalized adults are at high risk of an in-hospital fall, deployed as a workflow alert to nursing teams. Reference standard = documented in-hospital fall events. A prognostic (risk-prediction) model validated in three stages (development+internal / temporal+geographic external / cluster-randomized or stepped-wedge clinical-impact), reported to TRIPOD+AI and appraised with PROBAST.",
+  "source_spec_artifact": "golden_validation_spec_fall_risk.md",
+  "generated": "2026-07-09",
+  "intervention_type": "device",
+  "condition_forward": true,
+  "mesh_note": "Condition authored condition-forward ('inpatient fall-risk prediction / hospitalized adults / in-hospital fall'), so Case-4 Finding A (mechanism-first phrasing zeroing retrieval) cannot bite. MeSH divergence on the '+hierarchy' axis is read empirically from the sweep, not asserted in advance ('Accidental Falls' is the relevant heading; whether the 5-slot _mesh_candidates cap admits the bare token is observed, not assumed).",
+  "match_policy": {
+    "required_min_coverage": "All ids in 'required' should be present for full recall. 'field_grounding' is the per-field breakdown following each source's role in the spec's SOURCE INVENTORY 'Grounded field(s)' columns. Fall-risk has NO scored 'ncts' category: every trial that informed the spec is design/enrollment CONTEXT only (registry enrollment magnitudes, not numeric benchmarks), so the 7 NCTs live in 'context_only_identifiers' and are NOT scored. It carries 'fda_product_codes' (SEC/PJO/PJP/KMI/SBO), 'fda_den_numbers' (DEN240021, the De Novo that created code SEC), and 'fda_k_numbers' (K141877/K233096). NO 'fda_pma_numbers' (genuine null, LWP-positive-control-verified) and NO 'fda_nda_numbers' (no drug/biologic product).",
+    "resolution_pass": "PMID -> E-utils esummary; DOI -> Crossref works; product_code -> openFDA device/classification; DEN (De Novo) -> openFDA device/510k (De Novo grants indexed with a DEN k_number - verified live: DEN240021 resolves via the 510k k_number field, matching the verify tool's DEN resolver; the device/denovo endpoint does NOT index it under denovo_number); K -> openFDA device/510k (k_number field). A required id that fails to resolve is a TEST FAILURE, not a silent drop.",
+    "regulatory_null_for_the_system_under_eval": "NULL: no FDA product code, De Novo, 510(k), or PMA exists for a predictive EHR-based inpatient fall-RISK CDS algorithm. The scored FDA ids are the ADJACENT fall-related HARDWARE landscape, not the predictive software itself. A genuinely novel predictive-CDS device would most plausibly enter via the De Novo route (no suitable predicate), IF determined to be a device at all after a CDS device/non-device determination with regulatory counsel.",
+    "no_pma_positive_control": "PMA searches on SEC/PJO/SBO each returned openFDA's genuine NOT_FOUND body. Verified individually against a positive control: product code LWP returns 2,368 PMA records, confirming the empty SEC/PJO/SBO result is a true zero rather than a query error. LWP is a CONTEXT-ONLY positive-control probe, NOT a scored fall-risk identifier."
+  },
+  "required": {
+    "pmids": [
+      "25560714",
+      "25560730",
+      "38626948",
+      "30596876",
+      "30596875",
+      "32188600",
+      "38253388",
+      "34915593",
+      "31842878",
+      "26772608",
+      "2928815",
+      "12624858",
+      "9366729",
+      "18829693",
+      "31907532",
+      "30777849",
+      "34626168",
+      "37033322",
+      "37507147",
+      "32319959",
+      "36128798",
+      "21045097",
+      "33201236",
+      "32640131",
+      "31649194",
+      "34260843",
+      "28379439",
+      "33157313",
+      "34152373",
+      "42050181"
+    ],
+    "dois": [
+      "10.7326/M14-0697",
+      "10.7326/M14-0698",
+      "10.1136/bmj-2023-078378",
+      "10.7326/M18-1376",
+      "10.7326/M18-1377",
+      "10.1136/bmj.m441",
+      "10.1136/bmj-2023-074821",
+      "10.1002/sim.9275",
+      "10.1186/s12916-019-1466-7",
+      "10.1016/j.jclinepi.2015.12.005",
+      "10.1016/0277-9536(89)90309-2",
+      "10.1053/apnr.2003.YAPNR2",
+      "10.1136/bmj.315.7115.1049",
+      "10.1093/ageing/afn203",
+      "10.1093/gerona/glaa004",
+      "10.2196/11505",
+      "10.2196/26456",
+      "10.1093/jamiaopen/ooad019",
+      "10.1093/jamia/ocad145",
+      "10.2196/16970",
+      "10.15441/ceem.22.354",
+      "10.1001/jama.2010.1567",
+      "10.1001/jamanetworkopen.2020.25889",
+      "10.1056/NEJMoa2002183",
+      "10.1126/science.aax2342",
+      "10.1056/NEJMc2104626",
+      "10.1093/jamia/ocx030",
+      "10.1016/j.jbi.2020.103611",
+      "10.1001/jamainternmed.2021.2626",
+      "10.1038/s41591-026-04368-9"
+    ],
+    "fda_product_codes": [
+      "SEC",
+      "PJO",
+      "PJP",
+      "KMI",
+      "SBO"
+    ],
+    "fda_den_numbers": [
+      "DEN240021"
+    ],
+    "fda_k_numbers": [
+      "K141877",
+      "K233096"
+    ]
+  },
+  "context_only_identifiers": {
+    "description": "Identifiers that informed the spec as design/enrollment CONTEXT or as verification probes but are NOT scored. The harness and verify tool read ONLY the 'required' block, so nothing here affects recall/precision. Recorded for a complete audit trail.",
+    "ncts": [
+      {"id": "NCT00675935", "scored": false, "reason": "Fall TIPS interventional RCT (COMPLETED, n=10,264) - cited as impact-study design context (field 1) and realistic ward-level enrollment magnitude (field 5), NOT a numeric benchmark."},
+      {"id": "NCT03499717", "scored": false, "reason": "Fall TIPS generalizability/spread (observational, COMPLETED, n=37,231) - enrollment-magnitude context only (fields 1, 5)."},
+      {"id": "NCT06339125", "scored": false, "reason": "Predictive Analytics & Computer Visualization for patient safety (interventional, COMPLETED, n=5,350) - impact-study design context (field 1)."},
+      {"id": "NCT05391334", "scored": false, "reason": "Early fall-risk detection in inpatients (observational, COMPLETED, n=170) - design context (field 1)."},
+      {"id": "NCT07078240", "scored": false, "reason": "FAIR AI-powered falls-risk tool, nurse trust/acceptance (interventional, NOT_YET_RECRUITING, n=60 est.) - real-world adoption / human-factors monitoring context (fields 1, 8)."},
+      {"id": "NCT05846685", "scored": false, "reason": "Automated falls-risk screening & referral (observational, COMPLETED, n=10) - design context (field 1)."},
+      {"id": "NCT07631494", "scored": false, "reason": "AI-driven nursing decision support (interventional, NOT_YET_RECRUITING, n=188 est.) - adoption / human-factors monitoring context (fields 1, 8)."}
+    ],
+    "fda_pma_positive_control": [
+      {"id": "LWP", "scored": false, "reason": "Positive-control PMA probe ONLY: product code LWP returns 2,368 openFDA PMA records, proving the empty SEC/PJO/SBO PMA searches are a genuine null rather than a broken query. LWP is unrelated to fall-risk and must NEVER be scored."}
+    ]
+  },
+  "regulatory_null_evidence": {
+    "claim": "No FDA marketing authorization (product code, De Novo, 510(k), or PMA) exists for a predictive EHR-based inpatient fall-RISK decision-support algorithm as of this session's openFDA queries. This is a genuine coverage gap, not a search miss: searches on predictive/fall-risk SOFTWARE product names returned zero device records. The fall-related FDA device records that DO exist are all HARDWARE (sensors/alarms/monitors and a wearable protective belt), not risk-prediction software.",
+    "how_verified": "openFDA device/classification, device/510k, and device/pma queried this session. Positive hardware codes SEC (Class II, via De Novo DEN240021)/PJO/PJP/KMI/SBO and the cleared hardware 510(k)s K141877 (Leaf, KMI)/K233096 (PressureAlert, SBO) all resolve and are scored in 'required'. PMA searches on SEC/PJO/SBO returned NOT_FOUND; the LWP positive control (2,368 PMA records) confirms the null is genuine. No De Novo or 510(k) for a fall-risk-prediction software algorithm was located."
+  },
+  "field_grounding": {
+    "1_study_design": {
+      "pmids": ["25560714", "25560730", "38626948", "30596876", "30596875", "30777849", "34626168", "37033322", "21045097", "33201236"],
+      "dois": ["10.7326/M14-0697", "10.7326/M14-0698", "10.1136/bmj-2023-078378", "10.7326/M18-1376", "10.7326/M18-1377", "10.2196/11505", "10.2196/26456", "10.1093/jamiaopen/ooad019", "10.1001/jama.2010.1567", "10.1001/jamanetworkopen.2020.25889"],
+      "note": "Prognostic-model, three-stage validation reported to TRIPOD (25560714/25560730) and its AI extension TRIPOD+AI (38626948), appraised with PROBAST (30596876/30596875). Staged development->external->impact instantiated in the Cho program (30777849/34626168/37033322); unit-level cluster-randomized impact exemplified by the Fall TIPS toolkit trials (Dykes 21045097/33201236)."
+    },
+    "2_signal_validation": {
+      "pmids": ["30596875", "2928815", "12624858", "9366729", "18829693", "37507147", "32319959"],
+      "dois": ["10.7326/M18-1377", "10.1016/0277-9536(89)90309-2", "10.1053/apnr.2003.YAPNR2", "10.1136/bmj.315.7115.1049", "10.1093/ageing/afn203", "10.1093/jamia/ocad145", "10.2196/16970"],
+      "fda_product_codes": ["SEC", "PJO", "PJP", "KMI", "SBO"],
+      "note": "Validate the INPUTS: nursing fall-risk scales with imperfect measurement properties - Morse (2928815), Hendrich II (12624858), STRATIFY (9366729) and its meta-analysis (18829693) - need reliability checks; unstructured/nursing-record inputs carry real signal (NLP-of-nursing-records 32319959; standardized nursing terminologies 37507147). PROBAST applicability (30596875). Sensor-arm signal performance is regulated separately as HARDWARE (codes SEC/PJO/PJP/KMI/SBO), underscoring input validation as a distinct pre-condition."
+    },
+    "3_performance_benchmarks": {
+      "pmids": ["38626948", "31842878", "26772608", "30777849", "36128798"],
+      "dois": ["10.1136/bmj-2023-078378", "10.1186/s12916-019-1466-7", "10.1016/j.jclinepi.2015.12.005", "10.2196/11505", "10.15441/ceem.22.354"],
+      "note": "Report discrimination + calibration + clinical utility, not a single AUROC cutoff. Calibration as a hierarchy (Van Calster 31842878/26772608). Externally-validated inpatient fall comparators exist (Shim 36128798; Cho cross-site 30777849) but NO AUROC was retrieved from full text this session -> any comparator AUROC is a study-defined placeholder. Low-prevalence -> pair discrimination with precision/alert-burden per TRIPOD+AI (38626948)."
+    },
+    "4_ground_truth": {
+      "pmids": ["31907532", "33201236", "32640131", "31649194"],
+      "dois": ["10.1093/gerona/glaa004", "10.1001/jamanetworkopen.2020.25889", "10.1056/NEJMoa2002183", "10.1126/science.aax2342"],
+      "note": "Outcome = documented in-hospital fall with an injury-severity grade (Burns 31907532), ascertained from >=2 reconciled/adjudicated streams (Fall TIPS multi-source 33201236; STRIDE serious-fall-injury endpoint 32640131). Single-administrative-stream labels risk bias that propagates into performance estimates (Obermeyer 31649194)."
+    },
+    "5_sample_size": {
+      "pmids": ["32188600", "38253388", "34915593"],
+      "dois": ["10.1136/bmj.m441", "10.1136/bmj-2023-074821", "10.1002/sim.9275"],
+      "note": "Compute sample size twice from published formulae: development (Riley 32188600), external validation (Riley/Snell 34915593; BMJ part-3 evaluation-sample-size 38253388). Because falls are rare, the binding constraint is the number of fall events (EPP); the specific N is a study-defined placeholder until the site's event fraction is fixed."
+    },
+    "6_subgroup": {
+      "pmids": ["38626948", "30596876", "30596875", "31649194", "31842878"],
+      "dois": ["10.1136/bmj-2023-078378", "10.7326/M18-1376", "10.7326/M18-1377", "10.1126/science.aax2342", "10.1186/s12916-019-1466-7"],
+      "note": "Pre-specify subgroup discrimination AND calibration (a model can be calibrated overall yet miscalibrated in a subgroup - Van Calster 31842878) plus subgroup alert rates. TRIPOD+AI mandates fairness/subgroup reporting (38626948); PROBAST applicability covers transfer across subgroups (30596876/30596875); algorithmic bias appears on subgroup analysis (Obermeyer 31649194)."
+    },
+    "7_regulatory": {
+      "fda_product_codes": ["SEC", "PJO", "PJP", "KMI", "SBO"],
+      "fda_den_numbers": ["DEN240021"],
+      "fda_k_numbers": ["K141877", "K233096"],
+      "pmids": ["42050181"],
+      "dois": ["10.1038/s41591-026-04368-9"],
+      "note": "REGULATORY NULL for the predictive fall-risk CDS itself: no product code/De Novo/510(k)/PMA exists. The adjacent HARDWARE landscape (all openFDA-verified): Class II Wearable Fall Injury Prevention Device SEC via De Novo DEN240021 (Active Protective Tango Belt); Class I fall alarm/sensor PJO/PJP and bed/patient monitors KMI/SBO (21 CFR 880.2400); cleared hardware K141877 (Leaf, KMI) and K233096 (PressureAlert, SBO). A novel predictive-CDS device would most plausibly pursue De Novo if it is a device at all. Continuously-updated-AI regulatory framing (van Amsterdam 42050181)."
+    },
+    "8_monitoring": {
+      "pmids": ["34260843", "28379439", "33157313", "34152373", "42050181", "38626948"],
+      "dois": ["10.1056/NEJMc2104626", "10.1093/jamia/ocx030", "10.1016/j.jbi.2020.103611", "10.1001/jamainternmed.2021.2626", "10.1038/s41591-026-04368-9", "10.1136/bmj-2023-078378"],
+      "note": "Prospective monitoring for calibration drift (Davis 28379439/33157313), dataset/population shift (Finlayson 34260843), alert performance/alert-fatigue in the wild, and subgroup calibration. The Epic Sepsis Model external-validation failure (Wong 34152373) is the canonical cautionary example motivating mandatory surveillance; continuously-monitored-AI governance (van Amsterdam 42050181); ongoing subgroup-fairness monitoring per TRIPOD+AI (38626948)."
+    }
+  },
+  "expected_conclusions": {
+    "regulatory_class": "No FDA classification exists for a predictive EHR-based inpatient fall-RISK CDS algorithm. Existing fall-related FDA devices are HARDWARE: Class II wearable protective device (SEC, via De Novo DEN240021) and Class I alarms/sensors/monitors (PJO/PJP/KMI/SBO, all 21 CFR 880.2400). A novel predictive-CDS product would most plausibly pursue the De Novo route if determined to be a device, after a device/non-device CDS determination with regulatory counsel.",
+    "authorization_exists": false,
+    "is_device_case": true,
+    "is_drug_case": false,
+    "regulatory_null_for_system_under_eval": true,
+    "no_established_numeric_benchmark": true,
+    "benchmark_precedent_only": "No regulatory or consensus AUROC/sensitivity threshold exists that a fall-prediction model must meet. No comparator AUROC was retrieved from full text this session; any comparator figure is a study-defined placeholder. All operating thresholds, calibration slopes, sample sizes, and subgroup disparity limits are study-defined-placeholder values to be set by the study team."
+  },
+  "coverage_gaps_expected": [
+    "Drugs@FDA / drug labeling - not applicable: the system carries no drug/biologic product. Fall-risk-increasing drugs (sedatives, antihypertensives) enter only as model INPUTS, not as regulated products.",
+    "FDA AI/ML-enabled device list & CDS final-guidance documents - narrative documents, not openFDA API records; the ABSENCE of a fall-risk-prediction device was confirmable via openFDA but guidance-document text was not machine-verifiable this session.",
+    "Institutional / proprietary EHR-vendor embedded fall-risk models (vendor-native predictive scores) - not in any public database resolvable via the four permitted APIs; their performance claims could not be independently verified and were excluded.",
+    "Full-text effect sizes - PMIDs/DOIs resolved for identity only; no in-text numeric results extracted beyond registry enrollment counts, so any 'context' performance figure reflects abstract/summary level, not a full-text-verified estimate."
+  ]
+}
