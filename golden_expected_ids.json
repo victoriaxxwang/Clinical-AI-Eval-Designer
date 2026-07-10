@@ -58,6 +58,18 @@
       "DEN230041"
     ]
   },
+  "context_only_identifiers": {
+    "description": "Provenance-only identifiers cited in the HRV amendments document but deliberately NOT scored. The harness reads only the 'required' block (ablation_harness.py:256), so nothing here is ever counted as a hit or a miss. Recorded for a complete audit trail per the 2026-07-09 reconciliation with Claude Science.",
+    "fda_k_numbers": [
+      {
+        "id": "K873418",
+        "scored": false,
+        "role": "historical predicate",
+        "parent_code": "HCC",
+        "reason": "1987 Bodylog Stress Reduction Package (GSR/EMG/HRV relaxation-biofeedback), cited in the amendments doc's Amendment 5 landscape table as a 'legacy (e.g. ...)' exemplar establishing HCC-category lineage. The HCC product code is itself scored in 'required'; a topical HRV retrieval is not expected to surface a 39-year-old predicate, so scoring K873418 would register a guaranteed false-negative penalizing correct pipeline behavior."
+      }
+    ]
+  },
   "field_grounding": {
     "1_study_design": {
       "dois": [
