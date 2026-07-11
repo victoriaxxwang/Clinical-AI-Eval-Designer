@@ -1,44 +1,44 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:10:48Z
+- Retrieved (UTC): 2026-07-11T19:10:56Z
 - Intervention type: device
-- Literature/trials query: 'ensemble net segmentation head'
+- Literature/trials query: 'encoder–decoder segmentation network nnu'
 - MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
-- openFDA device terms: ['ensemble', 'emergency', 'department', 'hyperacute', 'net']
+- openFDA device terms: ['encoder–decoder', 'emergency', 'department', 'neuro', 'segmentation']
 
 ### openFDA (device classification / 510(k) precedents)
-- 510(k) | ENSEMBLE CENTRAL STATION MONITOR | k_number=K970358 | decision=Substantially Equivalent | date=1998-02-11 | applicant=Mennen Medical, Inc.
-- 510(k) | Ensemble CMC, Size 141, Ensemble CMC, Size 151, Ensemble CMC, Size 161 | k_number=K201072 | decision=Substantially Equivalent | date=2020-12-02 | applicant=Ensemble Orthopedics, LLC
-- 510(k) | MODIFICATION TO ENSEMBLE CENTRAL STATION MONITOR | k_number=K982697 | decision=Substantially Equivalent | date=1998-08-12 | applicant=Mennen Medical, Inc.
 - CLASSIFICATION | Needle, Emergency Airway | product_code=BWC | class=2 | regulation=868.5090 | panel=Anesthesiology
 - CLASSIFICATION | Powered Communication System For Emergency Use | product_code=QNZ | class=N | regulation= | panel=Unknown
 - CLASSIFICATION | Insect Sting Emergency Kit | product_code=PWX | class=1 | regulation=880.5740 | panel=General Hospital
 - 510(k) | EMERGENCY DEPARTMENT LACERATION KIT- | k_number=K802557 | decision=Substantially Equivalent | date=1980-11-12 | applicant=Johnson & Johnson Professionals, Inc.
-- 510(k) | WaveGuard Net EEG Cap (NA-245, NA-255, NA-261, NA-265, NA-271, NA-281) | k_number=K240575 | decision=Substantially Equivalent | date=2024-11-25 | applicant=Eemagine Medical Imaging Solutions GmbH
-- 510(k) | E*NET NEUROMONITORING SYSTEM | k_number=K930080 | decision=Substantially Equivalent | date=1993-10-19 | applicant=Physiometrix, Inc.
-- 510(k) | NET Recovery Corp/NET Device | k_number=K233166 | decision=Substantially Equivalent | date=2024-05-29 | applicant=Net Recovery
+- CLASSIFICATION | Catheter, Neuro-Vasculature, Occluding Balloon | product_code=PAV | class=f | regulation=882.5150 | panel=Neurology
+- 510(k) | KARL STORZ Flexible Video-Neuro-Endoscope System | k_number=K161112 | decision=Substantially Equivalent | date=2016-09-17 | applicant=KARL STORZ Endoscopy-America, Inc.
+- 510(k) | TEMP AND PERMANENT NEURO LEADS (VARIOUS MODELS) | k_number=K945103 | decision=Substantially Equivalent | date=1995-01-11 | applicant=Medtronic Vascular
+- 510(k) | SMART SEGMENTATION-KNOWLEDGE BASED CONTOURING | k_number=K112778 | decision=Substantially Equivalent | date=2011-12-29 | applicant=Varian Medical Systems
+- 510(k) | DrAid for Liver Segmentation | k_number=K241543 | decision=Substantially Equivalent | date=2024-12-06 | applicant=Vinbrain Joint Stock Company
+- 510(k) | ADVANTAGESIM MD MR PELVIC ORGAN AT RISK SEGMENTATION | k_number=K132944 | decision=Substantially Equivalent | date=2014-03-14 | applicant=Ge Hungary Kft
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- MAUDE | ENSEMBLE A CESARIENNE-LF | event_type=Injury | date_received=20241126 | report_number=1423395-2024-00504
 - MAUDE | VENTILATOR, EMERGENCY, POWERED (RESUSCITATOR) | event_type=Malfunction | date_received=20200427 | report_number=3012307300-2020-03395
-- Recall | Medline Probe Cover Kits containing sterile Ultrasound Gel, Labeled as the following: a) CVC PACK, Model Number DYNJ4696 | classification=Class II | status=Ongoing | reason=Probe covers for use during diagnostic ultrasound procedures may have an inadequate barrier at the seams. | firm=MEDLINE INDUSTRIES, LP - Northfield | date=20230518 | recall_number=Z-2176-2023
-- Recall | Medline custom medical procedure kits labeled as: 1) ENSEMBLE RACHIS-LF, REF DYNJ47568B; 2) UROLOGY ROBOTIC, REF DYNJ555 | classification=Class II | status=Ongoing | reason=Custom convenience kits are being recall because the contain non-sterile Codman Surgical Patties & Surgical Strips, which have the potential for endotoxin conta | firm=MEDLINE INDUSTRIES, LP - Northfield | date=20241121 | recall_number=Z-0792-2025
+- MAUDE | VENTILATOR, EMERGENCY, POWERED (RESUSCITATOR) | event_type=Malfunction | date_received=20200428 | report_number=3012307300-2020-03421
+- Recall | Cook Celect Platinum Vena Cava Filter Set for Femoral and Jugular Vein Approach, Catalog Number IGTCFS-65-1-UNl-C ELECT- | classification=Class III | status=Terminated | reason=Updates to the Instructions for Use. | firm=Cook Medical Incorporated | date=20190225 | recall_number=Z-1026-2019
+- Recall | DigitalDiagnost 4 Chest/Emergency, used to acquire, process, store, display and export digital radiographic images. | classification=Class II | status=Ongoing | reason=Potential for units suspended on the ceiling to fail and fall. | firm=Philips North America Llc | date=20230921 | recall_number=Z-0272-2024
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 42345655 | DOI 10.3390/biomimetics11060366 ✓Crossref | Hybrid Neural Network Architecture for Automated Liver and Tumor Segmentation Using Ensemble Learning on CT Images. | Biomimetics (Basel) 2026 [Europe PMC]
-- https://openalex.org/W3096947210 | DOI 10.1109/access.2021.3086020 ✓Crossref | U-Net and Its Variants for Medical Image Segmentation: A Review of Theory and Applications | IEEE Access 2021 [OpenAlex]
-- PMID 41971425 | DOI 10.3389/fonc.2026.1764408 ✓Crossref | Performance enhancement method by using the probabilistic estimation for kidney tumor segmentation. | Front Oncol 2026 [Europe PMC]
-- https://openalex.org/W4308909683 | DOI 10.48550/arxiv.1411.4038 ✓Crossref | Fully Convolutional Networks for Semantic Segmentation | arXiv (Cornell University) 2014 [OpenAlex]
-- PMID 42069908 | DOI 10.1038/s41598-026-50642-8 ✓Crossref | LFU-Net: LoRA-enhanced frequency-aware U-Net with recursive residual attention fusion for retinal segmentation. | Sci Rep 2026 [Europe PMC]
-- PMID 35840566 | DOI 10.1038/s41467-022-30695-9 ✓Crossref | The Medical Segmentation Decathlon | Nature Communications 2022 [OpenAlex]
-- PMID 42125505 | DOI 10.7759/cureus.108662 ✓Crossref | Performance of Artificial Intelligence Systems for Automated Segmentation and Quantification of Retinal Fluid and Pathology in Optical Coherence Tomography Scans: A Systematic Review and Meta-Analysis. | Cureus 2026 [Europe PMC]
-- PMID 28778026 | DOI 10.1016/j.media.2017.07.005 ✓Crossref | A survey on deep learning in medical image analysis | Medical Image Analysis 2017 [OpenAlex]
-- PMID 42318577 | DOI 10.3389/frai.2026.1786679 ✓Crossref | Deep learning driven colorectal polyp analysis: a review of detection, classification and segmentation methods. | Front Artif Intell 2026 [Europe PMC]
-- PMID 31647422 | DOI 10.1109/tmi.2019.2947628 ✓Crossref | A Multi-Organ Nucleus Segmentation Challenge | IEEE Transactions on Medical Imaging 2019 [OpenAlex]
-- PMID 42109077 | DOI 10.2340/1651-226x.2026.45685 | Improving confidence in MRI-based auto-segmentation via uncertainty assessment. | Acta Oncol 2026 [Europe PMC]
+- PMC:PMC13296547 | CT-Based Liver Segmentation for Liver Surgery: A Hybrid Approach Based on 3D U-Net–ELM Model | Biomedicines 2026 [Europe PMC]
+- https://openalex.org/W4206693420 | DOI 10.1049/ipr2.12419 ✓Crossref | Medical image segmentation using deep learning: A survey | IET Image Processing 2022 [OpenAlex]
+- PMID 42219396 | DOI 10.1038/s41598-026-55949-0 ✓Crossref | Deep learning for automatic segmentation of the inferior alveolar nerve using a hybrid CNN-transformer framework. | Sci Rep 2026 [Europe PMC]
 - PMID 33421920 | DOI 10.1016/j.media.2020.101950 ✓Crossref | CHAOS Challenge - combined (CT-MR) healthy abdominal organ segmentation | Medical Image Analysis 2020 [OpenAlex]
-- PMID 42084803 | DOI 10.1186/s40708-026-00307-z ✓Crossref | A deep-learning framework for brain tumor segmentation via three-dimensional mass-preserving geometric transformation. | Brain Inform 2026 [Europe PMC]
-- PMID 27046893 | DOI 10.1109/tmi.2016.2548501 ✓Crossref | Automatic Segmentation of MR Brain Images With a Convolutional Neural Network | IEEE Transactions on Medical Imaging 2016 [OpenAlex]
-- PMID 41742162 | DOI 10.1186/s12935-026-04234-1 ✓Crossref | Joint segmentation and classification of cervical cells using U-Net and CNN ensemble for early detection of cervical cancer. | Cancer Cell Int 2026 [Europe PMC]
+- PMID 42279467 | DOI 10.3390/diagnostics16111598 ✓Crossref | ABR-UNet3D: Aspect-Aware Boundary-Resilient Attention for Robust Cardiac MRI Segmentation. | Diagnostics (Basel) 2026 [Europe PMC]
+- PMID 38253604 | DOI 10.1038/s41467-024-44824-z ✓Crossref | Segment anything in medical images | Nature Communications 2024 [OpenAlex]
+- PMID 42030976 | DOI 10.1088/2057-1976/ae6459 ✓Crossref | Enhanced ResU-Net for brain tumor segmentation using EfficientNetB0, channel attention, and ASPP. | Biomed Phys Eng Express 2026 [Europe PMC]
+- https://openalex.org/W3137561054 | DOI 10.48550/arxiv.2103.10504 ✓Crossref | UNETR: Transformers for 3D Medical Image Segmentation | arXiv (Cornell University) 2021 [OpenAlex]
+- PMID 41940578 | DOI 10.1177/00368504261432413 ✓Crossref | MSA&lt;sup&gt;2&lt;/sup&gt;-Net: Utilizing self-adaptive convolution module to extract multi-scale information in medical image segmentation. | Sci Prog 2026 [Europe PMC]
+- https://openalex.org/W4388430308 | DOI 10.1109/access.2023.3329517 ✓Crossref | Efficient nnU-Net for Brain Tumor Segmentation | IEEE Access 2023 [OpenAlex]
+- PMID 42045338 | DOI 10.1038/s41598-026-49862-9 ✓Crossref | LQUnet: a vascular segmentation network based on multi-scale feature fusion and hierarchical self distillation. | Sci Rep 2026 [Europe PMC]
+- PMID 35463660 | DOI 10.1155/2022/4189781 ✓Crossref | U-Net-Based Medical Image Segmentation | Journal of Healthcare Engineering 2022 [OpenAlex]
+- PMID 41950131 | DOI 10.1109/tbme.2026.3681892 ✓Crossref | A PET/CT Cross-Modal Wavelet Fusion and Pseudo-Mask Guided Network With Frozen SAM Decoder for Multiple Myeloma Segmentation. | IEEE Trans Biomed Eng 2026 [Europe PMC]
+- PMID 34340104 | DOI 10.1016/j.media.2021.102166 ✓Crossref | VerSe: A Vertebrae labelling and segmentation benchmark for multi-detector CT images | Medical Image Analysis 2021 [OpenAlex]
+- PMID 42109077 | DOI 10.2340/1651-226x.2026.45685 ✓Crossref | Improving confidence in MRI-based auto-segmentation via uncertainty assessment. | Acta Oncol 2026 [Europe PMC]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

@@ -1,55 +1,50 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:17:17Z
+- Retrieved (UTC): 2026-07-11T19:18:07Z
 - Intervention type: device
-- Literature/trials query: '("Neoplasms" OR "Tumors" OR "Neoplasia" OR "Neoplasias" OR "Neoplasm") AND multimodal AND transformer'
+- Literature/trials query: '("Neoplasms" OR "Tumors" OR "Neoplasia" OR "Neoplasias" OR "Neoplasm") AND convolutional AND network'
 - MeSH normalization: 'malignancy' → "Neoplasms" (D009369) + 4 synonyms
-- openFDA device terms: ['multimodal', 'outpatient', 'dermatology', 'clinic', 'lesion']
+- openFDA device terms: ['convolutional', 'dermatology', 'outpatient', 'clinics', 'dermoscopic']
 
 ### ClinicalTrials.gov (study designs, endpoints, enrollment)
-- NCT07500428 | Construction of a Benchmark for Breast Ultrasound AI Interpretation and Performance Evaluation of Multimodal AI Models | status=RECRUITING | type=OBSERVATIONAL phases= | n=1380 | allocation= masking= | primary_outcomes=Diagnostic Accuracy for Pathological Diagnosis; BI-RADS Classification Accuracy
-- NCT07373951 | Retrospective Multicenter Study of Patient-level T1CE/FLAIR MRI Deep Learning to Predict EGFR/ALK Driver Status in NSCLC Brain Metastases With External Validation and Survival Analysis | status=ENROLLING_BY_INVITATION | type=OBSERVATIONAL phases= | n=380 | allocation= masking= | primary_outcomes=Patient-level AUC for driver status (External Validation)
+- NCT04864587 | Artificial Intelligence in Image Recognition of Pouchoscopies in Patients With Restorative Proctocolectomy | status=COMPLETED | type=OBSERVATIONAL phases= | n=500 | allocation= masking= | primary_outcomes=AI versus endoscopist; AI versus pathologist
+- NCT06540846 | Deep Learning for Histopathological Classification and Prognostication of Gynaecologic Smooth Muscle Tumours | status=RECRUITING | type=OBSERVATIONAL phases= | n=392 | allocation= masking= | primary_outcomes=Develop deep learning models that can accurately subclassify gynaecologic smooth muscle tumours
+- NCT07660718 | The Use of Artificial Intelligence for Ultrasound Screening of Ovarian Cancer in Postmenopausal Women | status=ACTIVE_NOT_RECRUITING | type=OBSERVATIONAL phases= | n=100 | allocation= masking= | primary_outcomes=The predictive performance of the integrated model in accurately discriminating between the different risk categories of ovarian lesions.
+- NCT05193656 | Bladder Cancer Detection Using Convolutional Neural Networks | status=UNKNOWN | type=OBSERVATIONAL phases= | n=5000 | allocation= masking= | primary_outcomes=Comparing standard technique to Machine Learning
+- NCT03857373 | Renal Cancer Detection Using Convolutional Neural Networks | status=RECRUITING | type=OBSERVATIONAL phases= | n=5000 | allocation= masking= | primary_outcomes=Predicting recurrences
+- NCT06703112 | Establishment and Clinical Application of AI-based Multimodal Diagnosis System for Ovarian Tumors | status=NOT_YET_RECRUITING | type=INTERVENTIONAL phases=NA | n=584 | allocation=NA masking=NONE | primary_outcomes=Pathological diagnosis; AUC （Area Under the ROC Curve）
 
 ### openFDA (device classification / 510(k) precedents)
-- 510(k) | CURRY MULTIMODAL NEUROIMAGING SOFTWARE | k_number=K001781 | decision=Substantially Equivalent | date=2001-02-05 | applicant=Neurosoft, Inc.
-- 510(k) | CUTERA MULTIMODAL CELLULITE PRODUCT (CMMCD) | k_number=K080300 | decision=Substantially Equivalent | date=2008-04-08 | applicant=Cutera, Inc.
-- 510(k) | CUTERA MULTIMODAL CELLULITE PRODUCT (CMMCD) | k_number=K092195 | decision=Substantially Equivalent | date=2009-10-01 | applicant=Cutera, Inc.
-- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
-- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
-- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
 - 510(k) | MODEL 10-C W/FL-10A/U FOR SURGERY AND DERMATOLOGY | k_number=K862862 | decision=Substantially Equivalent | date=1986-09-19 | applicant=Directed Energy, Inc.
 - 510(k) | BACTI PLATE (DERMATOLOGY) PRODUCT NO. PS-5000 | k_number=K861301 | decision=Substantially Equivalent | date=1986-04-21 | applicant=Troy Biologicals, Inc.
 - 510(k) | MODEL 20-C W/FL-20A/U FOR SURGERY & DERMATOLOGY | k_number=K862864 | decision=Substantially Equivalent | date=1986-10-24 | applicant=Directed Energy, Inc.
-- CLASSIFICATION | Monitor, Uterine Contraction, External (For Use In Clinic) | product_code=HFM | class=2 | regulation=884.2720 | panel=Obstetrics/Gynecology
-- 510(k) | ZT Clinic (MG675A); ZT Cube (ZC3) (MG465A); Z-ONE (MG455A) | k_number=K242754 | decision=Substantially Equivalent | date=2025-05-05 | applicant=Zamar Medical D.O.O.
-- 510(k) | Digital Dialysis Clinic - Intelligent Dialysis Assistant (IDA) with Medical Supervision Portal and IDA Smartphone App | k_number=K220935 | decision=Substantially Equivalent | date=2022-12-29 | applicant=Iren-Medical, Ltd.
-- CLASSIFICATION | Herpes Virus (Vzv, Hsv1, Hsv2), Dna Detection Assay For Cutaneous And Mucocutaneous Lesion Samples | product_code=PGI | class=2 | regulation=866.3309 | panel=Microbiology
-- CLASSIFICATION | Prostate Lesion, Documentation, System | product_code=OQT | class=2 | regulation=876.2050 | panel=Gastroenterology, Urology
-- CLASSIFICATION | Low Power Electrosurgical Devices For Skin Lesion Destruction | product_code=QVJ | class=2 | regulation=878.4400 | panel=General, Plastic Surgery
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- 510(k) | HOMECARE CLINICS INFRAHEAT #230 | k_number=K854151 | decision=Substantially Equivalent | date=1986-01-30 | applicant=Nelkin/Piper Intl.
+- 510(k) | SLEEP SYSTEM FOR CLINICS & RESEARCH | k_number=K955841 | decision=Unknown | date=1997-03-11 | applicant=Compumedics Ptd , Ltd.
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- PMA | GENESIS HOME UTERINE ACTIVITY MONITORING SYSTEM (HUAM) | pma_number=P890063 | supplement=S004 | decision=APPR | date=1995-06-16 | product_code=HFM | applicant=Matria Healthcare, Inc.
-- PMA | Thoraflex Hybrid | pma_number=P210006 | supplement=S006 | decision=OK30 | date=2023-09-21 | product_code=QSK | applicant=Vascutek, Ltd.
-- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
-- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
-- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
-- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+- MAUDE | LASER, SURGICAL, FOR USE IN DERMATOLOGY | event_type=Injury | date_received=20080401 | report_number=2914019-2008-00005
+- MAUDE | LASER, SURGICAL, FOR USE IN DERMATOLOGY | event_type=Malfunction | date_received=20080401 | report_number=2914019-2008-00010
+- Recall | AURIGA 30 BRAZIL ZERO COST SYSTEM UPN: M0068S30BZ0 Product Usage: The Auriga XL 4007 Laser System and the Auriga 30 Lase | classification=Class II | status=Terminated | reason=Certain Auriga consoles may exhibit faster than normal power degradation due to a potential issue in the mechanical cooling system that could lead to a low powe | firm=Boston Scientific Corporation | date=20190408 | recall_number=Z-1396-2019
+- Recall | Dornier Diode Laser Fibers:Used with Dornier Medilas D Family Lasers Part Number/Description: K1001291 600 micron single | classification=Class II | status=Terminated | reason=Pin hole package failures compromising sterility of product | firm=Dornier Medtech America, Inc. | date=20190401 | recall_number=Z-1381-2019
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 42366432 | DOI 10.7507/1001-5515.202411017 ✓Crossref | [An auxiliary diagnosis system for cervical intraepithelial neoplasia based on colposcopic images]. | Sheng Wu Yi Xue Gong Cheng Xue Za Zhi 2026 [Europe PMC]
-- PMID 36220072 | DOI 10.1016/j.ccell.2022.09.012 ✓Crossref | Artificial intelligence for multimodal data integration in oncology | Cancer Cell 2022 [OpenAlex]
-- PPR:PPR1253524 | DOI 10.64898/2026.03.05.26347766 ✓Crossref | Thyroid Cancer Risk Prediction from Multimodal Datasets Using Large Language Model | PPR 2026 [Europe PMC]
-- PMID 35575610 | DOI 10.1002/lary.30154 ✓Crossref | A Deep Learning Model for Classification of Parotid Neoplasms Based on Multimodal Magnetic Resonance Image Sequences | The Laryngoscope 2022 [OpenAlex]
-- PMID 41975814 | DOI 10.3390/diagnostics16071103 ✓Crossref | Artificial Intelligence in Ocular Surface Tumors: Current Advances, Challenges, and Future Directions. | Diagnostics (Basel) 2026 [Europe PMC]
-- PMID 36810839 | DOI 10.1038/s41467-023-36559-0 ✓Crossref | Single-cell biological network inference using a heterogeneous graph transformer | Nature Communications 2023 [OpenAlex]
+- PMID 42369008 | DOI 10.3389/frai.2026.1805416 ✓Crossref | Deep learning prediction of chemo-immunotherapy response using tumor perfusion ultrasound images. | Front Artif Intell 2026 [Europe PMC]
+- https://openalex.org/W2962946486 | DOI 10.1609/aaai.v33i01.33017370 ✓Crossref | Graph Convolutional Networks for Text Classification | Proceedings of the AAAI Conference on Artificial Intelligence 2019 [OpenAlex]
+- PMID 41518381 | DOI 10.1007/s00417-025-07034-x ✓Crossref | Utilizing artificial intelligence for the diagnosis of ocular surface squamous neoplasia with ultrasound biomicroscopy images. | Graefes Arch Clin Exp Ophthalmol 2026 [Europe PMC]
+- PMID 31443108 | DOI 10.1055/a-0981-6133 ✓Crossref | Automated classification of gastric neoplasms in endoscopic images using a convolutional neural network | Endoscopy 2019 [OpenAlex]
 - PMID 42279283 | DOI 10.3390/cancers18111698 ✓Crossref | A Scoping Review of Artificial Intelligence in Ocular Oncology. | Cancers (Basel) 2026 [Europe PMC]
-- PMID 39075407 | DOI 10.1186/s12911-024-02600-5 ✓Crossref | Transformer models in biomedicine | BMC Medical Informatics and Decision Making 2024 [OpenAlex]
-- PMID 42089749 | DOI 10.1093/bib/bbag224 ✓Crossref | Development of a novel multimodal deep learning approach to improve diagnostic precision in ovarian cancer. | Brief Bioinform 2026 [Europe PMC]
-- PMID 37360402 | DOI 10.1088/2516-1091/acc2fe ✓Crossref | Deep multimodal fusion of image and non-image data in disease diagnosis and prognosis: a review | Progress in Biomedical Engineering 2023 [OpenAlex]
-- PMID 42183263 | DOI 10.3389/fimmu.2026.1795144 ✓Crossref | Artificial intelligence in ovarian cancer: advancing in precision diagnosis and clinical management. | Front Immunol 2026 [Europe PMC]
-- PMID 38789645 | DOI 10.1038/s41591-024-02993-w ✓Crossref | Prediction of recurrence risk in endometrial cancer with multimodal deep learning | Nature Medicine 2024 [OpenAlex]
-- PMID 42407139 | DOI 10.1016/j.patol.2026.100885 ✓Crossref | A morphology-guided ViT-CNN approach for the detection of lung and colon cancer using H&amp;E-stained biopsy images. | Rev Esp Patol 2026 [Europe PMC]
-- PMID 38030638 | DOI 10.1038/s41467-023-43715-z ✓Crossref | TransformEHR: transformer-based encoder-decoder generative model to enhance prediction of disease outcomes using electronic health records | Nature Communications 2023 [OpenAlex]
-- PMID 41816119 | DOI 10.1016/j.jbo.2026.100753 ✓Crossref | From imaging to omics: deep learning is bridging MRI and liquid biopsy in bone tumor diagnosis. | J Bone Oncol 2026 [Europe PMC]
+- PMID 33465354 | DOI 10.1016/j.gie.2020.12.054 ✓Crossref | High performance in risk stratification of intraductal papillary mucinous neoplasms by confocal laser endomicroscopy image analysis with convolutional neural networks (with video) | Gastrointestinal Endoscopy 2021 [OpenAlex]
+- PMID 41024848 | DOI 10.5306/wjco.v16.i9.107993 ✓Crossref | Role of artificial intelligence in screening and medical imaging of precancerous gastric diseases. | World J Clin Oncol 2025 [Europe PMC]
+- PMID 31525737 | DOI 10.1159/000503291 ✓Crossref | Preoperative Prediction of Pancreatic Neuroendocrine Neoplasms Grading Based on Enhanced Computed Tomography Imaging: Validation of Deep Learning with a Convolutional Neural Network | Neuroendocrinology 2019 [OpenAlex]
+- PMID 42074175 | DOI 10.3390/ijms27083533 ✓Crossref | MV-HAGCN: Prediction of miRNA-Disease Association Based on Multi-View Hybrid Attention Graph Convolutional Network. | Int J Mol Sci 2026 [Europe PMC]
+- PMID 24325359 | DOI 10.1056/nejmoa1312542 ✓Crossref | Somatic <i>CALR</i> Mutations in Myeloproliferative Neoplasms with Nonmutated <i>JAK2</i> | New England Journal of Medicine 2013 [OpenAlex]
+- PMID 41828460 | DOI 10.3390/ijms27052237 ✓Crossref | Use of Artificial Intelligence Model Associated with Masson's Trichrome Staining as a Predictor of Muscle Invasion in Bladder Cancer. | Int J Mol Sci 2026 [Europe PMC]
+- PMID 29335825 | DOI 10.1007/s10120-018-0793-2 ✓Crossref | Application of artificial intelligence using a convolutional neural network for detecting gastric cancer in endoscopic images | Gastric Cancer 2018 [OpenAlex]
+- PMID 42223560 | DOI 10.1007/s12105-026-01920-4 ✓Crossref | Predicting Metastatic Potential from Histopathological Whole Slide Images of Primary Tumors in Head and Neck Squamous Cell Carcinoma Using Attention-Based Deep Learning and Signaling Pathway Alterations. | Head Neck Pathol 2026 [Europe PMC]
+- PMID 33137800 | DOI 10.1088/1361-6560/abc6f2 ✓Crossref | Segmentation and classification of thyroid follicular neoplasm using cascaded convolutional neural network | Physics in Medicine and Biology 2020 [OpenAlex]
+- PMID 42026537 | DOI 10.1186/s12885-026-16076-1 ✓Crossref | Image analysis for cervical cancer classification using deep learning techniques. | BMC Cancer 2026 [Europe PMC]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

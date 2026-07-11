@@ -1,51 +1,42 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:16:59Z
+- Retrieved (UTC): 2026-07-11T19:17:48Z
 - Intervention type: device
-- Literature/trials query: 'lesion multimodal transformer fuses'
+- Literature/trials query: 'dermoscopic convolutional network vit'
 - MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
-- openFDA device terms: ['multimodal', 'outpatient', 'dermatology', 'clinic', 'lesion']
+- openFDA device terms: ['convolutional', 'dermatology', 'outpatient', 'clinics', 'dermoscopic']
 
 ### openFDA (device classification / 510(k) precedents)
-- 510(k) | CURRY MULTIMODAL NEUROIMAGING SOFTWARE | k_number=K001781 | decision=Substantially Equivalent | date=2001-02-05 | applicant=Neurosoft, Inc.
-- 510(k) | CUTERA MULTIMODAL CELLULITE PRODUCT (CMMCD) | k_number=K080300 | decision=Substantially Equivalent | date=2008-04-08 | applicant=Cutera, Inc.
-- 510(k) | CUTERA MULTIMODAL CELLULITE PRODUCT (CMMCD) | k_number=K092195 | decision=Substantially Equivalent | date=2009-10-01 | applicant=Cutera, Inc.
-- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
-- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
-- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
 - 510(k) | MODEL 10-C W/FL-10A/U FOR SURGERY AND DERMATOLOGY | k_number=K862862 | decision=Substantially Equivalent | date=1986-09-19 | applicant=Directed Energy, Inc.
 - 510(k) | BACTI PLATE (DERMATOLOGY) PRODUCT NO. PS-5000 | k_number=K861301 | decision=Substantially Equivalent | date=1986-04-21 | applicant=Troy Biologicals, Inc.
 - 510(k) | MODEL 20-C W/FL-20A/U FOR SURGERY & DERMATOLOGY | k_number=K862864 | decision=Substantially Equivalent | date=1986-10-24 | applicant=Directed Energy, Inc.
-- CLASSIFICATION | Monitor, Uterine Contraction, External (For Use In Clinic) | product_code=HFM | class=2 | regulation=884.2720 | panel=Obstetrics/Gynecology
-- 510(k) | ZT Clinic (MG675A); ZT Cube (ZC3) (MG465A); Z-ONE (MG455A) | k_number=K242754 | decision=Substantially Equivalent | date=2025-05-05 | applicant=Zamar Medical D.O.O.
-- 510(k) | Digital Dialysis Clinic - Intelligent Dialysis Assistant (IDA) with Medical Supervision Portal and IDA Smartphone App | k_number=K220935 | decision=Substantially Equivalent | date=2022-12-29 | applicant=Iren-Medical, Ltd.
-- CLASSIFICATION | Herpes Virus (Vzv, Hsv1, Hsv2), Dna Detection Assay For Cutaneous And Mucocutaneous Lesion Samples | product_code=PGI | class=2 | regulation=866.3309 | panel=Microbiology
-- CLASSIFICATION | Prostate Lesion, Documentation, System | product_code=OQT | class=2 | regulation=876.2050 | panel=Gastroenterology, Urology
-- CLASSIFICATION | Low Power Electrosurgical Devices For Skin Lesion Destruction | product_code=QVJ | class=2 | regulation=878.4400 | panel=General, Plastic Surgery
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- 510(k) | HOMECARE CLINICS INFRAHEAT #230 | k_number=K854151 | decision=Substantially Equivalent | date=1986-01-30 | applicant=Nelkin/Piper Intl.
+- 510(k) | SLEEP SYSTEM FOR CLINICS & RESEARCH | k_number=K955841 | decision=Unknown | date=1997-03-11 | applicant=Compumedics Ptd , Ltd.
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- PMA | GENESIS HOME UTERINE ACTIVITY MONITORING SYSTEM (HUAM) | pma_number=P890063 | supplement=S004 | decision=APPR | date=1995-06-16 | product_code=HFM | applicant=Matria Healthcare, Inc.
-- PMA | Thoraflex Hybrid | pma_number=P210006 | supplement=S006 | decision=OK30 | date=2023-09-21 | product_code=QSK | applicant=Vascutek, Ltd.
-- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
-- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
-- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
-- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+- MAUDE | LASER, SURGICAL, FOR USE IN DERMATOLOGY | event_type=Injury | date_received=20080401 | report_number=2914019-2008-00005
+- MAUDE | LASER, SURGICAL, FOR USE IN DERMATOLOGY | event_type=Malfunction | date_received=20080401 | report_number=2914019-2008-00010
+- Recall | AURIGA 30 BRAZIL ZERO COST SYSTEM UPN: M0068S30BZ0 Product Usage: The Auriga XL 4007 Laser System and the Auriga 30 Lase | classification=Class II | status=Terminated | reason=Certain Auriga consoles may exhibit faster than normal power degradation due to a potential issue in the mechanical cooling system that could lead to a low powe | firm=Boston Scientific Corporation | date=20190408 | recall_number=Z-1396-2019
+- Recall | Dornier Diode Laser Fibers:Used with Dornier Medilas D Family Lasers Part Number/Description: K1001291 600 micron single | classification=Class II | status=Terminated | reason=Pin hole package failures compromising sterility of product | firm=Dornier Medtech America, Inc. | date=20190401 | recall_number=Z-1381-2019
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 41965884 | DOI 10.1038/s41746-026-02602-9 ✓Crossref | Graphicalized vision-language modeling for comprehensive lung nodule analysis and risk stratification. | NPJ Digit Med 2026 [Europe PMC]
-- PMID 35540957 | DOI 10.1007/s00371-022-02492-4 ✓Crossref | A multimodal transformer to fuse images and metadata for skin disease classification | The Visual Computer 2022 [OpenAlex]
-- PMID 41826548 | DOI 10.1038/s41598-026-43146-y ✓Crossref | Time-lapsed colposcopy image-based segmentation of cervical lesion areas. | Sci Rep 2026 [Europe PMC]
-- https://openalex.org/W3197957534 | DOI 10.1609/aaai.v36i3.20144 ✓Crossref | UCTransNet: Rethinking the Skip Connections in U-Net from a Channel-Wise Perspective with Transformer | Proceedings of the AAAI Conference on Artificial Intelligence 2022 [OpenAlex]
-- PMID 42023011 | DOI 10.3389/fpls.2026.1796407 ✓Crossref | An environment-guided visual-temporal deep learning framework for early disease detection in greenhouse horticultural crops. | Front Plant Sci 2026 [Europe PMC]
-- PMID 37308585 | DOI 10.1038/s41551-023-01045-x ✓Crossref | A transformer-based representation-learning model with unified processing of multimodal input for clinical diagnostics | Nature Biomedical Engineering 2023 [OpenAlex]
-- PMID 41673069 | DOI 10.1038/s41598-026-35951-2 ✓Crossref | Quantum-enhanced multimodal prognostic transformer for skin disease progression prediction and visualization. | Sci Rep 2026 [Europe PMC]
-- PMID 36220072 | DOI 10.1016/j.ccell.2022.09.012 ✓Crossref | Artificial intelligence for multimodal data integration in oncology | Cancer Cell 2022 [OpenAlex]
-- PMID 41872434 | DOI 10.1038/s41598-026-44979-3 | A deep learning approach for the diagnosis and recurrence prediction of OKC. | Sci Rep 2026 [Europe PMC]
-- https://openalex.org/W4293163051 | DOI 10.1016/j.imed.2022.07.002 ✓Crossref | Transformers in medical image analysis | Intelligent Medicine 2022 [OpenAlex]
-- PMID 42194321 | DOI 10.3390/bioengineering13050564 ✓Crossref | Multimodal Deep Learning with Attention-Based Fusion for Skin Cancer Diagnosis. | Bioengineering (Basel) 2026 [Europe PMC]
-- PMID 36344814 | DOI 10.1038/s41746-022-00712-8 ✓Crossref | Multimodal machine learning in precision health: A scoping review | npj Digital Medicine 2022 [OpenAlex]
-- PMID 42025609 | DOI 10.1016/j.compmedimag.2026.102769 ✓Crossref | Convolutional-transformer fusion of ultrasound and diffuse optical tomography for breast lesion classification. | Comput Med Imaging Graph 2026 [Europe PMC]
-- PMID 34441318 | DOI 10.3390/diagnostics11081384 ✓Crossref | TransMed: Transformers Advance Multi-Modal Medical Image Classification | Diagnostics 2021 [OpenAlex]
-- PMID 42147900 | DOI 10.21037/qims-2025-aw-2381 ✓Crossref | Application of transformer models in medical image segmentation: a narrative review. | Quant Imaging Med Surg 2026 [Europe PMC]
+- PMID 42014488 | DOI 10.1038/s41598-026-48260-5 ✓Crossref | From local textures to global attention: a hybrid feature fusion network for skin lesion classification. | Sci Rep 2026 [Europe PMC]
+- PMID 36037629 | DOI 10.1016/j.compbiomed.2022.105939 ✓Crossref | An improved transformer network for skin cancer classification | Computers in Biology and Medicine 2022 [OpenAlex]
+- PMID 42344491 | DOI 10.3389/fmed.2026.1834696 ✓Crossref | Integrating anisotropic heat flow and transformer encoders in convolutional neural network for skin cancer classification. | Front Med (Lausanne) 2026 [Europe PMC]
+- PMID 36611363 | DOI 10.3390/diagnostics13010072 ✓Crossref | A Deep CNN Transformer Hybrid Model for Skin Lesion Classification of Dermoscopic Images Using Focal Loss | Diagnostics 2022 [OpenAlex]
+- PMID 42036423 | DOI 10.1038/s41598-026-48633-w ✓Crossref | SkinFormer: a hybrid vision transformer and ConvNeXtV2 approach for skin cancer detection and segmentation. | Sci Rep 2026 [Europe PMC]
+- PMID 37260910 | DOI 10.1007/s11831-023-09899-9 ✓Crossref | On the Analyses of Medical Images Using Traditional Machine Learning Techniques and Convolutional Neural Networks | Archives of Computational Methods in Engineering 2023 [OpenAlex]
+- PMID 41449289 | DOI 10.1038/s41598-025-33767-0 ✓Crossref | SkinAttn-Net: a multi-level attention-based network for skin lesion segmentation. | Sci Rep 2025 [Europe PMC]
+- https://openalex.org/W4282582687 | DOI 10.3390/app12125990 ✓Crossref | Skin Lesion Segmentation Based on Vision Transformers and Convolutional Neural Networks—A Comparative Study | Applied Sciences 2022 [OpenAlex]
+- PMID 41942573 | DOI 10.1038/s41598-026-45132-w ✓Crossref | Smart medical system integrating clinical workflows for robust skin cancer detection across heterogeneous pathologies. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W4384827994 | DOI 10.3390/info14070415 ✓Crossref | Multi-Class Skin Cancer Classification Using Vision Transformer Networks and Convolutional Neural Network-Based Pre-Trained Models | Information 2023 [OpenAlex]
+- PMID 41888268 | DOI 10.1038/s41598-026-46011-0 ✓Crossref | DermaScanAI an explainable hybrid deep learning framework for automated skin lesion classification using dual attention and metadata fusion. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W4311227602 | DOI 10.1088/1742-6596/2405/1/012037 | Skin Cancer Classification Based on Convolutional Neural Networks and Vision Transformers | Journal of Physics Conference Series 2022 [OpenAlex]
+- PMID 41654513 | DOI 10.1038/s41598-025-32502-z ✓Crossref | Hybrid vision transformer and graph neural network model with region-adaptive attention for enhanced skin cancer prediction. | Sci Rep 2026 [Europe PMC]
+- PMID 37627864 | DOI 10.3390/bioengineering10080979 ✓Crossref | Enhancing Skin Cancer Detection and Classification in Dermoscopic Images through Concatenated MobileNetV2 and Xception Models | Bioengineering 2023 [OpenAlex]
+- PMID 41840007 | DOI 10.1038/s41598-026-43376-0 ✓Crossref | Advanced hybrid transformer CNN framework for improved skin lesion classification and segmentation. | Sci Rep 2026 [Europe PMC]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

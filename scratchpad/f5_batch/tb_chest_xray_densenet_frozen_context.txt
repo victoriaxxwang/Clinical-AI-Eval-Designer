@@ -1,46 +1,45 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:14:51Z
+- Retrieved (UTC): 2026-07-11T19:15:43Z
 - Intervention type: device
-- Literature/trials query: 'densenet 121 cnn pretrained'
+- Literature/trials query: 'chest convolutional classifier built'
 - MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
-- openFDA device terms: ['radiograph', 'community', 'mobile', 'screening', 'densenet']
+- openFDA device terms: ['radiograph', 'community', 'screening', 'campaigns', 'chest']
 
 ### openFDA (device classification / 510(k) precedents)
 - 510(k) | PHILIPS IMPROVED CHECK RADIOGRAPH OPTION | k_number=K943464 | decision=Substantially Equivalent | date=1995-02-01 | applicant=Philips Medical Systems North America, Inc.
 - 510(k) | TECNOMED GENERATOR, RADIOGRAPH., 3 PHASE | k_number=K820307 | decision=Substantially Equivalent | date=1982-03-05 | applicant=Tecnomed, Inc.
 - 510(k) | COMMUNITY BALANCE PERFORMANCE MONITOR OR COMMUNITY BPM | k_number=K951771 | decision=Substantially Equivalent | date=1995-08-11 | applicant=Sms Technologies, Ltd.
 - 510(k) | Community Containers (Flap and Daisy) | k_number=K252637 | decision=Substantially Equivalent | date=2025-10-14 | applicant=Keter Canada, Inc.
-- CLASSIFICATION | Image-Intensified Fluoroscopic X-Ray System, Mobile | product_code=OXO | class=2 | regulation=892.1650 | panel=Radiology
-- CLASSIFICATION | System, X-Ray, Mobile | product_code=IZL | class=2 | regulation=892.1720 | panel=Radiology
-- CLASSIFICATION | Mobile / Tablet Software Application To Control Settings Of Surgical And Endoscopic Camera | product_code=QGY | class=2 | regulation=876.1500 | panel=Gastroenterology, Urology
 - CLASSIFICATION | Neonatal Blood Collection Kit And Screening Form (Excludes Hiv Testing) | product_code=OIA | class=1 | regulation=864.3250 | panel=Pathology
 - CLASSIFICATION | Alpha-L-Iduronidase (Idua) Newborn Screening Test System | product_code=PQT | class=2 | regulation=862.1488 | panel=Clinical Chemistry
 - CLASSIFICATION | Acid-Sphingomyelinase (Asm) Newborn Screening Test System | product_code=QCL | class=2 | regulation=862.1488 | panel=Clinical Chemistry
+- CLASSIFICATION | Mesh, Surgical, Absorbable, Thoracic, Chest Wall Reconstruction | product_code=OWZ | class=2 | regulation=878.3300 | panel=General, Plastic Surgery
+- CLASSIFICATION | Mesh, Surgical, Collagen, Thoracic, Chest Wall Reconstruction | product_code=OXB | class=2 | regulation=878.3300 | panel=General, Plastic Surgery
+- CLASSIFICATION | Chest Drainage Kit | product_code=PAD | class=2 | regulation=880.6740 | panel=General Hospital
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- PMA | LCS TOTAL KNEE SYSTEM | pma_number=P830055 | supplement=S081 | decision=APPR | date=2002-02-05 | product_code=NJL | applicant=Depuy, Inc.
-- PMA | ZIMMER NEXGEN LPS FLEX MOBILE AND LPS MOBILE BEARING KNEE SYSTEM | pma_number=P060037 | supplement=S024 | decision=APPR | date=2014-02-18 | product_code=NJL | applicant=Zimmer, Inc.
+- PMA | ResQCPR System | pma_number=P110024 | supplement=S004 | decision=OK30 | date=2023-08-23 | product_code=PIZ | applicant=ZOLL Medical Corporation
 - MAUDE | RADIOGRAPH DUPLICATOR | event_type= | date_received=19940923 | report_number=2443168-1994-00001
 - MAUDE | COMMUNITY BED | event_type=Other | date_received=20110627 | report_number=3003984900-2011-00017
 - Recall | Apollo: Models: 9784000131, 9784000231, 9784020131, 9784020231, 9784100231, 9784120131, 9784120231, 9784130131 Multi-fun | classification=Class II | status=Ongoing | reason=The analysis showed that the incident was caused by a chain of four faults: 1.) The injured person overcame a physical barrier (the tabletop support arm. height | firm=Villa Radiology Systems LLC | date=20160219 | recall_number=Z-1064-2017
 - Recall | Juno DRF; Model: 709020 Multi-function x-ray systems capable of routine radiograph and general fluoroscopy procedures. | classification=Class II | status=Ongoing | reason=The analysis showed that the incident was caused by a chain of four faults: 1.) The injured person overcame a physical barrier (the tabletop support arm. height | firm=Villa Radiology Systems LLC | date=20160219 | recall_number=Z-1063-2017
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 42209768 | DOI 10.1038/s41598-026-55136-1 ✓Crossref | CAHA-Net: A novel MR image classification model based on DenseNet incorporating coordinate attention and hybrid augmentation. | Sci Rep 2026 [Europe PMC]
-- https://openalex.org/W2980584449 | DOI 10.1109/icecct.2019.8869364 ✓Crossref | Pneumonia Detection Using CNN based Feature Extraction |  2019 [OpenAlex]
-- PMID 41943462 | DOI 10.1155/bmri/5726771 ✓Crossref | Deep Learning Approaches for Multiple Sclerosis Detection in MRI Images. | Biomed Res Int 2026 [Europe PMC]
-- https://openalex.org/W3017309755 | DOI 10.3390/app10093233 ✓Crossref | Transfer Learning with Deep Convolutional Neural Network (CNN) for Pneumonia Detection Using Chest X-ray | Applied Sciences 2020 [OpenAlex]
-- PMID 42000898 | DOI 10.1038/s41598-026-49376-4 ✓Crossref | Favoring flat minima improves generalization of transfer-learned models for breast ultrasound tumor classification. | Sci Rep 2026 [Europe PMC]
-- https://openalex.org/W3043257208 | DOI 10.1109/jstars.2020.3009352 ✓Crossref | Channel-Attention-Based DenseNet Network for Remote Sensing Image Scene Classification | IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing 2020 [OpenAlex]
-- PMID 42274080 | DOI 10.1080/20565623.2026.2681575 ✓Crossref | Side-level versus patient-level evaluation in four-view mammography classification: a comprehensive benchmark on the CMMD dataset. | Future Sci OA 2026 [Europe PMC]
+- PMID 42194345 | DOI 10.3390/bioengineering13050588 ✓Crossref | ARTEMIS: An Explainable AI Framework for Multi-Class COVID-19 Diagnosis with a Newly Curated Dataset. | Bioengineering (Basel) 2026 [Europe PMC]
+- PMID 29934920 | DOI 10.1007/s13244-018-0639-9 ✓Crossref | Convolutional neural networks: an overview and application in radiology | Insights into Imaging 2018 [OpenAlex]
+- PMID 42339496 | DOI 10.2147/cia.s607232 ✓Crossref | Artificial Intelligence for Osteoporosis Diagnosis, Risk Prediction and Therapy: Current Advances, Clinical Challenges, and Future Perspectives. | Clin Interv Aging 2026 [Europe PMC]
+- PMID 34111009 | DOI 10.1109/tnnls.2021.3084827 ✓Crossref | A Survey of Convolutional Neural Networks: Analysis, Applications, and Prospects | IEEE Transactions on Neural Networks and Learning Systems 2021 [OpenAlex]
+- PMID 41953784 | DOI 10.1117/12.3088144 ✓Crossref | Random forest-based out-of-distribution detection for robust lung cancer segmentation. | Proc SPIE Int Soc Opt Eng 2026 [Europe PMC]
+- PMID 30154989 | DOI 10.1155/2018/4168538 ✓Crossref | Deep Convolutional Neural Networks for Chest Diseases Detection | Journal of Healthcare Engineering 2018 [OpenAlex]
+- PMID 41223383 | DOI 10.2196/35987 ✓Crossref | Detection of Polyphonic Alarm Sounds From Medical Devices Using Frequency-Enhanced Deep Learning: Simulation Study. | JMIR Med Inform 2025 [Europe PMC]
+- PMID 28778026 | DOI 10.1016/j.media.2017.07.005 ✓Crossref | A survey on deep learning in medical image analysis | Medical Image Analysis 2017 [OpenAlex]
+- PMC:PMC13294700 | ZDAM: a new deep learning model for bean leaf disease diagnosis | Front Plant Sci  [Europe PMC]
 - https://openalex.org/W2954996726 | DOI 10.1186/s40537-019-0197-0 ✓Crossref | A survey on Image Data Augmentation for Deep Learning | Journal Of Big Data 2019 [OpenAlex]
-- PMID 42228733 | DOI 10.1371/journal.pone.0348863 ✓Crossref | Tensor enhanced chest cancer classification via CNN and Vision Transformer models. | PLoS One 2026 [Europe PMC]
-- https://openalex.org/W2895238724 | DOI 10.1007/s11263-018-1125-z | From BoW to CNN: Two Decades of Texture Representation for Texture Classification | International Journal of Computer Vision 2018 [OpenAlex]
-- PMID 41393171 | DOI 10.1002/pld3.70124 ✓Crossref | RGB-Based Deep Learning for Freeze Damage Detection in Strawberry: Comparing Scratch and Transfer Learning Approaches on Custom Data. | Plant Direct 2025 [Europe PMC]
-- https://openalex.org/W4312264311 | DOI 10.14569/ijacsa.2022.0131065 ✓Crossref | Deep Architecture based on DenseNet-121 Model for Weather Image Recognition | International Journal of Advanced Computer Science and Applications 2022 [OpenAlex]
-- PMID 41580439 | DOI 10.1038/s41598-026-35831-9 ✓Crossref | Sickle cell disease detection in low-resource conditions using transfer-learning and contrastive-learning coupled with XAI. | Sci Rep 2026 [Europe PMC]
-- PMID 33037291 | DOI 10.1038/s41598-020-74164-z ✓Crossref | A comprehensive study on classification of COVID-19 on computed tomography with pretrained convolutional neural networks | Scientific Reports 2020 [OpenAlex]
-- PMID 42104545 | DOI 10.1002/cam4.71740 ✓Crossref | Transformer-Based Deep Learning Model for Predicting Recurrence in High-Grade Glioma. | Cancer Med 2026 [Europe PMC]
+- PMID 41745445 | DOI 10.3390/jimaging12020081 ✓Crossref | Automatic Childhood Pneumonia Diagnosis Based on Multi-Model Feature Fusion Using Chi-Square Feature Selection. | J Imaging 2026 [Europe PMC]
+- https://openalex.org/W3017309755 | DOI 10.3390/app10093233 ✓Crossref | Transfer Learning with Deep Convolutional Neural Network (CNN) for Pneumonia Detection Using Chest X-ray | Applied Sciences 2020 [OpenAlex]
+- PMID 41577997 | DOI 10.1038/s43856-025-01334-3 ✓Crossref | Hybrid deep learning framework MedFusionNet assists multilabel biomedical risk stratification from imaging and tabular data. | Commun Med (Lond) 2026 [Europe PMC]
+- https://openalex.org/W4385342469 | DOI 10.3390/computers12080151 ✓Crossref | Convolutional Neural Networks: A Survey | Computers 2023 [OpenAlex]
+- PMID 42200072 | DOI 10.3389/fmed.2026.1822284 ✓Crossref | A spatial correlation-guided deep fusion framework for multimodal lung cancer classification using CT imaging. | Front Med (Lausanne) 2026 [Europe PMC]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

@@ -1,44 +1,46 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:20:32Z
+- Retrieved (UTC): 2026-07-11T19:21:54Z
 - Intervention type: device
-- Literature/trials query: 'hierarchical pairs fine tuned'
+- Literature/trials query: 'text transformer natural language'
 - MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
-- openFDA device terms: ['hierarchical', 'outpatient', 'psychiatry', 'behavioral', 'pairs']
+- openFDA device terms: ['transformer', 'outpatient', 'behavioral', 'health', 'text']
 
 ### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Transformer, Endoscope | product_code=GCW | class=2 | regulation=876.1500 | panel=Gastroenterology, Urology
+- 510(k) | MERITS TRANSFORMER POWER SCOOTER, S941 | k_number=K142162 | decision=Substantially Equivalent | date=2015-05-01 | applicant=Merits Health Products Co., Ltd.
+- 510(k) | TRANSFORMER | k_number=K822267 | decision=Substantially Equivalent | date=1982-10-13 | applicant=Kelleher Corp.
 - CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
 - 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
 - 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
-- 510(k) | MyCare Psychiatry Clozapine Assay Kit | k_number=DEN190028 | decision=Unknown | date=2020-04-16 | applicant=Saladax Biomedical, Inc.
 - CLASSIFICATION | Tempo Pilot Bh: Behavioral Health | product_code=SIE | class=N | regulation= | panel=Unknown
 - CLASSIFICATION | Computerized Behavioral Therapy Device For Substance Use Disorders | product_code=PWE | class=2 | regulation=882.5801 | panel=Neurology
 - CLASSIFICATION | Computerized Behavioral Therapy Device For Treating Symptoms | product_code=QMY | class=2 | regulation=876.5960 | panel=Gastroenterology, Urology
-- 510(k) | KIMBERLY-CLARK PURPLE NITRILE XTRA* STERILE POWDER-FREE EXAM GLOVE (CHEMOTHERAPY GLOVE) - 12 STERILE PAIRS | k_number=K102032 | decision=Substantially Equivalent | date=2010-09-08 | applicant=Kimberly-Clark Corp.
-- 510(k) | THREADED PADDLE PAIRS, INTERNAL ADULT PEDI INFANT | k_number=K902590 | decision=Substantially Equivalent | date=1990-07-18 | applicant=Marquette Electronics, Inc.
-- 510(k) | Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Pairs; Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Singles | k_number=K243172 | decision=Substantially Equivalent | date=2025-06-18 | applicant=O&M Halyard, Inc.
+- CLASSIFICATION | N95 Respirator With Antimicrobial/Antiviral Agent For Use By The General Public In Public Health Medical Emergencies | product_code=ORW | class=2 | regulation=880.6260 | panel=General Hospital
+- CLASSIFICATION | Genetic Variant Detection And Health Risk Assessment System | product_code=PTA | class=2 | regulation=866.5950 | panel=Immunology
+- 510(k) | PC 2909A-HEALTH PULSE CONTROL STIMULATOR | k_number=K830747 | decision=Substantially Equivalent | date=1983-05-30 | applicant=J.A. Preston Corp.
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
-- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
-- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
-- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+- MAUDE | TRANSFORMER, LOW IMPEDANCE | event_type=Malfunction | date_received=20080617 | report_number=1062083
+- MAUDE | ISOLATION TRANSFORMER - 110V ERGOJUST CART | event_type=Malfunction | date_received=20201222 | report_number=9612330-2020-00013
+- Recall | GS777 Wall Transformer Model: 77710 Intended Use: The GS777 Wall Transformer is intended for use in ambulatory and acute | classification=Class II | status=Terminated | reason=Potential Risk of fluid ingress to the power supplies, resulting in risk of an internal electrical short and possible electrical shock | firm=Welch Allyn Inc | date=20210422 | recall_number=Z-1672-2021
+- Recall | GE HC OEC 9900 Elite and GE OEC 9800 Fluoroscopes Snubber Boards are a PCB with a 70 amp fuse to provide fused protectio | classification=Class II | status=Terminated | reason=GE OEC recalled certain 9800 Fluoroscope & 9900 Elite Models because the Snubber Board did not conform to the IEC 60601-1 standard for clearance and creepage of | firm=GE OEC Medical Systems, Inc | date=20100426 | recall_number=Z-2241-2012
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 41946745 | DOI 10.1038/s41597-026-07195-2 ✓Crossref | Bridging the Gap in Chinese Legal Conflict Review: A Dataset, Benchmark Tasks, and Framework. | Sci Data 2026 [Europe PMC]
-- PMID 15214846 | DOI 10.1042/bj20040892 ✓Crossref | Carbohydrate-binding modules: fine-tuning polysaccharide recognition | Biochemical Journal 2004 [OpenAlex]
-- PMID 41922447 | DOI 10.1038/s41598-026-45852-z ✓Crossref | Enhancing movie script creation through retrieval-augmented LLMs and stable diffusion scene modeling. | Sci Rep 2026 [Europe PMC]
-- PMID 23787344 | DOI 10.1109/tpami.2012.231 ✓Crossref | Learning Hierarchical Features for Scene Labeling | IEEE Transactions on Pattern Analysis and Machine Intelligence 2012 [OpenAlex]
-- PMID 41880603 | DOI 10.2196/82997 ✓Crossref | Improving Retrieval Augmented Generation for Health Care by Fine-Tuning Clinical Embedding Models: Development and Evaluation Study. | J Med Internet Res 2026 [Europe PMC]
-- https://openalex.org/W2099822476 | DOI 10.1088/1126-6708/2005/06/073 ✓Crossref | Supersymmetric unification without low energy supersymmetry and signatures for fine-tuning at the LHC | Journal of High Energy Physics 2005 [OpenAlex]
-- PMID 41881558 | DOI 10.1002/mp.70406 ✓Crossref | Predicting ventilation from single breathing phase non-contrast CT using Swin Transformers. | Med Phys 2026 [Europe PMC]
-- https://openalex.org/W1686810756 | DOI 10.48550/arxiv.1409.1556 ✓Crossref | Very Deep Convolutional Networks for Large-Scale Image Recognition | arXiv (Cornell University) 2014 [OpenAlex]
-- PMID 41523094 | DOI 10.5334/joc.482 ✓Crossref | Updating the German Psycholinguistic Word Toolbox with AI-Generated Estimates of Concreteness, Valence, Arousal, Age of Acquisition, and Familiarity. | J Cogn 2026 [Europe PMC]
-- PMID 12868647 | DOI 10.1364/josaa.20.001434 ✓Crossref | Hierarchical Bayesian inference in the visual cortex | Journal of the Optical Society of America A 2003 [OpenAlex]
-- AGR:IND609389656 | Joint topic entity and intent recognition model for multimodal agricultural diseases and pests question answering | Computers and electronics in agriculture. 2026 [Europe PMC]
-- https://openalex.org/W2963096510 | DOI 10.18653/v1/p18-1082 ✓Crossref | Hierarchical Neural Story Generation |  2018 [OpenAlex]
-- PMID 41667618 | DOI 10.1038/s41598-026-38066-w ✓Crossref | The construction and refined extraction techniques of knowledge graph based on large language models. | Sci Rep 2026 [Europe PMC]
-- https://openalex.org/W2962883855 | DOI 10.1609/aaai.v30i1.9883 ✓Crossref | Building End-To-End Dialogue Systems Using Generative Hierarchical Neural Network Models |  2016 [OpenAlex]
-- PMID 41888197 | DOI 10.1038/s41598-026-45458-5 ✓Crossref | Exploring the limits of pre-trained embeddings in machine-guided protein design: a case study on predicting AAV vector viability. | Sci Rep 2026 [Europe PMC]
+- PMID 42384713 | DOI 10.1371/journal.pone.0350516 ✓Crossref | Developing a natural language processing system using transformer-based models for adverse drug event detection in electronic health records. | PLoS One 2026 [Europe PMC]
+- https://openalex.org/W4288089799 | DOI 10.48550/arxiv.1910.10683 ✓Crossref | Exploring the Limits of Transfer Learning with a Unified Text-to-Text\n Transformer | arXiv (Cornell University) 2019 [OpenAlex]
+- PMID 42317820 | ScreeningPaL: LLM-NLP Enabled Early Autism Detection Method from Caregiver's Free-Text Input. | AMIA Jt Summits Transl Sci Proc 2026 [Europe PMC]
+- PMID 31501885 | DOI 10.1093/bioinformatics/btz682 ✓Crossref | BioBERT: a pre-trained biomedical language representation model for biomedical text mining | Bioinformatics 2019 [OpenAlex]
+- PMID 42214285 | DOI 10.1016/j.ijmedinf.2026.106505 ✓Crossref | Clinical text embeddings: A systematic review of methods, applications, and future directions. | Int J Med Inform 2026 [Europe PMC]
+- https://openalex.org/W4309674289 | DOI 10.1145/3571730 ✓Crossref | Survey of Hallucination in Natural Language Generation | ACM Computing Surveys 2022 [OpenAlex]
+- PMID 42081872 | DOI 10.1016/j.neunet.2026.109035 ✓Crossref | TWT: Textual white-box transformer for natural language understanding. | Neural Netw 2026 [Europe PMC]
+- PMID 42222841 | DOI 10.3389/frai.2026.1819994 ✓Crossref | Transformer-based NLP approaches for credit risk prediction: a systematic review. | Front Artif Intell 2026 [Europe PMC]
+- https://openalex.org/W2112796928 | DOI 10.1109/5.726791 ✓Crossref | Gradient-based learning applied to document recognition | Proceedings of the IEEE 1998 [OpenAlex]
+- PMID 42119114 | DOI 10.3233/shti260078 ✓Crossref | Semantic Text Vectorization in Healthcare: Transformer-Based Foundations and Benefit Potentials. | Stud Health Technol Inform 2026 [Europe PMC]
+- https://openalex.org/W2970771982 | DOI 10.18653/v1/d19-1371 ✓Crossref | SciBERT: A Pretrained Language Model for Scientific Text |  2019 [OpenAlex]
+- PMID 41990239 | DOI 10.1093/jamia/ocag045 ✓Crossref | Applying natural language processing and large language models to clinical notes for phenotyping and diagnosing rare diseases: a systematic review. | J Am Med Inform Assoc 2026 [Europe PMC]
+- https://openalex.org/W2952230511 | Natural Language Processing (almost) from Scratch | Infoscience (Ecole Polytechnique Fédérale de Lausanne) 2011 [OpenAlex]
+- PMID 42265769 | DOI 10.1186/s13049-026-01644-y ✓Crossref | AquaAI: development and internal validation of a Danish transformer-based model to identify drowning and aquatic incidents in prehospital medical records. | Scand J Trauma Resusc Emerg Med 2026 [Europe PMC]
+- https://openalex.org/W3169483174 | DOI 10.18653/v1/2021.naacl-main.41 ✓Crossref | mT5: A Massively Multilingual Pre-trained Text-to-Text Transformer |  2021 [OpenAlex]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

@@ -1,50 +1,46 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:20:51Z
+- Retrieved (UTC): 2026-07-11T19:22:09Z
 - Intervention type: device
-- Literature/trials query: '("Recurrence" OR "Recurrences" OR "Relapse" OR "Relapses" OR "Recrudescence") AND hierarchical AND pairs'
-- MeSH normalization: 'relapse' → "Recurrence" (D012008) + 4 synonyms
-- openFDA device terms: ['hierarchical', 'outpatient', 'psychiatry', 'behavioral', 'pairs']
-
-### ClinicalTrials.gov (study designs, endpoints, enrollment)
-- NCT01969799 | Aerosolized Amikacin and Fosfomycin in Mechanically Ventilated Patients With Gram-negative Pneumonia | status=COMPLETED | type=INTERVENTIONAL phases=PHASE2 | n=143 | allocation=RANDOMIZED masking=QUADRUPLE | primary_outcomes=Change From Baseline in Clinical Pulmonary Infection Score (CPIS) For Each Patient, Value Obtained From a Daily Assessment Over the 10 Day Study Period Was Compared to Baseline, and the LSM Data Represent the Change From Baseline Data Over All Days .
-- NCT07472439 | Auryon Atherectomy System With Standard Balloon Angioplasty Versus Standard Balloon Angioplasty Alone in Europe | status=NOT_YET_RECRUITING | type=INTERVENTIONAL phases=NA | n=50 | allocation=RANDOMIZED masking=NONE | primary_outcomes=Win-ratio comparing subjects in the treatment group versus the control group on the components of the composite endpoints in a hierarchical fashion at 12 months
-- NCT06777901 | Auryon Atherectomy System With Standard Balloon Angioplasty Versus Standard Balloon Angioplasty Alone | status=RECRUITING | type=INTERVENTIONAL phases=PHASE4 | n=224 | allocation=RANDOMIZED masking=NONE | primary_outcomes=Win-ratio comparing subjects in the treatment group versus the control group on the components of the composite endpoints in a hierarchical fashion at 12 months
-- NCT03904147 | TRILUMINATE Pivotal Trial | status=ACTIVE_NOT_RECRUITING | type=INTERVENTIONAL phases=NA | n=572 | allocation=RANDOMIZED masking=SINGLE | primary_outcomes=For Randomized Cohort: Hierarchical Composite of All-cause Death or Tricuspid Valve Surgery, Heart Failure Hospitalizations, and KCCQ Improvement; For Single-Arm Cohort: Rate of Survival Through 12 Months With a Quality of Life Improvement (Assessed Using KCCQ Overall Score) of at Least 10 Points Co
+- Literature/trials query: 'text transformer natural language'
+- MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
+- openFDA device terms: ['transformer', 'outpatient', 'behavioral', 'health', 'text']
 
 ### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Transformer, Endoscope | product_code=GCW | class=2 | regulation=876.1500 | panel=Gastroenterology, Urology
+- 510(k) | MERITS TRANSFORMER POWER SCOOTER, S941 | k_number=K142162 | decision=Substantially Equivalent | date=2015-05-01 | applicant=Merits Health Products Co., Ltd.
+- 510(k) | TRANSFORMER | k_number=K822267 | decision=Substantially Equivalent | date=1982-10-13 | applicant=Kelleher Corp.
 - CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
 - 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
 - 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
-- 510(k) | MyCare Psychiatry Clozapine Assay Kit | k_number=DEN190028 | decision=Unknown | date=2020-04-16 | applicant=Saladax Biomedical, Inc.
 - CLASSIFICATION | Tempo Pilot Bh: Behavioral Health | product_code=SIE | class=N | regulation= | panel=Unknown
 - CLASSIFICATION | Computerized Behavioral Therapy Device For Substance Use Disorders | product_code=PWE | class=2 | regulation=882.5801 | panel=Neurology
 - CLASSIFICATION | Computerized Behavioral Therapy Device For Treating Symptoms | product_code=QMY | class=2 | regulation=876.5960 | panel=Gastroenterology, Urology
-- 510(k) | KIMBERLY-CLARK PURPLE NITRILE XTRA* STERILE POWDER-FREE EXAM GLOVE (CHEMOTHERAPY GLOVE) - 12 STERILE PAIRS | k_number=K102032 | decision=Substantially Equivalent | date=2010-09-08 | applicant=Kimberly-Clark Corp.
-- 510(k) | THREADED PADDLE PAIRS, INTERNAL ADULT PEDI INFANT | k_number=K902590 | decision=Substantially Equivalent | date=1990-07-18 | applicant=Marquette Electronics, Inc.
-- 510(k) | Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Pairs; Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Singles | k_number=K243172 | decision=Substantially Equivalent | date=2025-06-18 | applicant=O&M Halyard, Inc.
+- CLASSIFICATION | N95 Respirator With Antimicrobial/Antiviral Agent For Use By The General Public In Public Health Medical Emergencies | product_code=ORW | class=2 | regulation=880.6260 | panel=General Hospital
+- CLASSIFICATION | Genetic Variant Detection And Health Risk Assessment System | product_code=PTA | class=2 | regulation=866.5950 | panel=Immunology
+- 510(k) | PC 2909A-HEALTH PULSE CONTROL STIMULATOR | k_number=K830747 | decision=Substantially Equivalent | date=1983-05-30 | applicant=J.A. Preston Corp.
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
-- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
-- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
-- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+- MAUDE | TRANSFORMER, LOW IMPEDANCE | event_type=Malfunction | date_received=20080617 | report_number=1062083
+- MAUDE | ISOLATION TRANSFORMER - 110V ERGOJUST CART | event_type=Malfunction | date_received=20201222 | report_number=9612330-2020-00013
+- Recall | GS777 Wall Transformer Model: 77710 Intended Use: The GS777 Wall Transformer is intended for use in ambulatory and acute | classification=Class II | status=Terminated | reason=Potential Risk of fluid ingress to the power supplies, resulting in risk of an internal electrical short and possible electrical shock | firm=Welch Allyn Inc | date=20210422 | recall_number=Z-1672-2021
+- Recall | GE HC OEC 9900 Elite and GE OEC 9800 Fluoroscopes Snubber Boards are a PCB with a 70 amp fuse to provide fused protectio | classification=Class II | status=Terminated | reason=GE OEC recalled certain 9800 Fluoroscope & 9900 Elite Models because the Snubber Board did not conform to the IEC 60601-1 standard for clearance and creepage of | firm=GE OEC Medical Systems, Inc | date=20100426 | recall_number=Z-2241-2012
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 42015361 | DOI 10.1093/bioinformatics/btag194 ✓Crossref | Spark: sparse hierarchical energy minimization for scalable prediction of RNA pseudoknots. | Bioinformatics 2026 [Europe PMC]
-- https://openalex.org/W2141807666 | DOI 10.1093/comjnl/26.4.354 ✓Crossref | A Survey of Recent Advances in Hierarchical Clustering Algorithms | The Computer Journal 1983 [OpenAlex]
-- PMID 42252652 | DOI 10.1002/sim.70627 ✓Crossref | Empirical Comparison of Win Ratio and Joint Frailty Models for Recurrent Event Endpoints With Applications in Oncology and Cardiology. | Stat Med 2026 [Europe PMC]
-- https://openalex.org/W2082583687 | DOI 10.1137/s1064827596311451 ✓Crossref | Algorithms for Model-Based Gaussian Hierarchical Clustering | SIAM Journal on Scientific Computing 1998 [OpenAlex]
-- PMID 41662857 | DOI 10.1016/j.lanmic.2025.101256 ✓Crossref | Parasite clearance in patients with Plasmodium vivax monoinfection treated with artesunate in Cambodia: an observational secondary analysis of trial data. | Lancet Microbe 2026 [Europe PMC]
-- https://openalex.org/W1992978094 | DOI 10.1137/1009002 ✓Crossref | Computational Aspects of Three-Term Recurrence Relations | SIAM Review 1967 [OpenAlex]
-- PMID 42034799 | DOI 10.1007/s00401-026-03016-3 ✓Crossref | Loss of meningothelial identity and mesenchymal fate switching in NF2-mutant meningiomas. | Acta Neuropathol 2026 [Europe PMC]
-- PMID 31591217 | DOI 10.1073/pnas.1905544116 ✓Crossref | Recurrence is required to capture the representational dynamics of the human visual system | Proceedings of the National Academy of Sciences 2019 [OpenAlex]
-- PMID 42192895 | DOI 10.3390/cancers18101532 ✓Crossref | Integrated Genomic Profiling of Newly Diagnosed and Relapsed Acute Myeloid Leukemia Identifies Driver Genes, Mutational Signatures, and Therapeutic Targets. | Cancers (Basel) 2026 [Europe PMC]
-- PMID 32641768 | DOI 10.1038/s41467-020-17186-5 ✓Crossref | Single-cell RNA-seq reveals that glioblastoma recapitulates a normal neurodevelopmental hierarchy | Nature Communications 2020 [OpenAlex]
-- PPR:PPR1114849 | DOI 10.1101/2025.11.04.25339472 ✓Crossref | Clonal Evolution of Pediatric Acute Myeloid Leukemia and Its Contribution to Disease Relapse | PPR 2025 [Europe PMC]
-- PMID 22008217 | DOI 10.1136/bmj.d5928 ✓Crossref | The Cochrane Collaboration's tool for assessing risk of bias in randomised trials | BMJ 2011 [OpenAlex]
-- PMID 41798597 | DOI 10.1093/ehjopen/oeag024 ✓Crossref | Win ratio analysis of low-voltage area ablation in persistent atrial fibrillation: sub-analysis of SUPPRESS-AF. | Eur Heart J Open 2026 [Europe PMC]
-- PMID 31532725 | DOI 10.1200/jco.19.00572 ✓Crossref | Effect of Psychological Intervention on Fear of Cancer Recurrence: A Systematic Review and Meta-Analysis | Journal of Clinical Oncology 2019 [OpenAlex]
-- PMID 41708893 | DOI 10.1038/s43018-026-01122-5 ✓Crossref | The automated computational workflow QUICHE reveals structural definitions of antitumor responses in triple-negative breast cancer. | Nat Cancer 2026 [Europe PMC]
+- PMID 42384713 | DOI 10.1371/journal.pone.0350516 ✓Crossref | Developing a natural language processing system using transformer-based models for adverse drug event detection in electronic health records. | PLoS One 2026 [Europe PMC]
+- https://openalex.org/W4288089799 | DOI 10.48550/arxiv.1910.10683 ✓Crossref | Exploring the Limits of Transfer Learning with a Unified Text-to-Text\n Transformer | arXiv (Cornell University) 2019 [OpenAlex]
+- PMID 42317820 | ScreeningPaL: LLM-NLP Enabled Early Autism Detection Method from Caregiver's Free-Text Input. | AMIA Jt Summits Transl Sci Proc 2026 [Europe PMC]
+- PMID 31501885 | DOI 10.1093/bioinformatics/btz682 ✓Crossref | BioBERT: a pre-trained biomedical language representation model for biomedical text mining | Bioinformatics 2019 [OpenAlex]
+- PMID 42214285 | DOI 10.1016/j.ijmedinf.2026.106505 ✓Crossref | Clinical text embeddings: A systematic review of methods, applications, and future directions. | Int J Med Inform 2026 [Europe PMC]
+- https://openalex.org/W4309674289 | DOI 10.1145/3571730 ✓Crossref | Survey of Hallucination in Natural Language Generation | ACM Computing Surveys 2022 [OpenAlex]
+- PMID 42081872 | DOI 10.1016/j.neunet.2026.109035 ✓Crossref | TWT: Textual white-box transformer for natural language understanding. | Neural Netw 2026 [Europe PMC]
+- PMID 42222841 | DOI 10.3389/frai.2026.1819994 ✓Crossref | Transformer-based NLP approaches for credit risk prediction: a systematic review. | Front Artif Intell 2026 [Europe PMC]
+- https://openalex.org/W2112796928 | DOI 10.1109/5.726791 ✓Crossref | Gradient-based learning applied to document recognition | Proceedings of the IEEE 1998 [OpenAlex]
+- PMID 42119114 | DOI 10.3233/shti260078 ✓Crossref | Semantic Text Vectorization in Healthcare: Transformer-Based Foundations and Benefit Potentials. | Stud Health Technol Inform 2026 [Europe PMC]
+- https://openalex.org/W2970771982 | DOI 10.18653/v1/d19-1371 ✓Crossref | SciBERT: A Pretrained Language Model for Scientific Text |  2019 [OpenAlex]
+- PMID 41990239 | DOI 10.1093/jamia/ocag045 ✓Crossref | Applying natural language processing and large language models to clinical notes for phenotyping and diagnosing rare diseases: a systematic review. | J Am Med Inform Assoc 2026 [Europe PMC]
+- https://openalex.org/W2952230511 | Natural Language Processing (almost) from Scratch | Infoscience (Ecole Polytechnique Fédérale de Lausanne) 2011 [OpenAlex]
+- PMID 42265769 | DOI 10.1186/s13049-026-01644-y ✓Crossref | AquaAI: development and internal validation of a Danish transformer-based model to identify drowning and aquatic incidents in prehospital medical records. | Scand J Trauma Resusc Emerg Med 2026 [Europe PMC]
+- https://openalex.org/W3169483174 | DOI 10.18653/v1/2021.naacl-main.41 ✓Crossref | mT5: A Massively Multilingual Pre-trained Text-to-Text Transformer |  2021 [OpenAlex]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

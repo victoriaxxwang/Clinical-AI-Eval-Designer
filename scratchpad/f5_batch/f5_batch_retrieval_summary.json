@@ -2,16 +2,16 @@
   "aggregate": {
     "n_cases": 10,
     "frozen_surfaced": 0,
-    "widenet_surfaced": 0,
-    "gate_pass": 0,
+    "widenet_surfaced": 4,
+    "gate_pass": 4,
     "fda_identical": 10,
-    "lit_diverged": 10
+    "lit_diverged": 9
   },
   "cases": [
     {
       "id": "nsclc_lung_ct_cnn",
       "oracle": "Carcinoma, Non-Small-Cell Lung",
-      "disease_in_text": "no \u2014 'Lung-RADS' / 'malignancy' / 'nodule' / 'chest CT' appear; 'lung cancer' / 'NSCLC' / 'adenocarcinoma' never stated",
+      "disease_in_text": "model_desc final clause: '...likelihood of progression to non-small cell lung cancer.' (once, standard name)",
       "frozen_surfaced": false,
       "widenet_surfaced": false,
       "gate_pass": false,
@@ -20,16 +20,16 @@
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'convolutional neural network adapted'",
+          "query": "'dual branch architecture pairs'",
           "surfaced_oracle_disease": false,
-          "context_chars": 9018,
+          "context_chars": 8192,
           "registry_hits_ok": 4
         },
         "widenet": {
-          "mesh_normalization": "'malignancy' \u2192 \"Neoplasms\" (D009369) + 4 synonyms",
-          "query": "'(\"Neoplasms\" OR \"Tumors\" OR \"Neoplasia\" OR \"Neoplasias\" OR \"Neoplasm\") AND convolutional AND neural'",
+          "mesh_normalization": "'lung cancer' \u2192 \"Lung Neoplasms\" (D008175) + 4 synonyms",
+          "query": "'(\"Lung Neoplasms\" OR \"Neoplasms, Pulmonary\" OR \"Neoplasm, Pulmonary\" OR \"Pulmonary Neoplasm\" OR \"Pulmonary Neoplasms\") AND dual AND branch'",
           "surfaced_oracle_disease": false,
-          "context_chars": 9512,
+          "context_chars": 10386,
           "registry_hits_ok": 4
         }
       }
@@ -37,25 +37,25 @@
     {
       "id": "ischemic_stroke_ct_ensemble",
       "oracle": "Ischemic Stroke",
-      "disease_in_text": "partial \u2014 'stroke' appears in setting ('hyperacute stroke pathway'); 'ischemic core' in model_desc; full 'ischemic stroke' not stated as a unit",
+      "disease_in_text": "model_desc final clause: '...for triage of acute ischemic stroke.' (once, standard name)",
       "frozen_surfaced": false,
-      "widenet_surfaced": false,
-      "gate_pass": false,
+      "widenet_surfaced": true,
+      "gate_pass": true,
       "fda_identical": true,
       "lit_identical": false,
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'ensemble net segmentation head'",
+          "query": "'encoder\u2013decoder segmentation network nnu'",
           "surfaced_oracle_disease": false,
-          "context_chars": 6878,
+          "context_chars": 6527,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "'emergency' \u2192 \"Emergencies\" (D004630) + 1 synonyms",
-          "query": "'(\"Emergencies\" OR \"Emergency\") AND ensemble AND net'",
-          "surfaced_oracle_disease": false,
-          "context_chars": 7133,
+          "mesh_normalization": "'ischemic stroke' \u2192 \"Ischemic Stroke\" (D000083242) + 4 synonyms",
+          "query": "'(\"Ischemic Stroke\" OR \"Ischemic Strokes\" OR \"Stroke, Ischemic\" OR \"Ischaemic Stroke\" OR \"Ischaemic Strokes\") AND encoder\u2013decoder AND segmentation'",
+          "surfaced_oracle_disease": true,
+          "context_chars": 6941,
           "registry_hits_ok": 3
         }
       }
@@ -63,7 +63,7 @@
     {
       "id": "copd_exacerbation_survival",
       "oracle": "Pulmonary Disease, Chronic Obstructive",
-      "disease_in_text": "no \u2014 'airflow-limitation' / 'spirometry' / 'FEV1/FVC' / 'exacerbation' appear; 'COPD' / 'chronic obstructive pulmonary disease' never stated",
+      "disease_in_text": "model_desc final clause: '...in patients with chronic obstructive pulmonary disease.' (once, standard name)",
       "frozen_surfaced": false,
       "widenet_surfaced": false,
       "gate_pass": false,
@@ -72,24 +72,24 @@
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'gradient boosted survival xgboost'",
+          "query": "'hybrid tabular\u2013imaging fuses gradient'",
           "surfaced_oracle_disease": false,
-          "context_chars": 8346,
+          "context_chars": 7566,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'gradient boosted survival xgboost'",
+          "mesh_normalization": "'pulmonary disease' \u2192 \"Lung Diseases\" (D008171) + 4 synonyms",
+          "query": "'(\"Lung Diseases\" OR \"Disease, Lung\" OR \"Diseases, Lung\" OR \"Lung Disease\" OR \"Disease, Pulmonary\") AND spirometry AND hybrid'",
           "surfaced_oracle_disease": false,
-          "context_chars": 8356,
-          "registry_hits_ok": 3
+          "context_chars": 9476,
+          "registry_hits_ok": 4
         }
       }
     },
     {
       "id": "aki_rnn_inpatient",
       "oracle": "Acute Kidney Injury",
-      "disease_in_text": "no \u2014 'KDIGO staging' / 'creatinine' / 'nephrotoxic' appear; 'acute kidney injury' / 'AKI' never stated",
+      "disease_in_text": "model_desc final clause: '...for impending acute kidney injury.' (once, standard name)",
       "frozen_surfaced": false,
       "widenet_surfaced": false,
       "gate_pass": false,
@@ -98,42 +98,42 @@
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'recurrent neural network gru'",
+          "query": "'sequence processes irregularly sampled'",
           "surfaced_oracle_disease": false,
-          "context_chars": 7195,
+          "context_chars": 8014,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'recurrent neural network gru'",
+          "mesh_normalization": "'injury' \u2192 \"Wounds and Injuries\" (D014947) + 4 synonyms",
+          "query": "'(\"Wounds and Injuries\" OR \"Injuries and Wounds\" OR \"Injuries, Wounds\" OR \"Wounds and Injury\" OR \"Injury and Wounds\") AND sequence AND processes'",
           "surfaced_oracle_disease": false,
-          "context_chars": 7205,
-          "registry_hits_ok": 3
+          "context_chars": 10036,
+          "registry_hits_ok": 4
         }
       }
     },
     {
       "id": "tb_chest_xray_densenet",
       "oracle": "Tuberculosis, Pulmonary",
-      "disease_in_text": "partial \u2014 'TB' (abbreviation) appears in model_desc ('TB-consistent abnormality'); full 'tuberculosis' never stated",
+      "disease_in_text": "model_desc final clause: '...findings suggestive of pulmonary tuberculosis.' (once, standard name)",
       "frozen_surfaced": false,
-      "widenet_surfaced": false,
-      "gate_pass": false,
+      "widenet_surfaced": true,
+      "gate_pass": true,
       "fda_identical": true,
       "lit_identical": false,
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'densenet 121 cnn pretrained'",
+          "query": "'chest convolutional classifier built'",
           "surfaced_oracle_disease": false,
-          "context_chars": 7409,
+          "context_chars": 7000,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'densenet 121 cnn pretrained'",
-          "surfaced_oracle_disease": false,
-          "context_chars": 7419,
+          "mesh_normalization": "'pulmonary tuberculosis' \u2192 \"Tuberculosis, Pulmonary\" (D014397) + 4 synonyms",
+          "query": "'(\"Tuberculosis, Pulmonary\" OR \"Pulmonary Consumption\" OR \"Consumption, Pulmonary\" OR \"Consumptions, Pulmonary\" OR \"Pulmonary Consumptions\") AND radiograph AND convolutional'",
+          "surfaced_oracle_disease": true,
+          "context_chars": 7477,
           "registry_hits_ok": 3
         }
       }
@@ -141,25 +141,25 @@
     {
       "id": "diabetic_retinopathy_fundus",
       "oracle": "Diabetic Retinopathy",
-      "disease_in_text": "no for oracle \u2014 'diabetes mellitus' in population is the PARENT (wrong node); 'macular edema' / 'microaneurysm' appear; 'diabetic retinopathy' / 'retinopathy' never stated",
+      "disease_in_text": "model_desc final clause: '...to identify referable diabetic retinopathy.' (once, standard name). NOTE: 'diabetes mellitus' also appears in population.",
       "frozen_surfaced": false,
-      "widenet_surfaced": false,
-      "gate_pass": false,
+      "widenet_surfaced": true,
+      "gate_pass": true,
       "fda_identical": true,
       "lit_identical": false,
       "arms": {
         "frozen": {
-          "mesh_normalization": "'disease' \u2192 \"Disease\" (D004194) + 1 synonyms",
-          "query": "'(\"Disease\" OR \"Diseases\") AND fundus AND efficientnet'",
+          "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
+          "query": "'efficientnet backbone processes macula'",
           "surfaced_oracle_disease": false,
-          "context_chars": 6892,
+          "context_chars": 7201,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "'macular edema' \u2192 \"Macular Edema\" (D008269) + 4 synonyms",
-          "query": "'(\"Macular Edema\" OR \"Edema, Macular\" OR \"Macular Edema, Cystoid\" OR \"Edema, Cystoid Macular\" OR \"Cystoid Macular Dystrophy\") AND fundus AND efficientnet'",
-          "surfaced_oracle_disease": false,
-          "context_chars": 6936,
+          "mesh_normalization": "'diabetic retinopathy' \u2192 \"Diabetic Retinopathy\" (D003930) + 3 synonyms",
+          "query": "'(\"Diabetic Retinopathy\" OR \"Diabetic Retinopathies\" OR \"Retinopathies, Diabetic\" OR \"Retinopathy, Diabetic\") AND fundus AND efficientnet'",
+          "surfaced_oracle_disease": true,
+          "context_chars": 7166,
           "registry_hits_ok": 3
         }
       }
@@ -167,7 +167,7 @@
     {
       "id": "melanoma_dermoscopy_transformer",
       "oracle": "Melanoma",
-      "disease_in_text": "no \u2014 'pigmented skin lesions' / 'dermoscopic' / 'malignancy' / 'biopsy' appear; 'melanoma' never stated",
+      "disease_in_text": "model_desc final clause: '...benign pigmented lesions from melanoma.' (once, standard name)",
       "frozen_surfaced": false,
       "widenet_surfaced": false,
       "gate_pass": false,
@@ -176,16 +176,16 @@
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'lesion multimodal transformer fuses'",
+          "query": "'dermoscopic convolutional network vit'",
           "surfaced_oracle_disease": false,
-          "context_chars": 8050,
+          "context_chars": 6801,
           "registry_hits_ok": 3
         },
         "widenet": {
           "mesh_normalization": "'malignancy' \u2192 \"Neoplasms\" (D009369) + 4 synonyms",
-          "query": "'(\"Neoplasms\" OR \"Tumors\" OR \"Neoplasia\" OR \"Neoplasias\" OR \"Neoplasm\") AND multimodal AND transformer'",
+          "query": "'(\"Neoplasms\" OR \"Tumors\" OR \"Neoplasia\" OR \"Neoplasias\" OR \"Neoplasm\") AND convolutional AND network'",
           "surfaced_oracle_disease": false,
-          "context_chars": 8849,
+          "context_chars": 8692,
           "registry_hits_ok": 4
         }
       }
@@ -193,33 +193,33 @@
     {
       "id": "crohns_endoscopy_video_cnn",
       "oracle": "Crohn Disease",
-      "disease_in_text": "no for oracle \u2014 'inflammatory bowel disease' in population is the PARENT (wrong node); 'mucosal inflammation' / 'ulceration' / 'stricturing' appear; 'Crohn' never stated",
+      "disease_in_text": "model_desc final clause: '...in patients with Crohn's disease.' (once, standard name). NOTE: parent term 'inflammatory bowel disease' appears in population/setting.",
       "frozen_surfaced": false,
-      "widenet_surfaced": false,
-      "gate_pass": false,
+      "widenet_surfaced": true,
+      "gate_pass": true,
       "fda_identical": true,
       "lit_identical": false,
       "arms": {
         "frozen": {
-          "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'cnn video analysis frame'",
+          "mesh_normalization": "'stenosis' \u2192 \"Constriction, Pathologic\" (D003251) + 4 synonyms",
+          "query": "'(\"Constriction, Pathologic\" OR \"Constrictions, Pathologic\" OR \"Pathologic Constrictions\" OR \"Constriction, Pathological\" OR \"Pathological Constriction\") AND multimodal AND combines'",
           "surfaced_oracle_disease": false,
-          "context_chars": 7894,
+          "context_chars": 8904,
           "registry_hits_ok": 4
         },
         "widenet": {
-          "mesh_normalization": "'inflammation' \u2192 \"Inflammation\" (D007249) + 4 synonyms",
-          "query": "'(\"Inflammation\" OR \"Inflammations\" OR \"Innate Inflammatory Response\" OR \"Inflammatory Response, Innate\" OR \"Innate Inflammatory Responses\") AND cnn AND video'",
-          "surfaced_oracle_disease": false,
-          "context_chars": 7544,
-          "registry_hits_ok": 3
+          "mesh_normalization": "'crohn disease' \u2192 \"Crohn Disease\" (D003424) + 4 synonyms",
+          "query": "'(\"Crohn Disease\" OR \"Crohn\\'s Disease\" OR \"Crohns Disease\" OR \"Crohn\\'s Enteritis\" OR \"Inflammatory Bowel Disease 1\") AND multimodal AND combines'",
+          "surfaced_oracle_disease": true,
+          "context_chars": 8387,
+          "registry_hits_ok": 4
         }
       }
     },
     {
       "id": "t2dm_incident_risk_ehr",
       "oracle": "Diabetes Mellitus, Type 2",
-      "disease_in_text": "no \u2014 'HbA1c' / 'fasting glucose' / 'prediabetic' appear; 'type 2 diabetes' / 'diabetes mellitus' never stated",
+      "disease_in_text": "model_desc final clause: '...risk of incident type 2 diabetes mellitus.' (once, standard name)",
       "frozen_surfaced": false,
       "widenet_surfaced": false,
       "gate_pass": false,
@@ -228,43 +228,43 @@
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'regularized logistic regression gradient'",
+          "query": "'gradient boosted tree ensemble'",
           "surfaced_oracle_disease": false,
-          "context_chars": 6872,
+          "context_chars": 6489,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "'disease' \u2192 \"Disease\" (D004194) + 1 synonyms",
-          "query": "'(\"Disease\" OR \"Diseases\") AND regularized AND logistic'",
+          "mesh_normalization": "'diabetes mellitus' \u2192 \"Diabetes Mellitus\" (D003920) + 0 synonyms",
+          "query": "'(\"Diabetes Mellitus\") AND gradient AND boosted'",
           "surfaced_oracle_disease": false,
-          "context_chars": 7592,
-          "registry_hits_ok": 4
+          "context_chars": 6887,
+          "registry_hits_ok": 3
         }
       }
     },
     {
       "id": "mdd_relapse_multimodal",
       "oracle": "Depressive Disorder, Major",
-      "disease_in_text": "no \u2014 'PHQ-9' / 'psychiatry' / 'relapse' / 'mental-health' appear; 'depression' / 'major depressive disorder' never stated",
+      "disease_in_text": "model_desc final clause: '...in patients with major depressive disorder.' (once, standard name)",
       "frozen_surfaced": false,
       "widenet_surfaced": false,
       "gate_pass": false,
       "fda_identical": true,
-      "lit_identical": false,
+      "lit_identical": true,
       "arms": {
         "frozen": {
           "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
-          "query": "'hierarchical pairs fine tuned'",
+          "query": "'text transformer natural language'",
           "surfaced_oracle_disease": false,
-          "context_chars": 6909,
+          "context_chars": 7129,
           "registry_hits_ok": 3
         },
         "widenet": {
-          "mesh_normalization": "'relapse' \u2192 \"Recurrence\" (D012008) + 4 synonyms",
-          "query": "'(\"Recurrence\" OR \"Recurrences\" OR \"Relapse\" OR \"Relapses\" OR \"Recrudescence\") AND hierarchical AND pairs'",
+          "mesh_normalization": "none (condition not an exact MeSH heading, or lookup unavailable) \u2014 raw keywords used",
+          "query": "'text transformer natural language'",
           "surfaced_oracle_disease": false,
-          "context_chars": 8942,
-          "registry_hits_ok": 4
+          "context_chars": 7129,
+          "registry_hits_ok": 3
         }
       }
     }

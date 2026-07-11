@@ -1,44 +1,44 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:11:09Z
+- Retrieved (UTC): 2026-07-11T19:11:15Z
 - Intervention type: device
-- Literature/trials query: '("Emergencies" OR "Emergency") AND ensemble AND net'
-- MeSH normalization: 'emergency' → "Emergencies" (D004630) + 1 synonyms
-- openFDA device terms: ['ensemble', 'emergency', 'department', 'hyperacute', 'net']
+- Literature/trials query: '("Ischemic Stroke" OR "Ischemic Strokes" OR "Stroke, Ischemic" OR "Ischaemic Stroke" OR "Ischaemic Strokes") AND encoder–decoder AND segmentation'
+- MeSH normalization: 'ischemic stroke' → "Ischemic Stroke" (D000083242) + 4 synonyms
+- openFDA device terms: ['encoder–decoder', 'emergency', 'department', 'neuro', 'segmentation']
 
 ### openFDA (device classification / 510(k) precedents)
-- 510(k) | ENSEMBLE CENTRAL STATION MONITOR | k_number=K970358 | decision=Substantially Equivalent | date=1998-02-11 | applicant=Mennen Medical, Inc.
-- 510(k) | Ensemble CMC, Size 141, Ensemble CMC, Size 151, Ensemble CMC, Size 161 | k_number=K201072 | decision=Substantially Equivalent | date=2020-12-02 | applicant=Ensemble Orthopedics, LLC
-- 510(k) | MODIFICATION TO ENSEMBLE CENTRAL STATION MONITOR | k_number=K982697 | decision=Substantially Equivalent | date=1998-08-12 | applicant=Mennen Medical, Inc.
 - CLASSIFICATION | Needle, Emergency Airway | product_code=BWC | class=2 | regulation=868.5090 | panel=Anesthesiology
 - CLASSIFICATION | Powered Communication System For Emergency Use | product_code=QNZ | class=N | regulation= | panel=Unknown
 - CLASSIFICATION | Insect Sting Emergency Kit | product_code=PWX | class=1 | regulation=880.5740 | panel=General Hospital
 - 510(k) | EMERGENCY DEPARTMENT LACERATION KIT- | k_number=K802557 | decision=Substantially Equivalent | date=1980-11-12 | applicant=Johnson & Johnson Professionals, Inc.
-- 510(k) | WaveGuard Net EEG Cap (NA-245, NA-255, NA-261, NA-265, NA-271, NA-281) | k_number=K240575 | decision=Substantially Equivalent | date=2024-11-25 | applicant=Eemagine Medical Imaging Solutions GmbH
-- 510(k) | E*NET NEUROMONITORING SYSTEM | k_number=K930080 | decision=Substantially Equivalent | date=1993-10-19 | applicant=Physiometrix, Inc.
-- 510(k) | NET Recovery Corp/NET Device | k_number=K233166 | decision=Substantially Equivalent | date=2024-05-29 | applicant=Net Recovery
+- CLASSIFICATION | Catheter, Neuro-Vasculature, Occluding Balloon | product_code=PAV | class=f | regulation=882.5150 | panel=Neurology
+- 510(k) | KARL STORZ Flexible Video-Neuro-Endoscope System | k_number=K161112 | decision=Substantially Equivalent | date=2016-09-17 | applicant=KARL STORZ Endoscopy-America, Inc.
+- 510(k) | TEMP AND PERMANENT NEURO LEADS (VARIOUS MODELS) | k_number=K945103 | decision=Substantially Equivalent | date=1995-01-11 | applicant=Medtronic Vascular
+- 510(k) | SMART SEGMENTATION-KNOWLEDGE BASED CONTOURING | k_number=K112778 | decision=Substantially Equivalent | date=2011-12-29 | applicant=Varian Medical Systems
+- 510(k) | DrAid for Liver Segmentation | k_number=K241543 | decision=Substantially Equivalent | date=2024-12-06 | applicant=Vinbrain Joint Stock Company
+- 510(k) | ADVANTAGESIM MD MR PELVIC ORGAN AT RISK SEGMENTATION | k_number=K132944 | decision=Substantially Equivalent | date=2014-03-14 | applicant=Ge Hungary Kft
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- MAUDE | ENSEMBLE A CESARIENNE-LF | event_type=Injury | date_received=20241126 | report_number=1423395-2024-00504
 - MAUDE | VENTILATOR, EMERGENCY, POWERED (RESUSCITATOR) | event_type=Malfunction | date_received=20200427 | report_number=3012307300-2020-03395
-- Recall | Medline Probe Cover Kits containing sterile Ultrasound Gel, Labeled as the following: a) CVC PACK, Model Number DYNJ4696 | classification=Class II | status=Ongoing | reason=Probe covers for use during diagnostic ultrasound procedures may have an inadequate barrier at the seams. | firm=MEDLINE INDUSTRIES, LP - Northfield | date=20230518 | recall_number=Z-2176-2023
-- Recall | Medline custom medical procedure kits labeled as: 1) ENSEMBLE RACHIS-LF, REF DYNJ47568B; 2) UROLOGY ROBOTIC, REF DYNJ555 | classification=Class II | status=Ongoing | reason=Custom convenience kits are being recall because the contain non-sterile Codman Surgical Patties & Surgical Strips, which have the potential for endotoxin conta | firm=MEDLINE INDUSTRIES, LP - Northfield | date=20241121 | recall_number=Z-0792-2025
+- MAUDE | VENTILATOR, EMERGENCY, POWERED (RESUSCITATOR) | event_type=Malfunction | date_received=20200428 | report_number=3012307300-2020-03421
+- Recall | Cook Celect Platinum Vena Cava Filter Set for Femoral and Jugular Vein Approach, Catalog Number IGTCFS-65-1-UNl-C ELECT- | classification=Class III | status=Terminated | reason=Updates to the Instructions for Use. | firm=Cook Medical Incorporated | date=20190225 | recall_number=Z-1026-2019
+- Recall | DigitalDiagnost 4 Chest/Emergency, used to acquire, process, store, display and export digital radiographic images. | classification=Class II | status=Ongoing | reason=Potential for units suspended on the ceiling to fail and fall. | firm=Philips North America Llc | date=20230921 | recall_number=Z-0272-2024
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 41927726 | DOI 10.1038/s41598-026-46040-9 ✓Crossref | A machine learning model for post-operative sepsis prediction in acute surgical patients: a multi-centre, prospective study. | Sci Rep 2026 [Europe PMC]
-- PMID 30795786 | DOI 10.1186/s13054-019-2351-7 ✓Crossref | Emergency department triage prediction of clinical outcomes using machine learning models | Critical Care 2019 [OpenAlex]
-- PMID 42328247 | DOI 10.2147/jmdh.s598950 ✓Crossref | Machine Learning Optimization Algorithms for Clustering Regions and Emergency Management: A Review. | J Multidiscip Healthc 2026 [Europe PMC]
-- PMID 30646206 | DOI 10.1001/jamanetworkopen.2018.6937 ✓Crossref | Machine Learning–Based Prediction of Clinical Outcomes for Children During Emergency Department Triage | JAMA Network Open 2019 [OpenAlex]
-- PMID 42022505 | DOI 10.3389/fdgth.2026.1703634 ✓Crossref | Deep learning for intracranial hemorrhage detection and classification in brain CT scans: a systematic review and hybrid model approach. | Front Digit Health 2026 [Europe PMC]
-- PMID 30392403 | DOI 10.1289/ehp3766 ✓Crossref | Estimates of the Global Burden of Ambient PM2.5, Ozone, and NO2 on Asthma Incidence and Emergency Room Visits | Environmental Health Perspectives 2018 [OpenAlex]
-- PMC:PMC13173139 | 52 Learning health systems and digital twins: Advancing translational science with MS as a use case | J Clin Transl Sci  [Europe PMC]
-- https://openalex.org/W2155190938 | DOI 10.1007/978-3-540-72584-8_143 ✓Crossref | Enhanced Situational Awareness: Application of DDDAS Concepts to Emergency and Disaster Management | Lecture notes in computer science 2007 [OpenAlex]
-- PMID 42345655 | DOI 10.3390/biomimetics11060366 | Hybrid Neural Network Architecture for Automated Liver and Tumor Segmentation Using Ensemble Learning on CT Images. | Biomimetics (Basel) 2026 [Europe PMC]
-- https://openalex.org/W3137180645 | DOI 10.1007/s10044-021-00970-4 ✓Crossref | Automatic COVID-19 detection from X-ray images using ensemble learning with convolutional neural network | Pattern Analysis and Applications 2021 [OpenAlex]
-- PMID 41889429 | DOI 10.1177/20552076261437428 | Developing a clinical decision support tool for stratifying stroke risk in patients presenting with dizziness to the emergency department: A retrospective cohort study. | Digit Health 2026 [Europe PMC]
-- PMID 36084812 | DOI 10.1016/j.jare.2022.08.021 ✓Crossref | A hybrid explainable ensemble transformer encoder for pneumonia identification from chest X-ray images | Journal of Advanced Research 2022 [OpenAlex]
-- PMID 41491206 | DOI 10.1038/s41598-025-34596-x ✓Crossref | A multi-task deep learning pipeline for classification, detection, and weakly supervised 3D segmentation of intraparenchymal hematoma on brain CT. | Sci Rep 2026 [Europe PMC]
-- PMID 31272902 | DOI 10.1016/j.ebiom.2019.06.050 | Automated diagnosis of ear disease using ensemble deep learning with a big otoendoscopy image database | EBioMedicine 2019 [OpenAlex]
-- PMID 41719547 | DOI 10.2196/77202 ✓Crossref | Ensemble Machine Learning Models for Predicting Patients With High Usage: Model Validation and Economic Impact Analysis. | JMIR Med Inform 2026 [Europe PMC]
+- PMID 42187401 | DOI 10.3390/biomimetics11050334 ✓Crossref | Deep Learning-Based Automatic Segmentation of Ischemic Stroke Lesions in CT Perfusion Imaging. | Biomimetics (Basel) 2026 [Europe PMC]
+- https://openalex.org/W3096947210 | DOI 10.1109/access.2021.3086020 ✓Crossref | U-Net and Its Variants for Medical Image Segmentation: A Review of Theory and Applications | IEEE Access 2021 [OpenAlex]
+- PMID 41286107 | DOI 10.1038/s41598-025-25539-7 ✓Crossref | Integrating convolutional and transformer networks for precise diagnosis of watershed and hemorrhagic stroke. | Sci Rep 2025 [Europe PMC]
+- PMID 34892009 | DOI 10.1109/embc46164.2021.9630336 ✓Crossref | UCATR: Based on CNN and Transformer Encoding and Cross-Attention Decoding for Lesion Segmentation of Acute Ischemic Stroke in Non-contrast Computed Tomography Images | 2021 43rd Annual International Conference of the IEEE Engineering in Medicine &amp; Biology Society (EMBC) 2021 [OpenAlex]
+- PMID 41920480 | DOI 10.1007/s13246-026-01730-6 ✓Crossref | Multimodal attention-enhanced network of segmenting acute ischemic stroke from perfusion images. | Phys Eng Sci Med 2026 [Europe PMC]
+- PMID 28778026 | DOI 10.1016/j.media.2017.07.005 ✓Crossref | A survey on deep learning in medical image analysis | Medical Image Analysis 2017 [OpenAlex]
+- PMID 41975201 | DOI 10.1038/s41746-025-02255-0 ✓Crossref | Unified multimodal learning for stroke triage: joint detection, scoring, and segmentation of acute ischemic stroke. | NPJ Digit Med 2026 [Europe PMC]
+- PMID 28577131 | DOI 10.1007/s10278-017-9983-4 ✓Crossref | Deep Learning for Brain MRI Segmentation: State of the Art and Future Directions | Journal of Digital Imaging 2017 [OpenAlex]
+- PMC:PMC12937852 | StrDiSeg: Adapter-Enhanced DINOv3 for Automated Ischemic Stroke Lesion Segmentation | Bioengineering (Basel) 2026 [Europe PMC]
+- PMID 32195270 | DOI 10.3389/fcvm.2020.00025 ✓Crossref | Deep Learning for Cardiac Image Segmentation: A Review | Frontiers in Cardiovascular Medicine 2020 [OpenAlex]
+- PMID 42280845 | DOI 10.3390/s26113322 ✓Crossref | Cloud-to-Edge Deployment of Optimized nnU-Net for Ischemic Stroke Lesion Segmentation on Resource-Constrained Embedded Devices. | Sensors (Basel) 2026 [Europe PMC]
+- https://openalex.org/W2900298334 | DOI 10.17863/cam.38755 ✓Crossref | Identifying the Best Machine Learning Algorithms for Brain Tumor Segmentation, Progression Assessment, and Overall Survival Prediction in the BRATS Challenge | arXiv (Cornell University) 2018 [OpenAlex]
+- PMID 41540225 | DOI 10.1038/s41746-025-02222-9 ✓Crossref | Modeling Ischemic Stroke Pathological Dynamics via Continuous Fields and Vector Flow. | NPJ Digit Med 2026 [Europe PMC]
+- https://openalex.org/W4206693420 | DOI 10.1049/ipr2.12419 ✓Crossref | Medical image segmentation using deep learning: A survey | IET Image Processing 2022 [OpenAlex]
+- PMID 41737402 | DOI 10.3389/fmed.2026.1759114 ✓Crossref | LBMNet: a hybrid multi-scale CNN-Mamba framework for enhanced 3D stroke lesion segmentation in MRI. | Front Med (Lausanne) 2026 [Europe PMC]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:

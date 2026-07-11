@@ -1,9 +1,9 @@
 ### Retrieval Metadata
-- Retrieved (UTC): 2026-07-11T18:12:08Z
+- Retrieved (UTC): 2026-07-11T19:12:10Z
 - Intervention type: device
-- Literature/trials query: 'gradient boosted survival xgboost'
+- Literature/trials query: 'hybrid tabular–imaging fuses gradient'
 - MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
-- openFDA device terms: ['spirometry', 'outpatient', 'remote', 'home', 'gradient']
+- openFDA device terms: ['spirometry', 'outpatient', 'pulmonology', 'clinics', 'hybrid']
 
 ### openFDA (device classification / 510(k) precedents)
 - CLASSIFICATION | Meter, Peak Flow, Spirometry | product_code=BZH | class=2 | regulation=868.1860 | panel=Anesthesiology
@@ -12,40 +12,36 @@
 - CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
 - 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
 - 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
-- CLASSIFICATION | Medication Management System, Remote | product_code=NZH | class=2 | regulation=880.6315 | panel=General Hospital
-- CLASSIFICATION | Patient Monitor With Independent Remote Display And Operation | product_code=QLJ | class=N | regulation= | panel=Unknown
-- CLASSIFICATION | System, Hemodialysis, Remote Accessories | product_code=MON | class=1 | regulation=876.5820 | panel=Gastroenterology, Urology
-- CLASSIFICATION | Home Monitoring Ophthalmic Optical Coherence Tomography (Oct) Imaging Device | product_code=SAX | class=2 | regulation=886.1600 | panel=Ophthalmic
-- CLASSIFICATION | At Home Intravaginal Insemination System | product_code=QYZ | class=2 | regulation=884.6110 | panel=Obstetrics/Gynecology
-- CLASSIFICATION | Kit, Conception-Assist, Home Use | product_code=OBB | class=2 | regulation=884.5250 | panel=Obstetrics/Gynecology
-- CLASSIFICATION | Intraoral Pressure Gradient Device | product_code=OZR | class=2 | regulation=872.5570 | panel=Dental
-- 510(k) | THERA-FLOW GRADIENT SEQUENTIAL PUMP | k_number=K943392 | decision=Substantially Equivalent | date=1994-12-30 | applicant=Meds Systems, Inc.
-- 510(k) | WRIGHT GRADIENT PRESSURE SUPPORT STOCKINGS | k_number=K883186 | decision=Substantially Equivalent | date=1988-11-21 | applicant=Wright Linear Pump, Inc.
+- 510(k) | SURGI-LIGHT DISPOSABLE SYSTEM FOR PULMONOLOGY USE | k_number=K875104 | decision=Substantially Equivalent | date=1988-02-02 | applicant=Laserguide
+- 510(k) | HOMECARE CLINICS INFRAHEAT #230 | k_number=K854151 | decision=Substantially Equivalent | date=1986-01-30 | applicant=Nelkin/Piper Intl.
+- 510(k) | SLEEP SYSTEM FOR CLINICS & RESEARCH | k_number=K955841 | decision=Unknown | date=1997-03-11 | applicant=Compumedics Ptd , Ltd.
+- CLASSIFICATION | Hybrid Stent Graft, Thoracic Aortic Lesion Treatment | product_code=QSK | class=3 | regulation= | panel=Unknown
+- 510(k) | HYBRID ENDOPORE ENDOSSEOUS DENTAL IMPLANT | k_number=K040714 | decision=Substantially Equivalent | date=2004-04-09 | applicant=Innova Corp.
+- 510(k) | Scopis Hybrid Navigation System EM | k_number=K161491 | decision=Substantially Equivalent | date=2017-02-09 | applicant=Scopis GmbH
 
 ### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
-- PMA | CAREFONE(TM)HOME UTERINE ACTIVITY MONITOR SYSTEM | pma_number=P910063 | supplement= | decision=APRL | date=1995-09-29 | product_code=LQK | applicant=Matria Healthcare, Inc.
-- PMA | SYSTEM 37 HOME UTERINE ACTIVITY MONITORING SYSTEM | pma_number=P920038 | supplement= | decision=APRL | date=1995-09-29 | product_code=LQK | applicant=Matria Healthcare, Inc.
+- PMA | Thoraflex Hybrid | pma_number=P210006 | supplement=S006 | decision=OK30 | date=2023-09-21 | product_code=QSK | applicant=Vascutek, Ltd.
 - MAUDE | PEAK FLOW METER (SPIROMETRY) | event_type=Malfunction | date_received=20140325 | report_number=1044475-2014-00076
 - MAUDE | PEAK FLOW METER (SPIROMETRY | event_type=Malfunction | date_received=20140325 | report_number=1044475-2014-00075
 - Recall | Welch Allyn CP150 Electrocardiograph with Spirometry Option, Product Code: CP150A-1ENB. The Electrocardiograph is one of | classification=Class II | status=Ongoing | reason=During manufacturing, the step to install an Electromagnetic Interference (EMI) Absorber was omitted. The purpose of the EMI absorber is to prevent EMI leakage  | firm=Baxter Healthcare Corporation | date=20240603 | recall_number=Z-2323-2024
 - Recall | GE Healthcare CARESCAPE Monitor B450 Product Usage: Intended uses of CARESCAPE B450 in 510(k) countries [UR_CRSCP-885]:  | classification=Class II | status=Ongoing | reason=When multiple CARESCAPEMonitor B450 or B850 units are connected to the same network and a network overload occurs for a prolonged time, the monitors may simulta | firm=GE Healthcare Finland Oy | date=20180904 | recall_number=Z-0095-2019
 
 ### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
-- PMID 42351600 | DOI 10.3390/diagnostics16121941 ✓Crossref | Data-Efficient and Explainable Multimodal Survival Prediction in NSCLC Using Deep Image Embeddings, Clinical Variables, and Gradient-Boosted Trees. | Diagnostics (Basel) 2026 [Europe PMC]
-- https://openalex.org/W4399647672 | DOI 10.32614/cran.package.xgboost ✓Crossref | xgboost: Extreme Gradient Boosting |  2014 [OpenAlex]
-- PMC:PMC13298473 | Data-Efficient and Explainable Multimodal Survival Prediction in NSCLC Using Deep Image Embeddings, Clinical Variables, and Gradient-Boosted Trees | Diagnostics (Basel) 2026 [Europe PMC]
-- PMID 32406821 | DOI 10.1109/tbme.2020.2993278 ✓Crossref | Optimizing Survival Analysis of XGBoost for Ties to Predict Disease Progression of Breast Cancer | IEEE Transactions on Biomedical Engineering 2020 [OpenAlex]
-- PPR:PPR1250978 | DOI 10.21203/rs.3.rs-9889524/v1 ✓Crossref | External Validation and Calibration of Hybrid Deep–Boosted Ensembles for Breast Cancer Survival Prediction: A Cross-Cohort Study on SEER and METABRIC | PPR 2026 [Europe PMC]
-- PMID 33287854 | DOI 10.1186/s12967-020-02620-5 ✓Crossref | Predicting 30-days mortality for MIMIC-III patients with sepsis-3: a machine learning approach using XGboost | Journal of Translational Medicine 2020 [OpenAlex]
-- PPR:PPR1272038 | DOI 10.64898/2026.07.01.735754 ✓Crossref | Deciphering the Tumor Microenvironment: An Integrated Single-Cell RNA-Seq and AI Framework for Novel Biomarker and Therapeutic Target Discovery in Melanoma | PPR 2026 [Europe PMC]
-- PMID 32852634 | DOI 10.1007/s00432-020-03366-9 ✓Crossref | Preoperative identification of microvascular invasion in hepatocellular carcinoma by XGBoost and deep learning | Journal of Cancer Research and Clinical Oncology 2020 [OpenAlex]
-- PMID 41935148 | DOI 10.1038/s41598-026-47382-0 ✓Crossref | A distributed fusion framework for breast cancer recurrence prediction using MapReduce. | Sci Rep 2026 [Europe PMC]
-- https://openalex.org/W2789282145 | DOI 10.1016/j.iref.2018.03.008 ✓Crossref | Predicting failure in the U.S. banking sector: An extreme gradient boosting approach | International Review of Economics & Finance 2018 [OpenAlex]
-- PMID 41789602 | DOI 10.1002/cam4.71692 | Predicting Postoperative Survival in Patients With Malignant Biliary Obstruction Using an Interpretable Machine Learning Model: A Multicenter Study. | Cancer Med 2026 [Europe PMC]
-- PMID 30358693 | DOI 10.1097/rli.0000000000000518 ✓Crossref | Impact of Machine Learning With Multiparametric Magnetic Resonance Imaging of the Breast for Early Prediction of Response to Neoadjuvant Chemotherapy and Survival Outcomes in Breast Cancer Patients | Investigative Radiology 2018 [OpenAlex]
-- PMID 41856423 | DOI 10.1016/j.jbi.2026.105020 ✓Crossref | Linear and non-linear feature selection for survival modelling of ischemic heart disease in patients with diabetes: Insights from electronic health records. | J Biomed Inform 2026 [Europe PMC]
-- PMID 36972270 | DOI 10.1371/journal.pone.0283452 ✓Crossref | A tree based eXtreme Gradient Boosting (XGBoost) machine learning model to forecast the annual rice production in Bangladesh | PLoS ONE 2023 [OpenAlex]
-- PMID 42193136 | DOI 10.3390/cimb48050532 ✓Crossref | AI and Machine Learning for Proteomics-Driven Drug Discovery: Methods, Tools, and Best Practices. | Curr Issues Mol Biol 2026 [Europe PMC]
+- PMID 41559273 | DOI 10.1038/s41598-026-36296-6 ✓Crossref | Integrative multimodal hybrid data fusion for mortality prediction. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W3022140654 | DOI 10.1109/jstars.2020.3005403 ✓Crossref | Remote Sensing Image Scene Classification Meets Deep Learning: Challenges, Methods, Benchmarks, and Opportunities | IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing 2020 [OpenAlex]
+- PMID 41922591 | DOI 10.1038/s41598-026-44167-3 ✓Crossref | The Trust-Aware XAI (TAXAI) framework: a quantitative model for interpretable and reliable clinical AI systems. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W4378803232 | DOI 10.25007/ajnu.v12n2a1612 ✓Crossref | eXtreme Gradient Boosting Algorithm with Machine Learning: a Review | Academic Journal of Nawroz University 2023 [OpenAlex]
+- PMID 41717278 | DOI 10.3389/fnimg.2026.1726037 ✓Crossref | Deep learning to predict future cognitive decline: a multimodal approach using brain MRI and clinical data. | Front Neuroimaging 2026 [Europe PMC]
+- https://openalex.org/W3212386989 | DOI 10.1007/s41095-022-0271-y ✓Crossref | Attention mechanisms in computer vision: A survey | Computational Visual Media 2022 [OpenAlex]
+- PMID 41932959 | DOI 10.1038/s41598-026-42207-6 ✓Crossref | SoleFusion-Net: an explainable multimodal deep learning framework for diabetic foot syndrome classification in type II diabetes mellitus. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W2981731882 | DOI 10.1016/j.inffus.2019.12.012 ✓Crossref | Explainable Artificial Intelligence (XAI): Concepts, taxonomies, opportunities and challenges toward responsible AI | Information Fusion 2019 [OpenAlex]
+- PMID 41809582 | DOI 10.3389/frai.2026.1766671 ✓Crossref | A hybrid deep boosting framework with adaptive label stabilization for SEM-based porosity estimation in fly-ash cement mortar. | Front Artif Intell 2026 [Europe PMC]
+- https://openalex.org/W4213124617 | DOI 10.3390/rs14040871 ✓Crossref | Deep Learning-Based Change Detection in Remote Sensing Images: A Review | Remote Sensing 2022 [OpenAlex]
+- PMID 41012320 | DOI 10.3390/polym17182557 ✓Crossref | Data-Driven Optimization of Discontinuous and Continuous Fiber Composite Processes Using Machine Learning: A Review. | Polymers (Basel) 2025 [Europe PMC]
+- PMID 36738650 | DOI 10.1016/j.media.2023.102762 ✓Crossref | Transforming medical imaging with Transformers? A comparative review of key properties, current progresses, and future perspectives | Medical Image Analysis 2023 [OpenAlex]
+- PMID 41584214 | DOI 10.1016/j.jobcr.2025.12.013 ✓Crossref | A hybrid MMBERT framework for classifying periodontal bone loss: Integrating visual and textual information. | J Oral Biol Craniofac Res 2026 [Europe PMC]
+- PMID 35455625 | DOI 10.3390/jpm12040509 ✓Crossref | Artificial Intelligence-Driven Prediction Modeling and Decision Making in Spine Surgery Using Hybrid Machine Learning Models | Journal of Personalized Medicine 2022 [OpenAlex]
+- PMID 41942550 | DOI 10.1038/s41598-026-47271-6 ✓Crossref | Text guided cross attentive multimodal learning with visual feature modulation for automated skin lesion detection. | Sci Rep 2026 [Europe PMC]
 
 ### Coverage & Retrieval Gaps
 This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
