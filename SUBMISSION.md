@@ -61,13 +61,23 @@ the shipped pipeline as a baseline and change exactly one dial at a time, across
 10 cases, to see which parts actually earn their place.
 
 - **What earns its place:** the multi-database literature layer does — adding
-  OpenAlex recovers a genuinely load-bearing landmark paper in every case where the
-  golden literature is retrievable at all (4 of 10). Crossref DOI-verification is a
-  correctness guard that costs nothing on clean data. Both stay.
-- **The honest negative — reported, not hidden:** one vocabulary-expansion feature
-  is **still unvalidated**, because a bug in how the engine builds its search query
-  blocked the two cases designed to test it. I'm reporting that openly and scheduling
-  the fix, rather than claiming a win.
+  OpenAlex recovers a genuinely load-bearing landmark paper in **3 of the 10** cases
+  (DR / warfarin / AFib), wherever the golden literature is retrievable by ranking at
+  all. Crossref DOI-verification is a correctness guard that costs nothing on clean
+  data. Both stay.
+- **The honest negatives — measured and reported, not hidden.** (1) I shipped a
+  fix that surfaces the disease name and makes broad conditions resolve — and then
+  measured that it only helps when the disease is *named early*: on realistic
+  *mechanism-first* write-ups (disease buried in ML jargon) it surfaces the condition
+  in just 3 of 20 independent cases. That's a first-principle bound of the shipped
+  approach; the wide-net fix that recovers it (2→17) needs a disambiguation step and
+  is scoped as Phase 2. (2) A side-effect of that same fix costs sepsis its one golden
+  paper (literature 2→0, because making its MeSH resolve rebuilds the query); the
+  compensating patch was net-negative across the slate (−1 golden) so I reverted it and
+  document the tradeoff. (3) The MeSH `+hierarchy` vocabulary-expansion axis is still
+  score-inert — now for a measured reason (a 5-term query cap fills with synonyms
+  before any child term is reached), not the unlaunched fix of the earlier draft. I'm
+  reporting all three openly rather than claiming a clean win.
 - **The headline finding:** the dials we can turn barely move recall. What actually
   determines whether the right FDA records and trials surface is **how the question
   is aimed** — records named by *function* ("Prioritization Software") or by a
@@ -120,6 +130,22 @@ Three distinct roles:
   layer is identical on either model. The honest read is that clinical inputs
   often run on Opus 4.8 today; the value (constraint layer + grounding) is
   model-independent.
+
+- **Anthropic API (Claude Fable 5 → Opus 4.8) — the review panel.** A second,
+  optional call puts the finished spec in front of three Claude-played personas —
+  an FDA/regulatory reviewer, a biostatistician, and a clinical scientist — that each
+  return one strength plus flagged (🔴 blocking / 🟡 minor) critiques, in one
+  structured JSON call. It is explicitly **advisory, not an authoritative verdict**,
+  and held to the same discipline as the generator: cite-or-flag (name a specific
+  study or record only if it's in the retrieved evidence, otherwise reason generally,
+  never invent). A deterministic **warn-only grounding audit** then cross-checks every
+  identifier the panel named against the retrieved evidence. This is where I leaned on
+  Claude hardest for judgment, and where I watched fabrication risk closely — an
+  end-to-end live run on 3 fresh device/imaging cases (2026-07-11), each spec generated
+  *from* the retrieved evidence, came back **fully grounded with zero fabrication**;
+  when I turned web search on, the panel correctly **caught and flagged** the
+  model's web-sourced (unverifiable) citations, which is why that toggle now defaults
+  off. The panel touches nothing in the deterministic engine.
 
 **Where it mattered most:** Claude Science proved the workflow was possible;
 Claude Code turned that into a product whose defensibility is the constraint

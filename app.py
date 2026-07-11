@@ -16,6 +16,7 @@ import datetime
 import anthropic
 import streamlit as st
 
+import critic_panel
 import engine
 
 # ---------------------------------------------------------------------------
@@ -220,8 +221,11 @@ with st.sidebar:
     )
     use_web_search = st.toggle(
         "Supplement with web search",
-        value=True,
-        help="Let the model fill gaps the registries don't cover (e.g. FDA guidance PDFs).",
+        value=False,
+        help="Off by default so every citation stays traceable to the live registry "
+        "evidence. Turn on to let the model fill gaps the registries don't cover "
+        "(e.g. FDA guidance PDFs) — note web-sourced citations aren't registry-verified, "
+        "and the review panel will flag them as ungrounded.",
     )
     st.divider()
     st.caption(
@@ -336,6 +340,12 @@ if submitted:
             st.warning("No content was returned. Try again, or lower the effort setting.")
         else:
             st.success("Specification generated. Review every field with a domain expert before use.")
+            # Remember this spec + its evidence so the review panel (rendered below,
+            # outside this submit branch) survives Streamlit's rerun on button click.
+            # Clear any panel result from a previous spec so it can't show stale.
+            st.session_state["spec_markdown"] = markdown_text
+            st.session_state["grounded_context"] = grounded_context
+            st.session_state.pop("panel_result", None)
             # 3. Emit the Phase-1 bundle: the spec + the source records it was grounded on.
             bundle = markdown_text
             bundle += (
@@ -358,3 +368,112 @@ if submitted:
                 file_name=f"validation_spec_{datetime.date.today()}.md",
                 mime="text/markdown",
             )
+
+
+# ---------------------------------------------------------------------------
+# Critic Panel — a simulated advisory review of the generated spec.
+# Rendered OUTSIDE the submit branch, gated on a spec existing in session memory,
+# so clicking the button (which reruns the page) doesn't wipe the spec.
+# ---------------------------------------------------------------------------
+_PERSONA_LABEL = {
+    "regulator": "⚖️ Regulator (FDA-reviewer mindset)",
+    "biostatistician": "📊 Biostatistician",
+    "clinical_scientist": "🔬 Clinical Scientist",
+}
+_SEVERITY_LABEL = {"blocking": "🔴 Blocking", "minor": "🟡 Minor"}
+
+
+def render_grounding_audit(result, grounded_context):
+    """Show the anti-fabrication net: every registry ID the panel cited, checked
+    against the retrieved evidence. Warn-only — the panel is advisory."""
+    audit = critic_panel.grounding_audit(grounded_context, result)
+    if not audit:
+        return
+    present = [a for a in audit if a["in_evidence"]]
+    missing = [a for a in audit if not a["in_evidence"]]
+    header = (f"🔍 Grounding audit — {len(audit)} identifier(s) cited · "
+              f"{len(present)} ✓ in evidence · {len(missing)} ⚠ not in evidence")
+    with st.expander(header, expanded=False):
+        st.caption(
+            "Every study / trial / device identifier the panel named, checked against "
+            "the retrieved records. A ⚠ is **not** automatically fabrication — the panel "
+            "deliberately names missing identifiers to flag gaps in the plan. It's a "
+            "\"verify this\" marker; the only real concern is a ⚠ the panel presented as "
+            "proof rather than as a gap. (Free-text FDA product codes aren't audited.)"
+        )
+        if missing:
+            st.markdown("**⚠ Not in the retrieved evidence:**")
+            for a in missing:
+                st.markdown(f"- `{a['id']}` — {a['kind']}")
+        if present:
+            st.markdown("**✓ Confirmed in the retrieved evidence:**")
+            for a in present:
+                st.markdown(f"- `{a['id']}` — {a['kind']}")
+
+
+def render_panel(result, grounded_context):
+    st.warning(
+        "⚠️ This is a **simulated advisory review** to help you stress-test your plan "
+        "before a real review. It is **not** an official regulatory determination and "
+        "does not guarantee any outcome."
+    )
+    for member in result.get("panel", []):
+        label = _PERSONA_LABEL.get(member.get("persona"), member.get("persona", "Reviewer"))
+        with st.expander(label, expanded=True):
+            if member.get("strength"):
+                st.markdown(f"**✅ Strength:** {member['strength']}")
+            for crit in member.get("critiques", []):
+                sev = _SEVERITY_LABEL.get(crit.get("severity"), crit.get("severity", ""))
+                st.markdown(f"**{sev}** — {crit.get('issue', '')}")
+                if crit.get("evidence_basis"):
+                    st.caption(f"Basis: {crit['evidence_basis']}")
+    fixes = result.get("fix_before_submission", [])
+    if fixes:
+        st.markdown("### 🔴 Fix before submission")
+        for f in fixes:
+            st.markdown(f"- {f}")
+    render_grounding_audit(result, grounded_context)
+
+
+if st.session_state.get("spec_markdown"):
+    st.divider()
+    st.subheader("⚖️ Simulated advisory review panel")
+    st.caption(
+        "Convene three Claude-played experts — a Regulator, a Biostatistician, and a "
+        "Clinical Scientist — to stress-test the spec above before a real reviewer sees "
+        "it. They may only cite the evidence that was retrieved; they never invent studies."
+    )
+    if st.button("Convene review panel", type="primary"):
+        client = get_client()
+        if client is None:
+            st.error("No Anthropic API key found — add it to `.streamlit/secrets.toml` and rerun.")
+        else:
+            with st.spinner("Convening the review panel…"):
+                try:
+                    parsed, final, raw = critic_panel.run_panel(
+                        client,
+                        st.session_state.get("grounded_context", ""),
+                        st.session_state["spec_markdown"],
+                    )
+                except anthropic.APIStatusError as e:
+                    st.error(f"API error {e.status_code}: {e.message}")
+                    parsed, final, raw = None, None, ""
+                except anthropic.APIConnectionError:
+                    st.error("Network error reaching the Anthropic API. Check your connection and retry.")
+                    parsed, final, raw = None, None, ""
+            if final is not None and final.stop_reason == "refusal":
+                st.error(
+                    "The review panel request was declined by the model's safety system, and "
+                    "the fallback model also declined. Try again, or rephrase the clinical context."
+                )
+            elif parsed is None:
+                st.warning("The panel returned a response that couldn't be parsed as a review. Try again.")
+                if raw:
+                    with st.expander("Raw panel response (debug)"):
+                        st.code(raw)
+            else:
+                st.session_state["panel_result"] = parsed
+
+    if st.session_state.get("panel_result"):
+        render_panel(st.session_state["panel_result"],
+                     st.session_state.get("grounded_context", ""))

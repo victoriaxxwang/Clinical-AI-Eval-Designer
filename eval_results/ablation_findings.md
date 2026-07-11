@@ -8,6 +8,16 @@ auto-generated `eval_results/ablation_results.md` (rebuild anytime with
 `ablation_results.json`. This file is the human interpretation — the harness
 never overwrites it._
 
+> **Update 2026-07-11 — read this first.** The "engine-hardening fix" that the
+> Jul-9 text below calls *scheduled / next window* has since **landed** (it is the
+> frozen shipped engine, md5 `2e6d49…`), and we then *measured* how far it actually
+> goes. The scorecard was regenerated against that frozen engine on 2026-07-11.
+> Two numbers moved and one axis got a new explanation — all captured in the dated
+> section **"## Update (2026-07-11): the hardening fix landed — measured, not
+> promised"** immediately after this Bottom line. The Jul-9 analysis below is kept
+> verbatim as the historical record; where it says "next / scheduled / a bug blocks
+> it," the Update section is the current truth.
+
 ## Bottom line (10 cases, up front)
 _The one-screen version; the per-axis verdicts and per-case detail follow._
 
@@ -39,6 +49,82 @@ _The one-screen version; the per-axis verdicts and per-case detail follow._
   then **re-run pneumonia** to finally exercise `+hierarchy`. This is the single
   load-bearing prerequisite for judging the hierarchy axis end-to-end.
 
+## Update (2026-07-11): the hardening fix landed — measured, not promised
+_The Jul-9 Bottom line above ends by scheduling the engine-hardening fix. It shipped.
+Here is what it actually bought, what it cost, and what remains open — all measured
+against the frozen engine (md5 `2e6d49…`), scorecard regenerated 2026-07-11._
+
+**What shipped (frozen at commit `7d8eb37`).** A "clinical-category filter +
+surface-buried-disease" change (6 edits): the engine now also mines the model
+description for a disease token, tries the **bare condition token** in the MeSH
+lookup, filters MeSH candidates by clinical category (accept disease/drug/psych
+headings for existing candidates, disease-only for newly-surfaced ones, reject
+anatomy/method/people junk), and fetches child descriptors for `+hierarchy`.
+
+**Win 1 — broad parents now resolve.** Sepsis, pneumonia, and other broad-parent
+conditions that used to normalize to "none" (Jul-9 Finding B) now resolve to their
+real MeSH heading (e.g. `sepsis → "Sepsis" (D018805)`), and children *are* fetched.
+
+**Cost 1 — and it is real: sepsis lost its one golden paper (lit recall 2 → 0).**
+Making sepsis's MeSH *resolve* has a side-effect. When MeSH resolves, the engine
+rebuilds the literature query into a tight boolean bag
+(`"Sepsis" OR "Bloodstream Infection" … AND continuously AND analyzes`) and drops
+the user's own descriptive words ("early warning") — which is exactly what the
+relevance-ranking providers (OpenAlex) had used to rank the TREWScore paper into the
+results. So **OpenAlex now earns its place on 3 of 10 cases (DR / warfarin / AFib),
+down from the Jul-9 "4 of 10"; sepsis moved from the recovers-column to the
+zeroes-out column.** This is the *lit-bow tension* the Chunk-B investigation
+diagnosed, now visible on the frozen scorecard. The **6-of-10 "literature zeroes out
+at query targeting first" headline is unchanged** — sepsis simply joined that group.
+
+**We tried to fix Cost 1 and it was net-negative, so we reverted it.** The candidate
+fix — stop overwriting the relevance-ranker bag, keep the user's words — recovered
+sepsis (0 → +3 golden) but **regressed AFib (3 → 0) and depression (1 → 0)**: net
+**−1 golden** across the slate. Root cause: OpenAlex relevance is sensitive to bag
+*tightness*, not term presence; sometimes the tight MeSH bag ranks better (AFib),
+sometimes the user's phrase does (sepsis). There is no universally-better bag, so we
+**kept the shipped behavior and accept sepsis literature = 0 as a documented, bounded
+limit.** (Backup of the alternative engine kept off-tree as a revert path.)
+
+**Open 1 — `+hierarchy` is still score-inert, but now for a *measured* reason.**
+Children are fetched now, but the query is capped at `MESH_MAX_TERMS = 5` and the
+pool lists preferred + synonyms *before* children — so on high-synonym headings
+(sepsis, pneumonia) the 5 slots fill with synonyms and **0 children reach the query**
+→ `+hierarchy` == baseline byte-for-byte. It only widens for low-synonym headings.
+Not the Jul-9 "a bug blocks the lookup" story anymore — the lookup works; the cap
+saturates. Still not worth shipping a change for; documented as a known ceiling.
+
+**Open 2 — the surfacing fix helps *condition-forward* phrasing only (3/20 on
+realistic write-ups). FIRST-PRINCIPLE, not niche.** An independent 20-case batch
+(Claude Science, Set A + Set B) measured the shipped fix surfacing the disease in
+just **3 of 20** realistic cases. Cause: the surfacer reads only the first ~12
+keywords of the model description, and real (and Claude-Science-authored) write-ups
+are *mechanism-first* — the disease name sits past that window, buried in ML jargon
+(in one case "diabetes" was keyword 41 of 42). The 10-golden slate passed only
+because the goldens are hand-authored **condition-forward** (disease named up front),
+a convention locked from Case 4 on. So: the fix is safe and helps when the disease is
+named early; it does **not** rescue buried-disease phrasing. Reported as a bounded
+limit of the shipped (Option-2) line, not hidden.
+
+**Open 2, de-risked (Phase-2 stretch, not shipped).** A read-only probe of the
+"wide-net" alternative — scan the *whole* case text as unigrams + bigrams instead of
+the first 12 keywords, with the same disease-only category gate — recovered surfacing
+from **2/20 → 17/20** with no loosening. But the wide net surfaces **>1 disease in
+16/20** cases, so it needs a ranking / clarifying-question tiebreaker to *pick* the
+right one before it can ship. That disambiguation step is the real remaining work and
+is scoped as a Phase-2 stretch, built in an isolated engine copy so it can never
+regress the frozen shipped engine.
+
+**Product decision recorded — web search defaults OFF.** An end-to-end live run on 3
+fresh device/imaging cases (each generated *from* the retrieved evidence, then passed
+to the new advisory review panel) came back **fully grounded, 0 fabrication**, and the
+grounding audit's ⚠ flags collapsed to zero. With the "Supplement with web search"
+toggle ON, the model injected real-looking FDA/registry IDs and performance stats that
+were *not* in the retrieved evidence (and one run hit a mid-stream refusal the fallback
+can't rescue). The review panel correctly **flagged every web-sourced citation as
+ungrounded** — but to keep the "purely grounded, citable" guarantee clean, the toggle
+now **defaults OFF** (stays available to demo the panel catching web cites on demand).
+
 ## Verdict per swept axis
 
 ### 1. Literature providers (+OpenAlex, +Semantic Scholar) — **EARNS ITS PLACE**
@@ -55,6 +141,10 @@ _The one-screen version; the per-axis verdicts and per-case detail follow._
   `lit_epmc_openalex` everywhere). Keep it — harmless, may help future cases — but
   **OpenAlex is the discriminating provider**.
 - **Decision:** keep the multi-provider literature layer. Tier B (1) validated.
+- **Superseded 2026-07-11:** on the frozen engine this is now **3 of 4 → 3 of 10**
+  (DR / warfarin / AFib). Sepsis dropped to 0 because the landed surfacing fix makes
+  its MeSH resolve and rebuilds the query — see the "Update (2026-07-11)" section,
+  *Cost 1*. The provider layer still earns its place; the count shifted by one.
 
 ### 2. MeSH expansion level (canonical / canonical+synonyms [shipped] / +hierarchy) — **STILL INERT — but Case 4 found *why*, and it's a bug**
 - Golden recall is **flat across all three levels on all four cases**, sepsis included.
@@ -73,6 +163,10 @@ _The one-screen version; the per-axis verdicts and per-case detail follow._
   condition from being looked up. Fixing that (below) is the prerequisite for a real
   hierarchy test; **pneumonia (Case 8) is the next broad-parent and will hit the same wall.**
   Shipped default (canonical+synonyms) stays safe — widens the net without hurting precision.
+- **Superseded 2026-07-11:** the "candidate-construction bug" is fixed — sepsis and
+  pneumonia now resolve and children *are* fetched. `+hierarchy` is *still* score-inert,
+  but for a new, measured reason: the `MESH_MAX_TERMS = 5` cap fills with synonyms
+  before any child reaches the query. See "Update (2026-07-11)", *Open 1*.
 
 ### 3. Crossref verify (on / off) — **PRECISION-NEUTRAL on goldens**
 - `verify_off` == `baseline` on all three cases (drops **0** golden DOIs).
@@ -426,6 +520,19 @@ each spec fresh arrives at the same citation, so these are shared vocabulary, no
 independent sweep passes (68/68 scored ids re-resolved live, offline consistency PASS, all 10 cases).
 
 ## What ships
+> **As shipped, 2026-07-11 (supersedes the forward-looking bullets below).** The
+> engine-hardening fix **landed and is frozen** (`2e6d49…`, commit `7d8eb37`); it
+> makes broad parents resolve and surfaces the disease token *when named early*.
+> Measured limits, all documented (see "Update (2026-07-11)"): sepsis literature
+> recall 2→0 (accepted lit-bow tension; the compensating fix was net −1 and reverted);
+> `+hierarchy` still inert (5-term cap saturates with synonyms); buried-disease
+> surfacing helps condition-forward phrasing only (3/20 on mechanism-first — a
+> first-principle bound, wide-net Phase-2 stretch recovers it 2→17 but needs a
+> ranking tiebreaker). On top of the engine: an **advisory 3-persona review panel**
+> (regulator / biostatistician / clinical scientist) with a warn-only grounding audit,
+> and the **web-search toggle defaults OFF** for grounding purity. Engine untouched
+> by the panel.
+
 - **Keep the shipped defaults** (canonical+synonyms / all-3-providers / verify-on):
   validated safe on all 10 cases; OpenAlex earns its place **wherever golden lit is retrievable at
   all (4 of 10 — DR/warfarin/sepsis/AFib; HRV + melanoma + depression + pneumonia + pembrolizumab +
