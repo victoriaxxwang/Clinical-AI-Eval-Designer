@@ -1,0 +1,47 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:20:32Z
+- Intervention type: device
+- Literature/trials query: 'hierarchical pairs fine tuned'
+- MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
+- openFDA device terms: ['hierarchical', 'outpatient', 'psychiatry', 'behavioral', 'pairs']
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- 510(k) | MyCare Psychiatry Clozapine Assay Kit | k_number=DEN190028 | decision=Unknown | date=2020-04-16 | applicant=Saladax Biomedical, Inc.
+- CLASSIFICATION | Tempo Pilot Bh: Behavioral Health | product_code=SIE | class=N | regulation= | panel=Unknown
+- CLASSIFICATION | Computerized Behavioral Therapy Device For Substance Use Disorders | product_code=PWE | class=2 | regulation=882.5801 | panel=Neurology
+- CLASSIFICATION | Computerized Behavioral Therapy Device For Treating Symptoms | product_code=QMY | class=2 | regulation=876.5960 | panel=Gastroenterology, Urology
+- 510(k) | KIMBERLY-CLARK PURPLE NITRILE XTRA* STERILE POWDER-FREE EXAM GLOVE (CHEMOTHERAPY GLOVE) - 12 STERILE PAIRS | k_number=K102032 | decision=Substantially Equivalent | date=2010-09-08 | applicant=Kimberly-Clark Corp.
+- 510(k) | THREADED PADDLE PAIRS, INTERNAL ADULT PEDI INFANT | k_number=K902590 | decision=Substantially Equivalent | date=1990-07-18 | applicant=Marquette Electronics, Inc.
+- 510(k) | Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Pairs; Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Singles | k_number=K243172 | decision=Substantially Equivalent | date=2025-06-18 | applicant=O&M Halyard, Inc.
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
+- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
+- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
+- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 41946745 | DOI 10.1038/s41597-026-07195-2 ✓Crossref | Bridging the Gap in Chinese Legal Conflict Review: A Dataset, Benchmark Tasks, and Framework. | Sci Data 2026 [Europe PMC]
+- PMID 15214846 | DOI 10.1042/bj20040892 ✓Crossref | Carbohydrate-binding modules: fine-tuning polysaccharide recognition | Biochemical Journal 2004 [OpenAlex]
+- PMID 41922447 | DOI 10.1038/s41598-026-45852-z ✓Crossref | Enhancing movie script creation through retrieval-augmented LLMs and stable diffusion scene modeling. | Sci Rep 2026 [Europe PMC]
+- PMID 23787344 | DOI 10.1109/tpami.2012.231 ✓Crossref | Learning Hierarchical Features for Scene Labeling | IEEE Transactions on Pattern Analysis and Machine Intelligence 2012 [OpenAlex]
+- PMID 41880603 | DOI 10.2196/82997 ✓Crossref | Improving Retrieval Augmented Generation for Health Care by Fine-Tuning Clinical Embedding Models: Development and Evaluation Study. | J Med Internet Res 2026 [Europe PMC]
+- https://openalex.org/W2099822476 | DOI 10.1088/1126-6708/2005/06/073 ✓Crossref | Supersymmetric unification without low energy supersymmetry and signatures for fine-tuning at the LHC | Journal of High Energy Physics 2005 [OpenAlex]
+- PMID 41881558 | DOI 10.1002/mp.70406 ✓Crossref | Predicting ventilation from single breathing phase non-contrast CT using Swin Transformers. | Med Phys 2026 [Europe PMC]
+- https://openalex.org/W1686810756 | DOI 10.48550/arxiv.1409.1556 ✓Crossref | Very Deep Convolutional Networks for Large-Scale Image Recognition | arXiv (Cornell University) 2014 [OpenAlex]
+- PMID 41523094 | DOI 10.5334/joc.482 ✓Crossref | Updating the German Psycholinguistic Word Toolbox with AI-Generated Estimates of Concreteness, Valence, Arousal, Age of Acquisition, and Familiarity. | J Cogn 2026 [Europe PMC]
+- PMID 12868647 | DOI 10.1364/josaa.20.001434 ✓Crossref | Hierarchical Bayesian inference in the visual cortex | Journal of the Optical Society of America A 2003 [OpenAlex]
+- AGR:IND609389656 | Joint topic entity and intent recognition model for multimodal agricultural diseases and pests question answering | Computers and electronics in agriculture. 2026 [Europe PMC]
+- https://openalex.org/W2963096510 | DOI 10.18653/v1/p18-1082 ✓Crossref | Hierarchical Neural Story Generation |  2018 [OpenAlex]
+- PMID 41667618 | DOI 10.1038/s41598-026-38066-w ✓Crossref | The construction and refined extraction techniques of knowledge graph based on large language models. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W2962883855 | DOI 10.1609/aaai.v30i1.9883 ✓Crossref | Building End-To-End Dialogue Systems Using Generative Hierarchical Neural Network Models |  2016 [OpenAlex]
+- PMID 41888197 | DOI 10.1038/s41598-026-45458-5 ✓Crossref | Exploring the limits of pre-trained embeddings in machine-guided protein design: a case study on predicting AAV vector viability. | Sci Rep 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

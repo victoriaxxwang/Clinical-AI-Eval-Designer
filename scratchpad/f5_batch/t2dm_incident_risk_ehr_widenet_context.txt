@@ -1,0 +1,51 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:19:36Z
+- Intervention type: device
+- Literature/trials query: '("Disease" OR "Diseases") AND regularized AND logistic'
+- MeSH normalization: 'disease' → "Disease" (D004194) + 1 synonyms
+- openFDA device terms: ['regularized', 'primary', 'care', 'population', 'logistic']
+
+### ClinicalTrials.gov (study designs, endpoints, enrollment)
+- NCT04088747 | Logistic Regression and Elastic Net Regularization for the Diagnosis of Fibromyalgia | status=COMPLETED | type=OBSERVATIONAL phases= | n=81 | allocation= masking= | primary_outcomes=Ultrasound Image Texture Variables; Fibromyalgia Diagnostic Criteria; Central Sensitization Inventory
+- NCT06460207 | Neurofeedback Removal of Emotional Information From Mind | status=UNKNOWN | type=INTERVENTIONAL phases=NA | n=40 | allocation=RANDOMIZED masking=NONE | primary_outcomes=Neurofeedback learning; Neural consequences of control; Behavioral consequences of control
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Calibrator, Primary | product_code=JIS | class=2 | regulation=862.1150 | panel=Clinical Chemistry
+- 510(k) | VERILAST WEAR CLAIMS FOR THE LEGION PRIMARY KNEE SYSTEM | k_number=K093746 | decision=Substantially Equivalent | date=2010-04-14 | applicant=Smith & Nephew, Inc.
+- 510(k) | LIFESHIELD PRIMARY I.V. SET WITH BACKCHECK VALVE | k_number=K971293 | decision=Substantially Equivalent | date=1997-06-27 | applicant=Abbott Mfg., Inc.
+- CLASSIFICATION | Point Of Care Hiv Serology Diagnostic And/Or Supplemental Test | product_code=QSU | class=2 | regulation=866.3956 | panel=Microbiology
+- CLASSIFICATION | Apparatus, Suction, Patient Care | product_code=DWM | class=2 | regulation=870.5050 | panel=Cardiovascular
+- CLASSIFICATION | Catheter Care Tray | product_code=OHR | class=2 | regulation=876.5130 | panel=Gastroenterology, Urology
+- 510(k) | REFERENCE POPULATION FOR NORLAND APOLLO X-RAY BONE DENSITOMETER | k_number=K980125 | decision=Substantially Equivalent | date=1998-05-20 | applicant=Norland Corp.
+- 510(k) | APOLLO MULTI-RACIAL REFERENCE POPULATION | k_number=K993337 | decision=Substantially Equivalent | date=2000-05-16 | applicant=Norland Medical Systems, Inc.
+- 510(k) | MULTI-RACIAL REFERENCE POPULATION FOR PDEXA AND DISCOVERY | k_number=K993176 | decision=Substantially Equivalent | date=2000-06-20 | applicant=Norland Medical Systems, Inc.
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | Organ Care System (OCS) Heart System | pma_number=P180051 | supplement=S008 | decision=OK30 | date=2025-10-22 | product_code=QIK | applicant=TransMedics, Inc.
+- MAUDE | SIGMA KNEE PRIMARY : KNEE FEMORAL | event_type=Injury | date_received=20200429 | report_number=1818910-2020-11507
+- MAUDE | SIGMA KNEE PRIMARY : KNEE TIBIAL INSERT | event_type=Injury | date_received=20200429 | report_number=1818910-2020-11510
+- Recall | 126" (320 cm) 16.4 ml, 15 Drop Primary Set w/2 MicroClave Clear, Remv 2 Gang 4-Way NanoClave Stopcock, Rotating Luer, 1  | classification=Class II | status=Terminated | reason=Identification of a potential manufacturing defect on the internal surface of the NanoClave within specific lots of NanoClave sets, which may inhibit a proper s | firm=ICU Medical, Inc. | date=20200706 | recall_number=Z-0218-2021
+- Recall | AMO TECNIS CL Foldable Silicone IOL with OptiEdge Design, Model Z9002. Indicated for primary implantation for the visual | classification=Class II | status=Terminated | reason=Units may be labeled with the incorrect diopter power. | firm=AMO Puerto Rico Manufacturing, Inc. | date=20140513 | recall_number=Z-2279-2014
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 42053398 | DOI 10.1177/14604582261444612 ✓Crossref | Interpretable heart disease risk prediction via FCA-constrained logistic regression. | Health Informatics J 2026 [Europe PMC]
+- https://openalex.org/W1678356000 | DOI 10.1214/aos/1013203451 ✓Crossref | Greedy function approximation: A gradient boosting machine. | The Annals of Statistics 2001 [OpenAlex]
+- PMID 42205695 | DOI 10.1016/j.isci.2026.115962 ✓Crossref | Harnessing artificial intelligence for pediatric health: Current trends and future opportunities. | iScience 2026 [Europe PMC]
+- PMID 26872142 | DOI 10.1371/journal.pcbi.1004760 ✓Crossref | Neighborhood Regularized Logistic Matrix Factorization for Drug-Target Interaction Prediction | PLoS Computational Biology 2016 [OpenAlex]
+- PMID 42132486 | DOI 10.1158/1055-9965.epi-25-2052 ✓Crossref | Performance of Statistical and Machine Learning Risk Prediction Models for Advanced Breast Cancers. | Cancer Epidemiol Biomarkers Prev 2026 [Europe PMC]
+- PMID 17429103 | DOI 10.1093/biostatistics/kxm010 ✓Crossref | Penalized logistic regression for detecting gene interactions | Biostatistics 2007 [OpenAlex]
+- PMID 41673187 | DOI 10.1038/s41598-026-38594-5 ✓Crossref | Leveraging natural language processing and machine learning to identify chronic conditions from primary care electronic medical records. | Sci Rep 2026 [Europe PMC]
+- PMID 22255338 | DOI 10.1109/iembs.2011.6091115 ✓Crossref | Classification of Alzheimer's Disease from structural MRI using sparse logistic regression with optional spatial regularization |  2011 [OpenAlex]
+- PMID 42369767 | DOI 10.3389/fbinf.2026.1861968 ✓Crossref | Explainable machine learning-based identification of transcriptomic biomarkers in CD1c+ dendritic cells for non-infectious uveitis: an integrative analysis of bulk RNA-seq data. | Front Bioinform 2026 [Europe PMC]
+- PMID 19118496 | DOI 10.1186/1471-2105-10-1 ✓Crossref | Regularized gene selection in cancer microarray meta-analysis | BMC Bioinformatics 2009 [OpenAlex]
+- PMID 41378455 | DOI 10.1161/jaha.123.030363 ✓Crossref | PrevCardioOncAI: Machine Learning Algorithms for Predicting Cardiovascular Disease in Cancer Survivors. | J Am Heart Assoc 2025 [Europe PMC]
+- PMID 19176549 | DOI 10.1093/bioinformatics/btp041 ✓Crossref | Genome-wide association analysis by lasso penalized logistic regression | Bioinformatics 2009 [OpenAlex]
+- PMC:PMC13294156 | Explainable machine learning-based identification of transcriptomic biomarkers in CD1c+ dendritic cells for non-infectious uveitis: an integrative analysis of bulk RNA-seq data | Front Bioinform  [Europe PMC]
+- https://openalex.org/W2101095383 | DOI 10.1111/j.1467-9868.2007.00607.x ✓Crossref | <i>L</i>1-Regularization Path Algorithm for Generalized Linear Models | Journal of the Royal Statistical Society Series B (Statistical Methodology) 2007 [OpenAlex]
+- PMID 42192117 | DOI 10.1038/s41598-026-54869-3 ✓Crossref | Discrimination stability and calibration of cardiovascular risk prediction models in the Framingham baseline cohort. | Sci Rep 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

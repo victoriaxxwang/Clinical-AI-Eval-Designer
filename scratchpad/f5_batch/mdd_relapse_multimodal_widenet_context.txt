@@ -1,0 +1,53 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:20:51Z
+- Intervention type: device
+- Literature/trials query: '("Recurrence" OR "Recurrences" OR "Relapse" OR "Relapses" OR "Recrudescence") AND hierarchical AND pairs'
+- MeSH normalization: 'relapse' → "Recurrence" (D012008) + 4 synonyms
+- openFDA device terms: ['hierarchical', 'outpatient', 'psychiatry', 'behavioral', 'pairs']
+
+### ClinicalTrials.gov (study designs, endpoints, enrollment)
+- NCT01969799 | Aerosolized Amikacin and Fosfomycin in Mechanically Ventilated Patients With Gram-negative Pneumonia | status=COMPLETED | type=INTERVENTIONAL phases=PHASE2 | n=143 | allocation=RANDOMIZED masking=QUADRUPLE | primary_outcomes=Change From Baseline in Clinical Pulmonary Infection Score (CPIS) For Each Patient, Value Obtained From a Daily Assessment Over the 10 Day Study Period Was Compared to Baseline, and the LSM Data Represent the Change From Baseline Data Over All Days .
+- NCT07472439 | Auryon Atherectomy System With Standard Balloon Angioplasty Versus Standard Balloon Angioplasty Alone in Europe | status=NOT_YET_RECRUITING | type=INTERVENTIONAL phases=NA | n=50 | allocation=RANDOMIZED masking=NONE | primary_outcomes=Win-ratio comparing subjects in the treatment group versus the control group on the components of the composite endpoints in a hierarchical fashion at 12 months
+- NCT06777901 | Auryon Atherectomy System With Standard Balloon Angioplasty Versus Standard Balloon Angioplasty Alone | status=RECRUITING | type=INTERVENTIONAL phases=PHASE4 | n=224 | allocation=RANDOMIZED masking=NONE | primary_outcomes=Win-ratio comparing subjects in the treatment group versus the control group on the components of the composite endpoints in a hierarchical fashion at 12 months
+- NCT03904147 | TRILUMINATE Pivotal Trial | status=ACTIVE_NOT_RECRUITING | type=INTERVENTIONAL phases=NA | n=572 | allocation=RANDOMIZED masking=SINGLE | primary_outcomes=For Randomized Cohort: Hierarchical Composite of All-cause Death or Tricuspid Valve Surgery, Heart Failure Hospitalizations, and KCCQ Improvement; For Single-Arm Cohort: Rate of Survival Through 12 Months With a Quality of Life Improvement (Assessed Using KCCQ Overall Score) of at Least 10 Points Co
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- 510(k) | MyCare Psychiatry Clozapine Assay Kit | k_number=DEN190028 | decision=Unknown | date=2020-04-16 | applicant=Saladax Biomedical, Inc.
+- CLASSIFICATION | Tempo Pilot Bh: Behavioral Health | product_code=SIE | class=N | regulation= | panel=Unknown
+- CLASSIFICATION | Computerized Behavioral Therapy Device For Substance Use Disorders | product_code=PWE | class=2 | regulation=882.5801 | panel=Neurology
+- CLASSIFICATION | Computerized Behavioral Therapy Device For Treating Symptoms | product_code=QMY | class=2 | regulation=876.5960 | panel=Gastroenterology, Urology
+- 510(k) | KIMBERLY-CLARK PURPLE NITRILE XTRA* STERILE POWDER-FREE EXAM GLOVE (CHEMOTHERAPY GLOVE) - 12 STERILE PAIRS | k_number=K102032 | decision=Substantially Equivalent | date=2010-09-08 | applicant=Kimberly-Clark Corp.
+- 510(k) | THREADED PADDLE PAIRS, INTERNAL ADULT PEDI INFANT | k_number=K902590 | decision=Substantially Equivalent | date=1990-07-18 | applicant=Marquette Electronics, Inc.
+- 510(k) | Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Pairs; Halyard Purple Nitrile* Powder-Free Exam Gloves, Sterile Singles | k_number=K243172 | decision=Substantially Equivalent | date=2025-06-18 | applicant=O&M Halyard, Inc.
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
+- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
+- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
+- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 42015361 | DOI 10.1093/bioinformatics/btag194 ✓Crossref | Spark: sparse hierarchical energy minimization for scalable prediction of RNA pseudoknots. | Bioinformatics 2026 [Europe PMC]
+- https://openalex.org/W2141807666 | DOI 10.1093/comjnl/26.4.354 ✓Crossref | A Survey of Recent Advances in Hierarchical Clustering Algorithms | The Computer Journal 1983 [OpenAlex]
+- PMID 42252652 | DOI 10.1002/sim.70627 ✓Crossref | Empirical Comparison of Win Ratio and Joint Frailty Models for Recurrent Event Endpoints With Applications in Oncology and Cardiology. | Stat Med 2026 [Europe PMC]
+- https://openalex.org/W2082583687 | DOI 10.1137/s1064827596311451 ✓Crossref | Algorithms for Model-Based Gaussian Hierarchical Clustering | SIAM Journal on Scientific Computing 1998 [OpenAlex]
+- PMID 41662857 | DOI 10.1016/j.lanmic.2025.101256 ✓Crossref | Parasite clearance in patients with Plasmodium vivax monoinfection treated with artesunate in Cambodia: an observational secondary analysis of trial data. | Lancet Microbe 2026 [Europe PMC]
+- https://openalex.org/W1992978094 | DOI 10.1137/1009002 ✓Crossref | Computational Aspects of Three-Term Recurrence Relations | SIAM Review 1967 [OpenAlex]
+- PMID 42034799 | DOI 10.1007/s00401-026-03016-3 ✓Crossref | Loss of meningothelial identity and mesenchymal fate switching in NF2-mutant meningiomas. | Acta Neuropathol 2026 [Europe PMC]
+- PMID 31591217 | DOI 10.1073/pnas.1905544116 ✓Crossref | Recurrence is required to capture the representational dynamics of the human visual system | Proceedings of the National Academy of Sciences 2019 [OpenAlex]
+- PMID 42192895 | DOI 10.3390/cancers18101532 ✓Crossref | Integrated Genomic Profiling of Newly Diagnosed and Relapsed Acute Myeloid Leukemia Identifies Driver Genes, Mutational Signatures, and Therapeutic Targets. | Cancers (Basel) 2026 [Europe PMC]
+- PMID 32641768 | DOI 10.1038/s41467-020-17186-5 ✓Crossref | Single-cell RNA-seq reveals that glioblastoma recapitulates a normal neurodevelopmental hierarchy | Nature Communications 2020 [OpenAlex]
+- PPR:PPR1114849 | DOI 10.1101/2025.11.04.25339472 ✓Crossref | Clonal Evolution of Pediatric Acute Myeloid Leukemia and Its Contribution to Disease Relapse | PPR 2025 [Europe PMC]
+- PMID 22008217 | DOI 10.1136/bmj.d5928 ✓Crossref | The Cochrane Collaboration's tool for assessing risk of bias in randomised trials | BMJ 2011 [OpenAlex]
+- PMID 41798597 | DOI 10.1093/ehjopen/oeag024 ✓Crossref | Win ratio analysis of low-voltage area ablation in persistent atrial fibrillation: sub-analysis of SUPPRESS-AF. | Eur Heart J Open 2026 [Europe PMC]
+- PMID 31532725 | DOI 10.1200/jco.19.00572 ✓Crossref | Effect of Psychological Intervention on Fear of Cancer Recurrence: A Systematic Review and Meta-Analysis | Journal of Clinical Oncology 2019 [OpenAlex]
+- PMID 41708893 | DOI 10.1038/s43018-026-01122-5 ✓Crossref | The automated computational workflow QUICHE reveals structural definitions of antitumor responses in triple-negative breast cancer. | Nat Cancer 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

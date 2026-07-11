@@ -1,0 +1,47 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:19:14Z
+- Intervention type: device
+- Literature/trials query: 'regularized logistic regression gradient'
+- MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
+- openFDA device terms: ['regularized', 'primary', 'care', 'population', 'logistic']
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Calibrator, Primary | product_code=JIS | class=2 | regulation=862.1150 | panel=Clinical Chemistry
+- 510(k) | VERILAST WEAR CLAIMS FOR THE LEGION PRIMARY KNEE SYSTEM | k_number=K093746 | decision=Substantially Equivalent | date=2010-04-14 | applicant=Smith & Nephew, Inc.
+- 510(k) | LIFESHIELD PRIMARY I.V. SET WITH BACKCHECK VALVE | k_number=K971293 | decision=Substantially Equivalent | date=1997-06-27 | applicant=Abbott Mfg., Inc.
+- CLASSIFICATION | Point Of Care Hiv Serology Diagnostic And/Or Supplemental Test | product_code=QSU | class=2 | regulation=866.3956 | panel=Microbiology
+- CLASSIFICATION | Apparatus, Suction, Patient Care | product_code=DWM | class=2 | regulation=870.5050 | panel=Cardiovascular
+- CLASSIFICATION | Catheter Care Tray | product_code=OHR | class=2 | regulation=876.5130 | panel=Gastroenterology, Urology
+- 510(k) | REFERENCE POPULATION FOR NORLAND APOLLO X-RAY BONE DENSITOMETER | k_number=K980125 | decision=Substantially Equivalent | date=1998-05-20 | applicant=Norland Corp.
+- 510(k) | APOLLO MULTI-RACIAL REFERENCE POPULATION | k_number=K993337 | decision=Substantially Equivalent | date=2000-05-16 | applicant=Norland Medical Systems, Inc.
+- 510(k) | MULTI-RACIAL REFERENCE POPULATION FOR PDEXA AND DISCOVERY | k_number=K993176 | decision=Substantially Equivalent | date=2000-06-20 | applicant=Norland Medical Systems, Inc.
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | Organ Care System (OCS) Heart System | pma_number=P180051 | supplement=S008 | decision=OK30 | date=2025-10-22 | product_code=QIK | applicant=TransMedics, Inc.
+- MAUDE | SIGMA KNEE PRIMARY : KNEE FEMORAL | event_type=Injury | date_received=20200429 | report_number=1818910-2020-11507
+- MAUDE | SIGMA KNEE PRIMARY : KNEE TIBIAL INSERT | event_type=Injury | date_received=20200429 | report_number=1818910-2020-11510
+- Recall | 126" (320 cm) 16.4 ml, 15 Drop Primary Set w/2 MicroClave Clear, Remv 2 Gang 4-Way NanoClave Stopcock, Rotating Luer, 1  | classification=Class II | status=Terminated | reason=Identification of a potential manufacturing defect on the internal surface of the NanoClave within specific lots of NanoClave sets, which may inhibit a proper s | firm=ICU Medical, Inc. | date=20200706 | recall_number=Z-0218-2021
+- Recall | AMO TECNIS CL Foldable Silicone IOL with OptiEdge Design, Model Z9002. Indicated for primary implantation for the visual | classification=Class II | status=Terminated | reason=Units may be labeled with the incorrect diopter power. | firm=AMO Puerto Rico Manufacturing, Inc. | date=20140513 | recall_number=Z-2279-2014
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 42254114 | DOI 10.1097/ms9.0000000000005005 ✓Crossref | Predicting pediatric surgical site infections using machine learning: clinical implications and limitations. | Ann Med Surg (Lond) 2026 [Europe PMC]
+- https://openalex.org/W1678356000 | DOI 10.1214/aos/1013203451 ✓Crossref | Greedy function approximation: A gradient boosting machine. | The Annals of Statistics 2001 [OpenAlex]
+- PMID 42132486 | DOI 10.1158/1055-9965.epi-25-2052 ✓Crossref | Performance of Statistical and Machine Learning Risk Prediction Models for Advanced Breast Cancers. | Cancer Epidemiol Biomarkers Prev 2026 [Europe PMC]
+- https://openalex.org/W2024046085 | DOI 10.1214/aos/1016218223 ✓Crossref | Additive logistic regression: a statistical view of boosting (With discussion and a rejoinder by the authors) | The Annals of Statistics 2000 [OpenAlex]
+- PMID 42351587 | DOI 10.3390/diagnostics16121928 ✓Crossref | Paranasal Sinus Morphometry for Forensic Sex Estimation: A Computed Tomography Study of 499 Individuals with a Cross-Validated, Transparently Reported Machine Learning Model. | Diagnostics (Basel) 2026 [Europe PMC]
+- https://openalex.org/W1522301498 | DOI 10.48550/arxiv.1412.6980 ✓Crossref | Adam: A Method for Stochastic Optimization | UvA-DARE (University of Amsterdam) 2014 [OpenAlex]
+- PMID 42184883 | DOI 10.1016/j.wneu.2026.125080 ✓Crossref | Paravertebral Muscle Fat Infiltration and Other Imaging Predictors of Cement Nonunion Following Percutaneous Kyphoplasty: A Multivariable Modeling Study. | World Neurosurg 2026 [Europe PMC]
+- https://openalex.org/W2063978378 | DOI 10.1214/009053604000000067 | Least angle regression | The Annals of Statistics 2004 [OpenAlex]
+- PMID 42280799 | DOI 10.3390/s26113278 | Can Locomotor Performance Predict the Final Result of a Football Match? A Machine Learning Approach. | Sensors (Basel) 2026 [Europe PMC]
+- https://openalex.org/W2163605009 | DOI 10.1145/3065386 ✓Crossref | ImageNet classification with deep convolutional neural networks | Communications of the ACM 2017 [OpenAlex]
+- PMID 42053398 | DOI 10.1177/14604582261444612 ✓Crossref | Interpretable heart disease risk prediction via FCA-constrained logistic regression. | Health Informatics J 2026 [Europe PMC]
+- PMID 18397250 | DOI 10.1111/j.1365-2656.2008.01390.x ✓Crossref | A working guide to boosted regression trees | Journal of Animal Ecology 2008 [OpenAlex]
+- PMC:PMC13298097 | Paranasal Sinus Morphometry for Forensic Sex Estimation: A Computed Tomography Study of 499 Individuals with a Cross-Validated, Transparently Reported Machine Learning Model | Diagnostics (Basel) 2026 [Europe PMC]
+- https://openalex.org/W2027197817 | An Interior-Point Method for Large-Scale l 1 -Regularized Logistic Regression |  2007 [OpenAlex]
+- PMID 41378455 | DOI 10.1161/jaha.123.030363 ✓Crossref | PrevCardioOncAI: Machine Learning Algorithms for Predicting Cardiovascular Disease in Cancer Survivors. | J Am Heart Assoc 2025 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

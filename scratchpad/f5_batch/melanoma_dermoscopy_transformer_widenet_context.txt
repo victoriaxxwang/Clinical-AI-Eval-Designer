@@ -1,0 +1,58 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:17:17Z
+- Intervention type: device
+- Literature/trials query: '("Neoplasms" OR "Tumors" OR "Neoplasia" OR "Neoplasias" OR "Neoplasm") AND multimodal AND transformer'
+- MeSH normalization: 'malignancy' → "Neoplasms" (D009369) + 4 synonyms
+- openFDA device terms: ['multimodal', 'outpatient', 'dermatology', 'clinic', 'lesion']
+
+### ClinicalTrials.gov (study designs, endpoints, enrollment)
+- NCT07500428 | Construction of a Benchmark for Breast Ultrasound AI Interpretation and Performance Evaluation of Multimodal AI Models | status=RECRUITING | type=OBSERVATIONAL phases= | n=1380 | allocation= masking= | primary_outcomes=Diagnostic Accuracy for Pathological Diagnosis; BI-RADS Classification Accuracy
+- NCT07373951 | Retrospective Multicenter Study of Patient-level T1CE/FLAIR MRI Deep Learning to Predict EGFR/ALK Driver Status in NSCLC Brain Metastases With External Validation and Survival Analysis | status=ENROLLING_BY_INVITATION | type=OBSERVATIONAL phases= | n=380 | allocation= masking= | primary_outcomes=Patient-level AUC for driver status (External Validation)
+
+### openFDA (device classification / 510(k) precedents)
+- 510(k) | CURRY MULTIMODAL NEUROIMAGING SOFTWARE | k_number=K001781 | decision=Substantially Equivalent | date=2001-02-05 | applicant=Neurosoft, Inc.
+- 510(k) | CUTERA MULTIMODAL CELLULITE PRODUCT (CMMCD) | k_number=K080300 | decision=Substantially Equivalent | date=2008-04-08 | applicant=Cutera, Inc.
+- 510(k) | CUTERA MULTIMODAL CELLULITE PRODUCT (CMMCD) | k_number=K092195 | decision=Substantially Equivalent | date=2009-10-01 | applicant=Cutera, Inc.
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- 510(k) | MODEL 10-C W/FL-10A/U FOR SURGERY AND DERMATOLOGY | k_number=K862862 | decision=Substantially Equivalent | date=1986-09-19 | applicant=Directed Energy, Inc.
+- 510(k) | BACTI PLATE (DERMATOLOGY) PRODUCT NO. PS-5000 | k_number=K861301 | decision=Substantially Equivalent | date=1986-04-21 | applicant=Troy Biologicals, Inc.
+- 510(k) | MODEL 20-C W/FL-20A/U FOR SURGERY & DERMATOLOGY | k_number=K862864 | decision=Substantially Equivalent | date=1986-10-24 | applicant=Directed Energy, Inc.
+- CLASSIFICATION | Monitor, Uterine Contraction, External (For Use In Clinic) | product_code=HFM | class=2 | regulation=884.2720 | panel=Obstetrics/Gynecology
+- 510(k) | ZT Clinic (MG675A); ZT Cube (ZC3) (MG465A); Z-ONE (MG455A) | k_number=K242754 | decision=Substantially Equivalent | date=2025-05-05 | applicant=Zamar Medical D.O.O.
+- 510(k) | Digital Dialysis Clinic - Intelligent Dialysis Assistant (IDA) with Medical Supervision Portal and IDA Smartphone App | k_number=K220935 | decision=Substantially Equivalent | date=2022-12-29 | applicant=Iren-Medical, Ltd.
+- CLASSIFICATION | Herpes Virus (Vzv, Hsv1, Hsv2), Dna Detection Assay For Cutaneous And Mucocutaneous Lesion Samples | product_code=PGI | class=2 | regulation=866.3309 | panel=Microbiology
+- CLASSIFICATION | Prostate Lesion, Documentation, System | product_code=OQT | class=2 | regulation=876.2050 | panel=Gastroenterology, Urology
+- CLASSIFICATION | Low Power Electrosurgical Devices For Skin Lesion Destruction | product_code=QVJ | class=2 | regulation=878.4400 | panel=General, Plastic Surgery
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | GENESIS HOME UTERINE ACTIVITY MONITORING SYSTEM (HUAM) | pma_number=P890063 | supplement=S004 | decision=APPR | date=1995-06-16 | product_code=HFM | applicant=Matria Healthcare, Inc.
+- PMA | Thoraflex Hybrid | pma_number=P210006 | supplement=S006 | decision=OK30 | date=2023-09-21 | product_code=QSK | applicant=Vascutek, Ltd.
+- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
+- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
+- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
+- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 42366432 | DOI 10.7507/1001-5515.202411017 ✓Crossref | [An auxiliary diagnosis system for cervical intraepithelial neoplasia based on colposcopic images]. | Sheng Wu Yi Xue Gong Cheng Xue Za Zhi 2026 [Europe PMC]
+- PMID 36220072 | DOI 10.1016/j.ccell.2022.09.012 ✓Crossref | Artificial intelligence for multimodal data integration in oncology | Cancer Cell 2022 [OpenAlex]
+- PPR:PPR1253524 | DOI 10.64898/2026.03.05.26347766 ✓Crossref | Thyroid Cancer Risk Prediction from Multimodal Datasets Using Large Language Model | PPR 2026 [Europe PMC]
+- PMID 35575610 | DOI 10.1002/lary.30154 ✓Crossref | A Deep Learning Model for Classification of Parotid Neoplasms Based on Multimodal Magnetic Resonance Image Sequences | The Laryngoscope 2022 [OpenAlex]
+- PMID 41975814 | DOI 10.3390/diagnostics16071103 ✓Crossref | Artificial Intelligence in Ocular Surface Tumors: Current Advances, Challenges, and Future Directions. | Diagnostics (Basel) 2026 [Europe PMC]
+- PMID 36810839 | DOI 10.1038/s41467-023-36559-0 ✓Crossref | Single-cell biological network inference using a heterogeneous graph transformer | Nature Communications 2023 [OpenAlex]
+- PMID 42279283 | DOI 10.3390/cancers18111698 ✓Crossref | A Scoping Review of Artificial Intelligence in Ocular Oncology. | Cancers (Basel) 2026 [Europe PMC]
+- PMID 39075407 | DOI 10.1186/s12911-024-02600-5 ✓Crossref | Transformer models in biomedicine | BMC Medical Informatics and Decision Making 2024 [OpenAlex]
+- PMID 42089749 | DOI 10.1093/bib/bbag224 ✓Crossref | Development of a novel multimodal deep learning approach to improve diagnostic precision in ovarian cancer. | Brief Bioinform 2026 [Europe PMC]
+- PMID 37360402 | DOI 10.1088/2516-1091/acc2fe ✓Crossref | Deep multimodal fusion of image and non-image data in disease diagnosis and prognosis: a review | Progress in Biomedical Engineering 2023 [OpenAlex]
+- PMID 42183263 | DOI 10.3389/fimmu.2026.1795144 ✓Crossref | Artificial intelligence in ovarian cancer: advancing in precision diagnosis and clinical management. | Front Immunol 2026 [Europe PMC]
+- PMID 38789645 | DOI 10.1038/s41591-024-02993-w ✓Crossref | Prediction of recurrence risk in endometrial cancer with multimodal deep learning | Nature Medicine 2024 [OpenAlex]
+- PMID 42407139 | DOI 10.1016/j.patol.2026.100885 ✓Crossref | A morphology-guided ViT-CNN approach for the detection of lung and colon cancer using H&amp;E-stained biopsy images. | Rev Esp Patol 2026 [Europe PMC]
+- PMID 38030638 | DOI 10.1038/s41467-023-43715-z ✓Crossref | TransformEHR: transformer-based encoder-decoder generative model to enhance prediction of disease outcomes using electronic health records | Nature Communications 2023 [OpenAlex]
+- PMID 41816119 | DOI 10.1016/j.jbo.2026.100753 ✓Crossref | From imaging to omics: deep learning is bridging MRI and liquid biopsy in bone tumor diagnosis. | J Bone Oncol 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

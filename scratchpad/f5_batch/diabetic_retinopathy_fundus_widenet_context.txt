@@ -1,0 +1,47 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:16:37Z
+- Intervention type: device
+- Literature/trials query: '("Macular Edema" OR "Edema, Macular" OR "Macular Edema, Cystoid" OR "Edema, Cystoid Macular" OR "Cystoid Macular Dystrophy") AND fundus AND efficientnet'
+- MeSH normalization: 'macular edema' → "Macular Edema" (D008269) + 4 synonyms
+- openFDA device terms: ['fundus', 'primary', 'care', 'optometry', 'efficientnet']
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Lens, Fundus, Hruby, Diagnostic | product_code=HJI | class=1 | regulation=886.1395 | panel=Ophthalmic
+- 510(k) | YANNUZZI FUNDUS LASER LENS | k_number=K864304 | decision=Substantially Equivalent | date=1986-12-15 | applicant=Ocular Instruments, Inc.
+- 510(k) | 60 FUNDUS CAMERA CF-60UV | k_number=K901839 | decision=Substantially Equivalent | date=1990-07-05 | applicant=Canon USA, Inc.
+- CLASSIFICATION | Calibrator, Primary | product_code=JIS | class=2 | regulation=862.1150 | panel=Clinical Chemistry
+- 510(k) | VERILAST WEAR CLAIMS FOR THE LEGION PRIMARY KNEE SYSTEM | k_number=K093746 | decision=Substantially Equivalent | date=2010-04-14 | applicant=Smith & Nephew, Inc.
+- 510(k) | LIFESHIELD PRIMARY I.V. SET WITH BACKCHECK VALVE | k_number=K971293 | decision=Substantially Equivalent | date=1997-06-27 | applicant=Abbott Mfg., Inc.
+- CLASSIFICATION | Point Of Care Hiv Serology Diagnostic And/Or Supplemental Test | product_code=QSU | class=2 | regulation=866.3956 | panel=Microbiology
+- CLASSIFICATION | Apparatus, Suction, Patient Care | product_code=DWM | class=2 | regulation=870.5050 | panel=Cardiovascular
+- CLASSIFICATION | Catheter Care Tray | product_code=OHR | class=2 | regulation=876.5130 | panel=Gastroenterology, Urology
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | Organ Care System (OCS) Heart System | pma_number=P180051 | supplement=S008 | decision=OK30 | date=2025-10-22 | product_code=QIK | applicant=TransMedics, Inc.
+- MAUDE | LENS, FUNDUS, HRUBY, DIAGNOSTIC | event_type=Injury | date_received=20211117 | report_number=MW5105451
+- MAUDE | FUNDUS GRASPER | event_type=Injury | date_received=20221109 | report_number=2955842-2022-15143
+- Recall | Fundus Grasper; used with the da Vinci Si Surgical System (IS3000); Model numbers: 428058-12, 428058-13. The Intuitive S | classification=Class II | status=Terminated | reason=In certain circumstances involving select da Vinci Si Single-Site instruments, the jaws of grip actuated instruments may become fixed in a closed position. | firm=Intuitive Surgical, Inc. | date=20150808 | recall_number=Z-2754-2015
+- Recall | NAVIS-EX , Image Filing Software for NIDEK AFC Fundus camera, Ver 1.1.0 to 1.3.5. NAVIS-EX is indicated for use as file  | classification=Class II | status=Terminated | reason=Under certain circumstances, the Left eye image may be saved as the Right eye image. | firm=Nidek Inc | date=20130801 | recall_number=Z-2046-2013
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 41868207 | DOI 10.3389/fmed.2026.1775911 ✓Crossref | Evaluation of classification performance for six types of fundus diseases in OCT images based on multi-source training strategy. | Front Med (Lausanne) 2026 [Europe PMC]
+- PMID 34073541 | DOI 10.3390/s21113704 ✓Crossref | Diabetic Retinopathy Fundus Image Classification and Lesions Localization System Using Deep Learning | Sensors 2021 [OpenAlex]
+- PMID 41136657 | DOI 10.1038/s41598-025-21366-y ✓Crossref | Prediction of advanced chronic kidney disease through retinal fundus images by deep learning. | Sci Rep 2025 [Europe PMC]
+- PMID 39695310 | DOI 10.1038/s41598-024-81132-4 ✓Crossref | Ensemble deep learning and EfficientNet for accurate diagnosis of diabetic retinopathy | Scientific Reports 2024 [OpenAlex]
+- PMID 42060353 | DOI 10.4103/ijo.ijo_3152_25 ✓Crossref | The evolving role of artificial intelligence in optimizing treatment and patient selection in diabetic macular edema. | Indian J Ophthalmol 2026 [Europe PMC]
+- PMID 37203031 | DOI 10.4103/ijo.ijo_2614_22 ✓Crossref | Deep learning–based detection of diabetic macular edema using optical coherence tomography and fundus images: A meta-analysis | Indian Journal of Ophthalmology 2023 [OpenAlex]
+- PMC:PMC12984710 | Investigating the Impact of Semi-Supervised Learning Methods to Improve the Quality of Diagnosis of Retinal Diseases from OCT Images | Diagnostics (Basel) 2026 [Europe PMC]
+- https://openalex.org/W4387885883 | DOI 10.1109/access.2023.3326528 ✓Crossref | Vision Transformer Model for Predicting the Severity of Diabetic Retinopathy in Fundus Photography-Based Retina Images | IEEE Access 2023 [OpenAlex]
+- PMID 41899275 | DOI 10.3390/jcm15062352 ✓Crossref | MidFusionEfficientV2: Improving Ophthalmic Diagnosis with Mid-Level RGB-LBP Fusion and SE Attention. | J Clin Med 2026 [Europe PMC]
+- PMID 38880890 | DOI 10.1186/s40662-024-00389-y ✓Crossref | Novel artificial intelligence algorithms for diabetic retinopathy and diabetic macular edema | Eye and Vision 2024 [OpenAlex]
+- PMID 41354757 | DOI 10.1038/s41598-025-28376-w ✓Crossref | Intelligent retinal disease detection using deep learning. | Sci Rep 2025 [Europe PMC]
+- PMID 38287062 | DOI 10.1038/s41598-024-52131-2 ✓Crossref | A concentrated machine learning-based classification system for age-related macular degeneration (AMD) diagnosis using fundus images | Scientific Reports 2024 [OpenAlex]
+- PMID 41585223 | DOI 10.3389/fmed.2025.1741146 ✓Crossref | Early prediction of diabetic retinopathy using a multimodal deep learning framework integrating fundus and OCT imaging. | Front Med (Lausanne) 2025 [Europe PMC]
+- PMID 35204404 | DOI 10.3390/diagnostics12020312 ✓Crossref | Deep Learning Prediction of Response to Anti-VEGF among Diabetic Macular Edema Patients: Treatment Response Analyzer System (TRAS) | Diagnostics 2022 [OpenAlex]
+- PMID 41814043 | DOI 10.1007/s40123-026-01353-w ✓Crossref | Validation of the Eyerobo FC Portable Fundus Camera for Diabetic Retinopathy Screening Using Public Datasets and Deep Learning. | Ophthalmol Ther 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

@@ -1,0 +1,59 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:09:35Z
+- Intervention type: device
+- Literature/trials query: 'convolutional neural network adapted'
+- MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
+- openFDA device terms: ['convolutional', 'outpatient', 'radiology', 'screening', 'neural']
+
+### ClinicalTrials.gov (study designs, endpoints, enrollment)
+- NCT06796283 | Research on AIS Recurrence Risk Prediction Model Using XGBoost Combined With Convolutional Neural Network Algorithm | status=COMPLETED | type=OBSERVATIONAL phases= | n=2628 | allocation= masking= | primary_outcomes=Recurrent ischemic stroke,
+- NCT04952675 | Evaluation of Pneumoconiosis High Risk Early Warning Models | status=UNKNOWN | type=OBSERVATIONAL phases= | n=200 | allocation= masking= | primary_outcomes=participants diagnosed as "pneumoconiosis"; death
+- NCT03960710 | Automatic Segmentation of Polycystic Liver | status=UNKNOWN | type=OBSERVATIONAL phases= | n=120 | allocation= masking= | primary_outcomes=Test of automatic segmentation by the convolutional neural network on these group and collection of data set
+- NCT06715488 | Automated Arthritis Detection Using Artificial Intelligence on Smartphone Photographs | status=ACTIVE_NOT_RECRUITING | type=OBSERVATIONAL phases= | n=3000 | allocation= masking= | primary_outcomes=Accuracy of AI diagnosis against specialist (rheumatologist) opinion
+- NCT05243121 | Artificial Intelligence Analysis for Magnetic Resonance Imaging in Screening and Diagnosis of Breast Cancer | status=UNKNOWN | type=OBSERVATIONAL phases= | n=5000 | allocation= masking= | primary_outcomes=Breast Cancer Screening
+- NCT06641258 | Deep Learning Model Detecting Pressure Injury | status=COMPLETED | type=INTERVENTIONAL phases=NA | n=60 | allocation=RANDOMIZED masking=NONE | primary_outcomes=Knowledge levels
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- CLASSIFICATION | Radiology Software For Opportunistic Evaluation Of Low Bone Mineral Density | product_code=SAO | class=2 | regulation=892.1171 | panel=Radiology
+- CLASSIFICATION | Display, Diagnostic Radiology | product_code=PGY | class=2 | regulation=892.2050 | panel=Radiology
+- CLASSIFICATION | Radiology-Diagnostic Kit | product_code=OIP | class=2 | regulation=892.1680 | panel=Radiology
+- CLASSIFICATION | Neonatal Blood Collection Kit And Screening Form (Excludes Hiv Testing) | product_code=OIA | class=1 | regulation=864.3250 | panel=Pathology
+- CLASSIFICATION | Alpha-L-Iduronidase (Idua) Newborn Screening Test System | product_code=PQT | class=2 | regulation=862.1488 | panel=Clinical Chemistry
+- CLASSIFICATION | Acid-Sphingomyelinase (Asm) Newborn Screening Test System | product_code=QCL | class=2 | regulation=862.1488 | panel=Clinical Chemistry
+- CLASSIFICATION | Kit, Test, Alpha-Fetoprotein For Neural Tube Defects | product_code=LOK | class=3 | regulation= | panel=Unknown
+- CLASSIFICATION | High Intensity Focused Ultrasound System For Peripheral Neural Tissue Ablation | product_code=SGN | class=2 | regulation=882.4420 | panel=Neurology
+- 510(k) | Cionic Neural Sleeve NS-100 | k_number=K213622 | decision=Substantially Equivalent | date=2022-02-14 | applicant=Cionic
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | ARCHITECT AFP | pma_number=P120008 | supplement=S015 | decision=APPR | date=2020-05-23 | product_code=LOK | applicant=Abbott Laboratories
+- PMA | Atellica IM Alpha Fetoprotein (AFP) | pma_number=P930036 | supplement=S024 | decision=APPR | date=2024-09-23 | product_code=LOK | applicant=Siemens Healthcare Diagnostics, Inc.
+- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
+- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
+- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
+- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 35609391 | DOI 10.1016/j.saa.2022.121350 ✓Crossref | Probing 1D convolutional neural network adapted to near-infrared spectroscopy for efficient classification of mixed fish. | Spectrochim Acta A Mol Biomol Spectrosc 2022 [Europe PMC]
+- https://openalex.org/W1832693441 | DOI 10.3115/v1/d14-1181 ✓Crossref | Convolutional Neural Networks for Sentence Classification |  2014 [OpenAlex]
+- PMID 35874151 | DOI 10.3389/fnhum.2022.924222 ✓Crossref | Identifying Amnestic Mild Cognitive Impairment With Convolutional Neural Network Adapted to the Spectral Entropy Heat Map of the Electroencephalogram. | Front Hum Neurosci 2022 [Europe PMC]
+- https://openalex.org/W2884585870 | DOI 10.1007/978-3-030-01234-2_1 ✓Crossref | CBAM: Convolutional Block Attention Module | Lecture notes in computer science 2018 [OpenAlex]
+- PMID 33819697 | DOI 10.1016/j.jpba.2021.114035 ✓Crossref | Improved 1D convolutional neural network adapted to near-infrared spectroscopy for rapid discrimination of Anoectochilus roxburghii and its counterfeits. | J Pharm Biomed Anal 2021 [Europe PMC]
+- https://openalex.org/W2752782242 | DOI 10.1109/cvpr.2018.00745 ✓Crossref | Squeeze-and-Excitation Networks |  2018 [OpenAlex]
+- PMID 42263070 | DOI 10.1371/journal.pone.0351460 ✓Crossref | Correction: Prediction of the ectasia screening index from raw Casia2 volume data for keratoconus identification by using convolutional neural networks. | PLoS One 2026 [Europe PMC]
+- https://openalex.org/W3034552520 | DOI 10.1109/cvpr42600.2020.01155 ✓Crossref | ECA-Net: Efficient Channel Attention for Deep Convolutional Neural Networks |  2020 [OpenAlex]
+- PMID 42154307 | DOI 10.1007/s10548-026-01207-5 ✓Crossref | fNIRS-STCT: A Novel Hybrid Spatial and Temporal CNN and Transformer Network for fNIRS Signal Classification. | Brain Topogr 2026 [Europe PMC]
+- https://openalex.org/W2963017945 | DOI 10.1609/aaai.v32i1.11691 ✓Crossref | Adaptive Graph Convolutional Neural Networks | Proceedings of the AAAI Conference on Artificial Intelligence 2018 [OpenAlex]
+- PPR:PPR1248869 | DOI 10.21203/rs.3.rs-9887445/v1 ✓Crossref | Uncertain flow Reduced-Order Modeling acting as Virtual Viscosimeter using Physics-Manifold Adapted-mCRE-Guided Neural Networks | PPR 2026 [Europe PMC]
+- PMID 29934920 | DOI 10.1007/s13244-018-0639-9 ✓Crossref | Convolutional neural networks: an overview and application in radiology | Insights into Imaging 2018 [OpenAlex]
+- PMID 42310365 | DOI 10.1038/s41598-026-58763-w ✓Crossref | Zero-shot multimodal large language models underperform a domain-trained CNN baseline in pediatric wrist fracture detection. | Sci Rep 2026 [Europe PMC]
+- PMID 31034408 | DOI 10.1109/tpami.2019.2913372 ✓Crossref | Squeeze-and-Excitation Networks | IEEE Transactions on Pattern Analysis and Machine Intelligence 2019 [OpenAlex]
+- PMID 42024668 | DOI 10.1371/journal.pone.0346294 ✓Crossref | Neural network architectures and normalization techniques for automated sleep stage classification using rodent EEG and EMG signals. | PLoS One 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

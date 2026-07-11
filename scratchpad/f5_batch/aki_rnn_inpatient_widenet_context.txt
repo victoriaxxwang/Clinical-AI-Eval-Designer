@@ -1,0 +1,51 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:13:45Z
+- Intervention type: device
+- Literature/trials query: 'recurrent neural network gru'
+- MeSH normalization: none (condition not an exact MeSH heading, or lookup unavailable) — raw keywords used
+- openFDA device terms: ['recurrent', 'acute', 'care', 'hospital', 'neural']
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Phototherapy Device For Reducing The Appearance Of Acute Post-Surgical Incisions | product_code=QPE | class=2 | regulation=878.4880 | panel=General, Plastic Surgery
+- CLASSIFICATION | Neurovascular Mechanical Thrombectomy Device For Acute Ischemic Stroke Treatment | product_code=POL | class=2 | regulation=882.5600 | panel=Neurology
+- CLASSIFICATION | Acute Kidney Injury Test System | product_code=PIG | class=2 | regulation=862.1220 | panel=Clinical Chemistry
+- CLASSIFICATION | Point Of Care Hiv Serology Diagnostic And/Or Supplemental Test | product_code=QSU | class=2 | regulation=866.3956 | panel=Microbiology
+- CLASSIFICATION | Apparatus, Suction, Patient Care | product_code=DWM | class=2 | regulation=870.5050 | panel=Cardiovascular
+- CLASSIFICATION | Catheter Care Tray | product_code=OHR | class=2 | regulation=876.5130 | panel=Gastroenterology, Urology
+- CLASSIFICATION | Hospital Continuous Glucose Monitoring System | product_code=PYV | class=2 | regulation=862.1345 | panel=Clinical Chemistry
+- CLASSIFICATION | Bassinet, Hospital | product_code=NZG | class=2 | regulation=880.5145 | panel=General Hospital
+- CLASSIFICATION | Bed, Pediatric Open Hospital | product_code=FMS | class=2 | regulation=880.5140 | panel=General Hospital
+- CLASSIFICATION | Kit, Test, Alpha-Fetoprotein For Neural Tube Defects | product_code=LOK | class=3 | regulation= | panel=Unknown
+- CLASSIFICATION | High Intensity Focused Ultrasound System For Peripheral Neural Tissue Ablation | product_code=SGN | class=2 | regulation=882.4420 | panel=Neurology
+- 510(k) | Cionic Neural Sleeve NS-100 | k_number=K213622 | decision=Substantially Equivalent | date=2022-02-14 | applicant=Cionic
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | Guardian System | pma_number=P150009 | supplement=S011 | decision=APPR | date=2024-01-25 | product_code=QBI | applicant=Avertix Medical, Inc.
+- PMA | RESPONSE CV CARDIOVERSION ELECTROPHYSIOLOGY CATHETER | pma_number=P020052 | supplement=S004 | decision=OK30 | date=2007-09-21 | product_code=MTE | applicant=St Jude Medical
+- MAUDE | ENDOPROSTHESIS FOR RECURRENT BULBAR URETHRAL STRICTURE | event_type=Injury | date_received=19970107 | report_number=61424
+- MAUDE | ACUTE CARE TROPONIN I TEST PAK | event_type=Malfunction | date_received=20080229 | report_number=2517506-2008-00021
+- Recall | Cook Celect Platinum Vena Cava Filter Set for Femoral and Jugular Vein Approach, Catalog Number IGTCFS-65-1-UNl-C ELECT- | classification=Class III | status=Terminated | reason=Updates to the Instructions for Use. | firm=Cook Medical Incorporated | date=20190225 | recall_number=Z-1026-2019
+- Recall | Cook Celect Platinum Vena Cava Filter Set for Jugular Vein Approach, Catalog Number GTCFS-65-1-JUG-CELECT-PT Product Usa | classification=Class III | status=Terminated | reason=Updates to the Instructions for Use. | firm=Cook Medical Incorporated | date=20190225 | recall_number=Z-1025-2019
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 42218320 | DOI 10.1038/s41598-026-55532-7 ✓Crossref | Deep hybrid architecture for multi-class detection of network layer attacks in WSN. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W1924770834 | DOI 10.48550/arxiv.1412.3555 ✓Crossref | Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling | arXiv (Cornell University) 2014 [OpenAlex]
+- PMID 42318583 | DOI 10.3389/frai.2026.1825655 ✓Crossref | Attention integrated deep learning models for interpretable multi-class IoT intrusion detection using SHAP. | Front Artif Intell 2026 [Europe PMC]
+- PMID 29666385 | DOI 10.1038/s41598-018-24271-9 ✓Crossref | Recurrent Neural Networks for Multivariate Time Series with Missing Values | Scientific Reports 2018 [OpenAlex]
+- PPR:PPR1258650 | DOI 10.21203/rs.3.rs-10128538/v1 ✓Crossref | Context-Enriched Graph Neural Networks for EV Charging Station Energy Demand Forecasting | PPR 2026 [Europe PMC]
+- https://openalex.org/W2972178360 | DOI 10.1109/access.2019.2939947 ✓Crossref | A Deep Bidirectional GRU Network Model for Biometric Electrocardiogram Classification Based on Recurrent Neural Networks | IEEE Access 2019 [OpenAlex]
+- PMID 42194602 | DOI 10.3390/jcm15103642 ✓Crossref | Development of an Artificial Intelligence Model to Predict Endotracheal Intubation in Critically Ill Patients in Real Time. | J Clin Med 2026 [Europe PMC]
+- https://openalex.org/W4394733584 | DOI 10.1016/j.enconman.2024.118333 ✓Crossref | Wind speed short-term prediction using recurrent neural network GRU model and stationary wavelet transform GRU hybrid model | Energy Conversion and Management 2024 [OpenAlex]
+- PMID 42241468 | DOI 10.1371/journal.pone.0350331 ✓Crossref | Estimation of battery SOC using a combined approach of temporal convolutional networks and Unscented Kalman Filter. | PLoS One 2026 [Europe PMC]
+- https://openalex.org/W2572939427 | DOI 10.1109/yac.2016.7804912 ✓Crossref | Using LSTM and GRU neural network methods for traffic flow prediction |  2016 [OpenAlex]
+- PMID 42156856 | DOI 10.1038/s41598-026-51284-6 ✓Crossref | Attention-augmented hybrid framework with evolutionary optimization for robust deepfake detection. | Sci Rep 2026 [Europe PMC]
+- https://openalex.org/W2580662672 | DOI 10.1109/mwscas.2017.8053243 ✓Crossref | Gate-variants of Gated Recurrent Unit (GRU) neural networks |  2017 [OpenAlex]
+- PPR:PPR1188208 | DOI 10.21203/rs.3.rs-8754456/v1 ✓Crossref | A method for predicting thermal error in machine tool spindles based on multi-feature GRU network | PPR 2026 [Europe PMC]
+- https://openalex.org/W2755146079 | DOI 10.1145/3195106.3195117 ✓Crossref | A Neural Network Architecture Combining Gated Recurrent Unit (GRU) and Support Vector Machine (SVM) for Intrusion Detection in Network Traffic Data |  2018 [OpenAlex]
+- PMID 42020720 | DOI 10.1038/s41598-026-49691-w ✓Crossref | LSTM-GRU hybrid model for multi-layer microclimate prediction in solar greenhouse. | Sci Rep 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

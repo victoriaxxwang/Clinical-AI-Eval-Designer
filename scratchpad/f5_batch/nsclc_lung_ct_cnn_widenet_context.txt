@@ -1,0 +1,59 @@
+### Retrieval Metadata
+- Retrieved (UTC): 2026-07-11T18:09:53Z
+- Intervention type: device
+- Literature/trials query: '("Neoplasms" OR "Tumors" OR "Neoplasia" OR "Neoplasias" OR "Neoplasm") AND convolutional AND neural'
+- MeSH normalization: 'malignancy' → "Neoplasms" (D009369) + 4 synonyms
+- openFDA device terms: ['convolutional', 'outpatient', 'radiology', 'screening', 'neural']
+
+### ClinicalTrials.gov (study designs, endpoints, enrollment)
+- NCT04864587 | Artificial Intelligence in Image Recognition of Pouchoscopies in Patients With Restorative Proctocolectomy | status=COMPLETED | type=OBSERVATIONAL phases= | n=500 | allocation= masking= | primary_outcomes=AI versus endoscopist; AI versus pathologist
+- NCT06540846 | Deep Learning for Histopathological Classification and Prognostication of Gynaecologic Smooth Muscle Tumours | status=RECRUITING | type=OBSERVATIONAL phases= | n=392 | allocation= masking= | primary_outcomes=Develop deep learning models that can accurately subclassify gynaecologic smooth muscle tumours
+- NCT07660718 | The Use of Artificial Intelligence for Ultrasound Screening of Ovarian Cancer in Postmenopausal Women | status=ACTIVE_NOT_RECRUITING | type=OBSERVATIONAL phases= | n=100 | allocation= masking= | primary_outcomes=The predictive performance of the integrated model in accurately discriminating between the different risk categories of ovarian lesions.
+- NCT05193656 | Bladder Cancer Detection Using Convolutional Neural Networks | status=UNKNOWN | type=OBSERVATIONAL phases= | n=5000 | allocation= masking= | primary_outcomes=Comparing standard technique to Machine Learning
+- NCT03857373 | Renal Cancer Detection Using Convolutional Neural Networks | status=RECRUITING | type=OBSERVATIONAL phases= | n=5000 | allocation= masking= | primary_outcomes=Predicting recurrences
+- NCT06703112 | Establishment and Clinical Application of AI-based Multimodal Diagnosis System for Ovarian Tumors | status=NOT_YET_RECRUITING | type=INTERVENTIONAL phases=NA | n=584 | allocation=NA masking=NONE | primary_outcomes=Pathological diagnosis; AUC （Area Under the ROC Curve）
+
+### openFDA (device classification / 510(k) precedents)
+- CLASSIFICATION | Outpatient Cardiac Telemetry | product_code=QYX | class=2 | regulation=870.1025 | panel=Cardiovascular
+- 510(k) | THE CORE (CARDIAC OUTPATIENT REALTIME ECG) MONITOR | k_number=K103706 | decision=Substantially Equivalent | date=2011-08-24 | applicant=Applied Cardiac Systems, Inc.
+- 510(k) | WELLAHO PERSONALIZED OUTPATIENT MANAGEMENT SYSTEM | k_number=K123671 | decision=Substantially Equivalent | date=2013-01-16 | applicant=Sanitas, Inc.
+- CLASSIFICATION | Radiology Software For Opportunistic Evaluation Of Low Bone Mineral Density | product_code=SAO | class=2 | regulation=892.1171 | panel=Radiology
+- CLASSIFICATION | Display, Diagnostic Radiology | product_code=PGY | class=2 | regulation=892.2050 | panel=Radiology
+- CLASSIFICATION | Radiology-Diagnostic Kit | product_code=OIP | class=2 | regulation=892.1680 | panel=Radiology
+- CLASSIFICATION | Neonatal Blood Collection Kit And Screening Form (Excludes Hiv Testing) | product_code=OIA | class=1 | regulation=864.3250 | panel=Pathology
+- CLASSIFICATION | Alpha-L-Iduronidase (Idua) Newborn Screening Test System | product_code=PQT | class=2 | regulation=862.1488 | panel=Clinical Chemistry
+- CLASSIFICATION | Acid-Sphingomyelinase (Asm) Newborn Screening Test System | product_code=QCL | class=2 | regulation=862.1488 | panel=Clinical Chemistry
+- CLASSIFICATION | Kit, Test, Alpha-Fetoprotein For Neural Tube Defects | product_code=LOK | class=3 | regulation= | panel=Unknown
+- CLASSIFICATION | High Intensity Focused Ultrasound System For Peripheral Neural Tissue Ablation | product_code=SGN | class=2 | regulation=882.4420 | panel=Neurology
+- 510(k) | Cionic Neural Sleeve NS-100 | k_number=K213622 | decision=Substantially Equivalent | date=2022-02-14 | applicant=Cionic
+
+### openFDA post-market & Class III (PMA / MAUDE adverse events / recalls)
+- PMA | ARCHITECT AFP | pma_number=P120008 | supplement=S015 | decision=APPR | date=2020-05-23 | product_code=LOK | applicant=Abbott Laboratories
+- PMA | Atellica IM Alpha Fetoprotein (AFP) | pma_number=P930036 | supplement=S024 | decision=APPR | date=2024-09-23 | product_code=LOK | applicant=Siemens Healthcare Diagnostics, Inc.
+- MAUDE | MOBILE CARDIAC OUTPATIENT TELEMETRY | event_type=Malfunction | date_received=20081204 | report_number=MW5009195
+- MAUDE | OUTPATIENT CARDIAC TELEMETRY | event_type=Injury | date_received=20240423 | report_number=MW5154172
+- Recall | Baxter SIGMA Spectrum Infusion Pump with Master Drug Library (Version 8), infusion pump, 35700BAX2 Product Usage: The Ba | classification=Class II | status=Terminated | reason=The firm will be updating the Instructions for Use for the product. Current IFUs instruct users to lower the primary bag 20 inches below the secondary bag using | firm=Baxter Healthcare Corporation | date=20180508 | recall_number=Z-2113-2018
+- Recall | Dialog+ Hemodialysis machines: Dialog A + 1 Blood Pump 120V Product Code 710200K Serial # >202169 and < 203249 The Dialo | classification=Class I | status=Terminated | reason=Potential leakage of conductivity sensors of the Dialog Dialysis machines. | firm=B Braun Medical Inc | date=20160401 | recall_number=Z-1532-2016
+
+### Literature (Europe PMC + OpenAlex + Semantic Scholar / PubMed — PMID + DOI, merged & de-duplicated)
+- PMID 42369008 | DOI 10.3389/frai.2026.1805416 ✓Crossref | Deep learning prediction of chemo-immunotherapy response using tumor perfusion ultrasound images. | Front Artif Intell 2026 [Europe PMC]
+- PMID 31443108 | DOI 10.1055/a-0981-6133 ✓Crossref | Automated classification of gastric neoplasms in endoscopic images using a convolutional neural network | Endoscopy 2019 [OpenAlex]
+- PMID 41518381 | DOI 10.1007/s00417-025-07034-x ✓Crossref | Utilizing artificial intelligence for the diagnosis of ocular surface squamous neoplasia with ultrasound biomicroscopy images. | Graefes Arch Clin Exp Ophthalmol 2026 [Europe PMC]
+- https://openalex.org/W2962946486 | DOI 10.1609/aaai.v33i01.33017370 ✓Crossref | Graph Convolutional Networks for Text Classification | Proceedings of the AAAI Conference on Artificial Intelligence 2019 [OpenAlex]
+- PMID 42366432 | DOI 10.7507/1001-5515.202411017 ✓Crossref | [An auxiliary diagnosis system for cervical intraepithelial neoplasia based on colposcopic images]. | Sheng Wu Yi Xue Gong Cheng Xue Za Zhi 2026 [Europe PMC]
+- PMID 33465354 | DOI 10.1016/j.gie.2020.12.054 ✓Crossref | High performance in risk stratification of intraductal papillary mucinous neoplasms by confocal laser endomicroscopy image analysis with convolutional neural networks (with video) | Gastrointestinal Endoscopy 2021 [OpenAlex]
+- PMID 42279283 | DOI 10.3390/cancers18111698 ✓Crossref | A Scoping Review of Artificial Intelligence in Ocular Oncology. | Cancers (Basel) 2026 [Europe PMC]
+- PMID 31525737 | DOI 10.1159/000503291 ✓Crossref | Preoperative Prediction of Pancreatic Neuroendocrine Neoplasms Grading Based on Enhanced Computed Tomography Imaging: Validation of Deep Learning with a Convolutional Neural Network | Neuroendocrinology 2019 [OpenAlex]
+- PMID 42026537 | DOI 10.1186/s12885-026-16076-1 ✓Crossref | Image analysis for cervical cancer classification using deep learning techniques. | BMC Cancer 2026 [Europe PMC]
+- PMID 29335825 | DOI 10.1007/s10120-018-0793-2 ✓Crossref | Application of artificial intelligence using a convolutional neural network for detecting gastric cancer in endoscopic images | Gastric Cancer 2018 [OpenAlex]
+- PMID 42223560 | DOI 10.1007/s12105-026-01920-4 ✓Crossref | Predicting Metastatic Potential from Histopathological Whole Slide Images of Primary Tumors in Head and Neck Squamous Cell Carcinoma Using Attention-Based Deep Learning and Signaling Pathway Alterations. | Head Neck Pathol 2026 [Europe PMC]
+- PMID 24325359 | DOI 10.1056/nejmoa1312542 ✓Crossref | Somatic <i>CALR</i> Mutations in Myeloproliferative Neoplasms with Nonmutated <i>JAK2</i> | New England Journal of Medicine 2013 [OpenAlex]
+- PMID 41024848 | DOI 10.5306/wjco.v16.i9.107993 ✓Crossref | Role of artificial intelligence in screening and medical imaging of precancerous gastric diseases. | World J Clin Oncol 2025 [Europe PMC]
+- PMID 33137800 | DOI 10.1088/1361-6560/abc6f2 ✓Crossref | Segmentation and classification of thyroid follicular neoplasm using cascaded convolutional neural network | Physics in Medicine and Biology 2020 [OpenAlex]
+- PMID 41828460 | DOI 10.3390/ijms27052237 ✓Crossref | Use of Artificial Intelligence Model Associated with Masson's Trichrome Staining as a Predictor of Muscle Invasion in Bladder Cancer. | Int J Mol Sci 2026 [Europe PMC]
+
+### Coverage & Retrieval Gaps
+This spec was grounded ONLY in sources that expose a free, public API: ClinicalTrials.gov, openFDA (device classification, 510(k), PMA, MAUDE adverse events, recalls), the merged literature indexes Europe PMC / OpenAlex / Semantic Scholar (PubMed fallback), and Crossref (DOI verification). It deliberately does NOT include:
+- Licensed databases with no public API (institutional / manual retrieval required): Embase, PsycINFO, Cochrane Library (CENTRAL), Scopus, Web of Science, CINAHL.
+- FDA drug/biologic pathways (Drugs@FDA, SPL labeling, FAERS) and non-US regulators (EMA, MHRA, PMDA) — not queried by this pipeline.
+Absence of a record above is NOT evidence of absence. Treat the retrieved evidence as a floor for expert review, not a complete landscape.

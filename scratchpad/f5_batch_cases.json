@@ -1,0 +1,125 @@
+{
+  "_note": "Option-1 F5 BATCH (B1 intake). 10 single-disease, mechanism-first clinical AI/ML cases authored by Claude Science (2026-07-11), across 10 distinct clinical areas (no heart failure). Same schema as f5_demo_case.json. Each runs through BOTH engines (frozen engine.py vs experimental/engine_widenet.py) end-to-end. model_desc / use_case / population / setting are VERBATIM from Claude Science. mesh_heading_oracle is the canonical NLM MeSH preferred term (the scoring target). intervention_type=device for all 10 (each is an imaging / EHR / signal SaMD; none is a drug). _disease_in_text = an intake audit of whether the oracle disease name (or a MeSH-resolvable variant) appears anywhere in the ENGINE-VISIBLE text (model_desc/use_case/population/setting) — NOT in the DISEASE header, which the engine never sees. This matters: the heart-failure demo named the disease in the last clause of model_desc (buried-but-PRESENT); Claude Science followed 'do not restate the disease' so faithfully that most of these do NOT name the disease in the visible text at all (fully-ABSENT), a structurally harder scenario. The free B2 retrieval sweep measures what each arm actually surfaces.",
+  "cases": [
+    {
+      "id": "nsclc_lung_ct_cnn",
+      "mesh_heading_oracle": "Carcinoma, Non-Small-Cell Lung",
+      "intervention_type": "device",
+      "model_desc": "A 3D convolutional neural network (adapted ResNet-50 backbone with a false-positive-reduction second stage) ingests reconstructed volumetric low-dose chest CT series, performs voxel-level nodule segmentation, and emits per-nodule malignancy probabilities plus a patient-level risk score calibrated against Lung-RADS categories. Nodule geometry features (diameter, doubling time from prior scans, spiculation) are concatenated into the final dense layer.",
+      "use_case": "opportunistic screening triage from volumetric imaging",
+      "population": "adults 50–80 with ≥20 pack-year smoking history",
+      "setting": "outpatient radiology / screening program",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no — 'Lung-RADS' / 'malignancy' / 'nodule' / 'chest CT' appear; 'lung cancer' / 'NSCLC' / 'adenocarcinoma' never stated"
+    },
+    {
+      "id": "ischemic_stroke_ct_ensemble",
+      "mesh_heading_oracle": "Ischemic Stroke",
+      "intervention_type": "device",
+      "model_desc": "An ensemble of a U-Net segmentation head and a gradient-boosted classifier processes non-contrast head CT and CT-angiography source images to detect large-vessel occlusion, segment the ischemic core, and output an ASPECTS estimate with a hemispheric asymmetry heatmap. Perfusion-derived mismatch volumes are fused as tabular features to produce a treatment-eligibility flag.",
+      "use_case": "time-critical imaging triage and worklist prioritization",
+      "population": "adults presenting with acute focal neurological deficit",
+      "setting": "emergency department / hyperacute stroke pathway",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "partial — 'stroke' appears in setting ('hyperacute stroke pathway'); 'ischemic core' in model_desc; full 'ischemic stroke' not stated as a unit"
+    },
+    {
+      "id": "copd_exacerbation_survival",
+      "mesh_heading_oracle": "Pulmonary Disease, Chronic Obstructive",
+      "intervention_type": "device",
+      "model_desc": "A gradient-boosted survival model (XGBoost with a Cox objective) combines structured EHR variables — spirometry (FEV1/FVC), prior exacerbation counts, eosinophil counts, inhaler fill history — with home spirometer and pulse-oximetry telemetry to predict 30-day exacerbation hazard. Output is a rolling daily risk trajectory with SHAP-based feature attributions.",
+      "use_case": "rolling ambulatory exacerbation-risk forecasting",
+      "population": "adults with established airflow-limitation diagnosis",
+      "setting": "outpatient / remote home-monitoring program",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no — 'airflow-limitation' / 'spirometry' / 'FEV1/FVC' / 'exacerbation' appear; 'COPD' / 'chronic obstructive pulmonary disease' never stated"
+    },
+    {
+      "id": "aki_rnn_inpatient",
+      "mesh_heading_oracle": "Acute Kidney Injury",
+      "intervention_type": "device",
+      "model_desc": "A recurrent neural network (GRU layers over irregularly-sampled time series, with masking and time-decay embeddings) consumes streaming inpatient labs (serial creatinine, electrolytes, urine output), vitals, and nephrotoxic medication administration events to predict onset within the next 48 hours per KDIGO staging. It outputs a continuously updated probability with lead-time-to-event estimation.",
+      "use_case": "continuous inpatient deterioration monitoring",
+      "population": "hospitalized adult inpatients on general and ICU wards",
+      "setting": "acute-care hospital, real-time EHR-integrated",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no — 'KDIGO staging' / 'creatinine' / 'nephrotoxic' appear; 'acute kidney injury' / 'AKI' never stated"
+    },
+    {
+      "id": "tb_chest_xray_densenet",
+      "mesh_heading_oracle": "Tuberculosis, Pulmonary",
+      "intervention_type": "device",
+      "model_desc": "A DenseNet-121 CNN pretrained on large chest-radiograph corpora and fine-tuned with focal loss classifies frontal chest X-rays for TB-consistent abnormality, returning a probability score with Grad-CAM localization over cavitary and infiltrate regions. A lightweight quantized variant runs on-device for portable digital radiography units.",
+      "use_case": "point-of-capture radiographic case-finding in low-resource settings",
+      "population": "adults and adolescents in high-incidence community screening",
+      "setting": "community / mobile screening clinics",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "partial — 'TB' (abbreviation) appears in model_desc ('TB-consistent abnormality'); full 'tuberculosis' never stated"
+    },
+    {
+      "id": "diabetic_retinopathy_fundus",
+      "mesh_heading_oracle": "Diabetic Retinopathy",
+      "intervention_type": "device",
+      "model_desc": "An EfficientNet-B4 classifier ingests color fundus photographs, applies quality-gating and lesion-attention pooling, and grades disease severity on the 5-point international scale while flagging referable macular edema. Image preprocessing includes vessel-contrast normalization and field-of-view masking; output is a severity grade with per-lesion (microaneurysm, hemorrhage, exudate) heatmaps.",
+      "use_case": "autonomous grading and referral triage from retinal photography",
+      "population": "adults with diabetes mellitus undergoing routine eye screening",
+      "setting": "primary care / optometry-based screening",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no for oracle — 'diabetes mellitus' in population is the PARENT (wrong node); 'macular edema' / 'microaneurysm' appear; 'diabetic retinopathy' / 'retinopathy' never stated"
+    },
+    {
+      "id": "melanoma_dermoscopy_transformer",
+      "mesh_heading_oracle": "Melanoma",
+      "intervention_type": "device",
+      "model_desc": "A multimodal transformer fuses dermoscopic image embeddings (ViT encoder) with structured metadata (lesion site, patient age, evolution history) and applies a \"ugly-duckling\" contrastive comparison across a patient's other lesions to output a malignancy probability and biopsy-recommendation flag. Training uses class-balanced sampling and calibration via temperature scaling.",
+      "use_case": "lesion risk stratification and biopsy prioritization",
+      "population": "adults presenting with pigmented skin lesions",
+      "setting": "outpatient dermatology clinic",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no — 'pigmented skin lesions' / 'dermoscopic' / 'malignancy' / 'biopsy' appear; 'melanoma' never stated"
+    },
+    {
+      "id": "crohns_endoscopy_video_cnn",
+      "mesh_heading_oracle": "Crohn Disease",
+      "intervention_type": "device",
+      "model_desc": "A CNN video-analysis model (frame-level ResNet features aggregated by a temporal attention module) scores colonoscopy and capsule-endoscopy footage for mucosal inflammation, ulceration, and stricturing, producing a segment-wise endoscopic severity index. Non-informative frames (bubbles, debris, motion blur) are filtered by an upstream quality classifier.",
+      "use_case": "automated endoscopic disease-activity scoring",
+      "population": "adults with established inflammatory bowel disease",
+      "setting": "gastroenterology endoscopy suite",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no for oracle — 'inflammatory bowel disease' in population is the PARENT (wrong node); 'mucosal inflammation' / 'ulceration' / 'stricturing' appear; 'Crohn' never stated"
+    },
+    {
+      "id": "t2dm_incident_risk_ehr",
+      "mesh_heading_oracle": "Diabetes Mellitus, Type 2",
+      "intervention_type": "device",
+      "model_desc": "A regularized logistic-regression / gradient-boosting hybrid trained on de-identified EHR features — BMI trajectory, fasting glucose, HbA1c, lipid panels, prescription and diagnosis codes — predicts 3-year incident-disease risk, with a monotonic-constraint layer to enforce clinically plausible feature directions. Output is a calibrated risk percentile with an actionable modifiable-factor breakdown.",
+      "use_case": "population-level incident-risk stratification for preventive outreach",
+      "population": "adults with prediabetic or at-risk metabolic profiles",
+      "setting": "primary care / population-health management",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no — 'HbA1c' / 'fasting glucose' / 'prediabetic' appear; 'type 2 diabetes' / 'diabetes mellitus' never stated"
+    },
+    {
+      "id": "mdd_relapse_multimodal",
+      "mesh_heading_oracle": "Depressive Disorder, Major",
+      "intervention_type": "device",
+      "model_desc": "A hierarchical model pairs a fine-tuned clinical-language-model encoder over free-text progress notes with a temporal classifier over passive smartphone signals (sleep, activity, typing dynamics) and PHQ-9 histories to predict relapse within 90 days. It outputs a risk score with note-level attention spans and a symptom-domain profile.",
+      "use_case": "longitudinal relapse-risk surveillance",
+      "population": "adults in active outpatient mental-health treatment",
+      "setting": "outpatient psychiatry / behavioral-health telemonitoring",
+      "claim": "",
+      "optional_url": "",
+      "_disease_in_text": "no — 'PHQ-9' / 'psychiatry' / 'relapse' / 'mental-health' appear; 'depression' / 'major depressive disorder' never stated"
+    }
+  ]
+}
