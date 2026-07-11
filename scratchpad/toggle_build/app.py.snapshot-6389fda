@@ -12,21 +12,12 @@ Claude Fable 5 synthesizes the constrained 8-field spec → output bundle
 """
 
 import datetime
-import os
-import sys
 
 import anthropic
 import streamlit as st
 
 import critic_panel
 import engine
-
-# The wide-net twin lives in experimental/ and is a drop-in replacement for
-# engine (identical build_grounded_context signature + return shape). It reads
-# the disease out of the input text and aims every citation search at the real
-# condition; the sidebar toggle selects between the two at grounding time.
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "experimental"))
-import engine_widenet
 
 # ---------------------------------------------------------------------------
 # The constraint layer (the product). See engine.py for the retrieval layer.
@@ -228,13 +219,6 @@ with st.sidebar:
         value="high",
         help="Higher effort = more thorough synthesis, but slower and more expensive.",
     )
-    use_widenet = st.toggle(
-        "Disease-aware grounding (wide-net)",
-        value=True,
-        help="On by default. Reads the disease out of your description and aims all "
-        "citation searches at the real condition. Turn off to see the baseline engine "
-        "that grounds on device/ML keywords only — useful for a side-by-side comparison.",
-    )
     use_web_search = st.toggle(
         "Supplement with web search",
         value=False,
@@ -317,16 +301,13 @@ if submitted:
                       else "device + drug/biologic pathways")
         with st.spinner(f"Searching ClinicalTrials.gov, openFDA ({_fda_scope}), and literature "
                         "(Europe PMC + OpenAlex + Semantic Scholar, Crossref-verified)…"):
-            _eng = engine_widenet if use_widenet else engine
-            grounded_context, statuses, retrieval_timestamp = _eng.build_grounded_context(
+            grounded_context, statuses, retrieval_timestamp = engine.build_grounded_context(
                 model_desc, use_case, population, optional_url, setting, intervention_type
             )
         with st.expander("🔎 Live data retrieved (grounding context)", expanded=True):
             st.caption(
-                ("🎯 Grounding mode: **wide-net (disease-aware)**" if use_widenet
-                 else "🔑 Grounding mode: **baseline (keyword)**")
-                + f" · 📸 Retrieval snapshot (UTC): **{retrieval_timestamp}** — frozen "
-                "once generated. A reviewer cites this snapshot, not a live re-query."
+                f"📸 Retrieval snapshot (UTC): **{retrieval_timestamp}** — frozen once "
+                "generated. A reviewer cites this snapshot, not a live re-query."
             )
             for s in statuses:
                 st.write(s)
