@@ -21,10 +21,28 @@ FDA section of a grounded context. Residual off-target codes degrade safely: cit
 downstream quarantines non-analogous predicates (proven in B3).
 """
 
+import re
 import requests
 
 HTTP_TIMEOUT = 15
 FDA_BASE = "https://api.fda.gov/device"
+
+# --- Second search axis (F3b) -------------------------------------------------
+# Known AI / CAD / triage software product codes (SaMD). Their code NAMES are
+# generic ("Computer-Assisted Detection", "Radiological Computer-Assisted Triage
+# And Notification Software"), so a disease-name search on the classification
+# endpoint never reaches them -- yet the actual devices filed under them DO name
+# the disease/anatomy ("AVIEW Lung Nodule CAD", "Rapid NCCT Stroke"). Used as a
+# keep-filter for the device-name axis. Extensible; seeded from F5-verified codes.
+SAMD_CODES = {"OEB", "MYN", "QFM", "QAS", "LLZ", "POK", "QBS", "QDQ", "QIH", "QFR", "DQK"}
+
+# Generic medical words that make a single-token device_name search too broad to
+# be disease-specific; dropped from the anatomy-token list.
+_STOP_TOKENS = {
+    "disease", "diseases", "syndrome", "disorder", "disorders", "chronic",
+    "acute", "primary", "secondary", "type", "malignant", "benign", "cell",
+    "cells", "injury", "failure", "system", "device",
+}
 
 # device_name signals that mark a code as the AI / diagnostic / imaging analog we
 # want (as opposed to a treatment/stimulator/assay that merely shares the disease
@@ -35,7 +53,7 @@ DIAGNOSTIC_SIGNAL = [
     "computer-aided", "computer-assisted", "computer aided", "computer assisted",
     "cad", "software", "imaging", "image", "analysis", "analyzer",
     "optical", "screening", "screen", "classifier", "classification",
-    "radiolog", "assist", "quantitat", "lesion", "monitor",
+    "radiolog", "quantitat", "lesion", "monitor",
 ]
 # device_name signals that mark a code as an off-target device TYPE for an
 # imaging/AI-diagnostic use case (treatment / hardware / consumable). Down-weighted.
@@ -154,51 +172,157 @@ def _predicates_for_code(product_code, limit=3):
     return out
 
 
+def _anatomy_tokens(disease):
+    """Meaningful single words from the disease phrase (>=4 chars, minus generic
+    medical stopwords). Lets the device-name axis catch anatomy-named AI devices
+    ("lung" -> "AVIEW Lung Nodule CAD") that a full-phrase search would miss."""
+    out, seen = [], set()
+    for t in re.findall(r"[A-Za-z]{4,}", disease or ""):
+        k = t.lower()
+        if k in _STOP_TOKENS or k in seen:
+            continue
+        seen.add(k)
+        out.append(t)
+    return out
+
+
+def _devices_by_name(term, limit=10):
+    """term -> cleared 510(k)/De Novo devices whose device_name contains `term`.
+    Includes product_code so the caller can see which (often generic) code the
+    device sits under -- the whole point of the second axis."""
+    quoted = '"%s"' % term.replace('"', "")
+    out = []
+    try:
+        r = requests.get(
+            FDA_BASE + "/510k.json",
+            params={"search": "device_name:%s" % quoted, "limit": limit},
+            timeout=HTTP_TIMEOUT,
+        )
+    except requests.RequestException:
+        return out
+    if r.ok:
+        for k in r.json().get("results", []):
+            out.append({
+                "k_number": k.get("k_number", ""),
+                "device_name": k.get("device_name", ""),
+                "decision_date": k.get("decision_date", ""),
+                "applicant": k.get("applicant", ""),
+                "product_code": k.get("product_code", ""),
+            })
+    return out
+
+
+def _second_axis(disease, limit_per_term=10, keep=6):
+    """Device-NAME axis: find AI/CAD/triage devices whose NAME contains the disease
+    or an anatomy token, even when their product code is generically named
+    (OEB/MYN/QAS...) and thus invisible to the classification search. Keeps only
+    devices that look like the AI analog -- under a known SaMD code OR carrying a
+    diagnostic signal in the name -- so a raw "lung" search doesn't drag in every
+    lung device. De-dupes by k_number; ranks SaMD-coded + diagnostic first."""
+    # de-dup the search terms (phrase variants + anatomy tokens), preserve order
+    seen_t, terms = set(), []
+    for t in _disease_variants(disease) + _anatomy_tokens(disease):
+        k = t.lower()
+        if k not in seen_t:
+            seen_t.add(k)
+            terms.append(t)
+
+    by_k = {}
+    for term in terms:
+        for d in _devices_by_name(term, limit=limit_per_term):
+            kn = d["k_number"]
+            if not kn or kn in by_k:
+                continue
+            # Keep a device if it sits under a known AI/CAD/triage code, OR its name
+            # carries a diagnostic signal AND it was cleared in the AI-SaMD era
+            # (>=2015) -- the date floor drops pre-AI namesakes like a 1986
+            # "Computer Assisted Diabetic Instruction" device.
+            is_samd = d["product_code"] in SAMD_CODES
+            recent = (d["decision_date"][:4] >= "2015") if d["decision_date"] else False
+            if is_samd or (_score_code(d["device_name"]) > 0 and recent):
+                d["match_term"] = term
+                by_k[kn] = d
+    devices = list(by_k.values())
+    devices.sort(
+        key=lambda d: (
+            d["product_code"] in SAMD_CODES,
+            _score_code(d["device_name"]),
+            d["decision_date"],
+        ),
+        reverse=True,
+    )
+    return devices[:keep]
+
+
 def disease_to_fda(disease, top_codes=3, per_code=3):
     """Main entry. Returns (text, status, meta).
 
     text   : formatted FDA section (drop-in for a grounded context), or "".
     status : "✅/⚠️/❌ FDA(disease-aware): ..." line.
-    meta   : {"disease", "ranked_codes":[(code,name,specialty,score)], "predicates":{code:[...]}}
-             -- lets the F4 scorer compute precision/recall without re-parsing text.
+    meta   : {"disease",
+              "ranked_codes":[(code,name,specialty,score)],   # axis 1: classification codes
+              "predicates":{code:[...]},                       # axis 1: 510(k)s under those codes
+              "name_axis_devices":[{...}]}                     # axis 2: devices named for the disease
+             -- lets the F4/F4b scorer compute precision/recall without re-parsing text.
     """
     disease = (disease or "").strip()
     if not disease:
-        return "", "⚠️ FDA(disease-aware): empty disease", {"disease": "", "ranked_codes": [], "predicates": {}}
+        return "", "⚠️ FDA(disease-aware): empty disease", {
+            "disease": "", "ranked_codes": [], "predicates": {}, "name_axis_devices": []}
 
+    # Axis 1 (F3): disease -> classification product codes -> cleared predicates.
     codes = _classification_codes(disease)
-    if not codes:
-        return "", "⚠️ FDA(disease-aware): no product code for '%s'" % disease, {
-            "disease": disease, "ranked_codes": [], "predicates": {}}
-
     ranked = sorted(
         ((pc, dn, spec, _score_code(dn)) for pc, (dn, spec) in codes.items()),
         key=lambda t: t[3],
         reverse=True,
     )
     chosen = ranked[:top_codes]
-
-    lines, predicates, any_pred = [], {}, False
+    predicates = {}
     for pc, dn, spec, score in chosen:
-        lines.append("- CODE %s | %s | panel=%s | rank=%d" % (pc, dn, spec or "?", score))
-        preds = _predicates_for_code(pc, limit=per_code)
-        predicates[pc] = preds
-        for p in preds:
-            any_pred = True
+        predicates[pc] = _predicates_for_code(pc, limit=per_code)
+
+    # Axis 2 (F3b): direct device-name search -> generic-coded AI/CAD/triage devices
+    # that name the disease/anatomy (the false-negative fix from F5).
+    name_devices = _second_axis(disease)
+
+    meta = {
+        "disease": disease,
+        "ranked_codes": chosen,
+        "predicates": predicates,
+        "name_axis_devices": name_devices,
+    }
+
+    lines = []
+    if chosen:
+        lines.append("Disease-code axis (classification -> 510(k)):")
+        for pc, dn, spec, score in chosen:
+            lines.append("- CODE %s | %s | panel=%s | rank=%d" % (pc, dn, spec or "?", score))
+            for p in predicates[pc]:
+                lines.append(
+                    "    predicate %s | %s | date=%s | applicant=%s"
+                    % (p["k_number"], p["device_name"], p["decision_date"], p["applicant"])
+                )
+    if name_devices:
+        lines.append("Device-name axis (AI/CAD/triage devices naming the disease/anatomy):")
+        for d in name_devices:
             lines.append(
-                "    predicate %s | %s | date=%s | applicant=%s"
-                % (p["k_number"], p["device_name"], p["decision_date"], p["applicant"])
+                "- %s | %s | code=%s | date=%s | applicant=%s"
+                % (d["k_number"], d["device_name"], d["product_code"],
+                   d["decision_date"], d["applicant"])
             )
-    meta = {"disease": disease, "ranked_codes": chosen, "predicates": predicates}
     text = "\n".join(lines)
-    n_codes = len(chosen)
-    n_pred = sum(len(v) for v in predicates.values())
-    if any_pred:
-        status = "✅ FDA(disease-aware): %d code(s), %d predicate device(s) for '%s'" % (
-            n_codes, n_pred, disease)
-    else:
+
+    n_code_pred = sum(len(v) for v in predicates.values())
+    n_name = len(name_devices)
+    if n_code_pred or n_name:
+        status = "✅ FDA(disease-aware): %d code-axis predicate(s) + %d name-axis device(s) for '%s'" % (
+            n_code_pred, n_name, disease)
+    elif chosen:
         status = "⚠️ FDA(disease-aware): %d code(s) but no cleared predicates for '%s'" % (
-            n_codes, disease)
+            len(chosen), disease)
+    else:
+        status = "⚠️ FDA(disease-aware): no product code or named device for '%s'" % disease
     return text, status, meta
 
 
