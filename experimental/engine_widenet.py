@@ -597,6 +597,110 @@ def normalize_mesh(candidates, with_children=False, new_bares=None):
     return None
 
 
+# ---- Option-1 F3: rank surfaced diseases + clarifying-question tiebreaker -----
+# Over-generic MeSH headings the wide net can dredge up ("Disease", "Chronic
+# Disease"): never a validation spec's subject, so they are demoted below real
+# conditions AND never counted as a competing disease for the pop-up. Lowercased.
+_GENERIC_HEADINGS = {
+    "disease", "diseases", "chronic disease", "acute disease",
+    "syndrome", "disease attributes", "signs and symptoms",
+}
+# Candidate phrases whose only content is a generic condition word — sunk to the
+# back of the lookup order so they can never out-rank a real named condition.
+_GENERIC_CANDIDATES = {
+    "disease", "diseases", "chronic disease", "disease chronic",
+    "chronic", "acute", "syndrome", "disorder", "condition", "illness",
+}
+
+
+def _uc_named(cand, uc_tokens):
+    """True when EVERY word of ``cand`` appears in the use_case token set (the
+    strongest tiebreaker: the clinician named this condition as the indication)."""
+    toks = (cand or "").split()
+    return bool(toks) and all(t in uc_tokens for t in toks)
+
+
+def resolve_condition(candidates, use_case, new_bares=None, with_children=False):
+    """Option-1 F3 — pick ONE condition from the (possibly several) diseases the
+    wide net surfaces, or flag a genuine tie for a clarifying question.
+
+    Wraps ``normalize_mesh`` (left byte-for-byte identical to the frozen engine's —
+    the resolver is never touched). This is the ranking/tiebreaker step the F1/F2
+    wide net deferred. On a single-disease write-up it behaves exactly like
+    ``normalize_mesh`` (first candidate that resolves wins); on a comorbidity
+    write-up it applies three tiebreakers, in order:
+      1. a condition NAMED in the use_case wins outright (the declared indication);
+      2. a full two-word heading beats a lone word that happened to resolve;
+      3. over-generic headings ("Disease", "Chronic Disease") are demoted.
+    When the use_case names neither disease and two distinct real conditions still
+    resolve, NO silent pick is made: the result carries ``needs_disambiguation=True``
+    and ``disambiguation_options`` (the competing headings) so the app can ask the
+    user which condition the model actually targets. On control/single-winner cases
+    the flag stays False, so the pop-up never over-fires.
+
+    Returns the ``normalize_mesh`` dict (``preferred``/``synonyms``/…) augmented with
+    ``needs_disambiguation`` (bool) and ``disambiguation_options`` (list of headings),
+    or None when nothing resolves. Purely additive — callers that only read
+    ``preferred``/``synonyms`` are unaffected.
+    """
+    new_bares = set(new_bares or ())
+    cands = [c for c in (candidates or []) if c and len(c.strip()) > 2]
+    uc_tokens = set(_widenet_tokens(use_case))
+
+    # Tiebreaker reorder (OFFLINE, stable): float use_case-named conditions to the
+    # front, sink over-generic phrases to the back, prefer two-word headings — but
+    # otherwise preserve the engine's existing bigram-first order (index tiebreak),
+    # so single-disease cases resolve byte-for-byte as before.
+    def key(item):
+        i, c = item
+        cl = c.strip().lower()
+        named = _uc_named(cl, uc_tokens)
+        is_bigram = len(cl.split()) == 2
+        generic = cl in _GENERIC_CANDIDATES
+        return (0 if named else 1, 1 if generic else 0, 0 if is_bigram else 1, i)
+
+    ranked = [c for _, c in sorted(enumerate(cands), key=key)]
+
+    # First candidate that resolves = the winner (cheap: stops at the first hit,
+    # exactly like normalize_mesh, but on the reordered list).
+    winner = normalize_mesh(ranked, with_children=with_children, new_bares=new_bares)
+    if not winner:
+        return None
+    winner["needs_disambiguation"] = False
+    winner["disambiguation_options"] = [winner["preferred"]]
+
+    # If the winner was NAMED in the use_case, the indication is explicit — done,
+    # no clarifying question (the control-phrasing path).
+    if _uc_named((winner.get("input") or "").lower(), uc_tokens):
+        return winner
+
+    # Otherwise the use_case gave no disambiguating signal: look for a SECOND,
+    # distinct, non-generic condition that ALSO resolves. Only a genuine two-disease
+    # fork earns a pop-up. A lone-word competitor is treated as noise (tiebreaker 2),
+    # so a stray unigram can't fire the pop-up against a solid heading. This branch
+    # is the only one that pays for extra lookups — control cases never reach it.
+    win_input = winner.get("input")
+    options = [winner["preferred"]]
+    for c in ranked:
+        if c == win_input:
+            continue
+        r = normalize_mesh([c], with_children=False, new_bares=new_bares)
+        if not r:
+            continue
+        pref = r["preferred"]
+        if (pref or "").lower() in _GENERIC_HEADINGS or pref in options:
+            continue
+        if len(c.split()) < 2:            # tiebreaker 2: ignore lone-word competitors
+            continue
+        options.append(pref)
+        break
+
+    if len(options) >= 2:
+        winner["needs_disambiguation"] = True
+        winner["disambiguation_options"] = options
+    return winner
+
+
 def search_clinicaltrials(term, max_studies=6):
     if not term:
         return "", "⚠️ ClinicalTrials.gov: empty query"

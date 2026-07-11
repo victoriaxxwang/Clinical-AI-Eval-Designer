@@ -1,0 +1,39 @@
+/Users/victoriaxwang/Desktop/Claude/Clinical-AI-Eval-Designer/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+[hf_in_diabetes / control]
+  use_case: 'early prediction of heart failure decompensation to guide escalation of diuretic therapy'
+  primary target : 'Heart Failure'   (secondary: 'Diabetes Mellitus, Type 2')
+  # diseases surfaced: 2
+  surfaced: Heart Failure<-'heart failure' | Diabetes Mellitus<-'diabetes mellitus'
+  NAIVE pick (first-resolve): 'Heart Failure' from 'heart failure'  => is_primary=True
+
+[hf_in_diabetes / mechanism_first]
+  use_case: 'continuous outpatient deterioration monitoring'
+  primary target : 'Heart Failure'   (secondary: 'Diabetes Mellitus, Type 2')
+  # diseases surfaced: 4
+  surfaced: Diabetes Mellitus<-'diabetes mellitus' | Heart Failure<-'heart failure' | Chronic Disease<-'chronic disease' | Disease<-'disease'
+  NAIVE pick (first-resolve): 'Diabetes Mellitus' from 'diabetes mellitus'  => is_primary=False
+
+[afib_stroke / control]
+  use_case: 'opportunistic screening for atrial fibrillation'
+  primary target : 'Atrial Fibrillation'   (secondary: 'Stroke')
+  # diseases surfaced: 3
+  surfaced: Atrial Fibrillation<-'atrial fibrillation' | Embolic Stroke<-'embolic stroke' | Stroke<-'stroke'
+  NAIVE pick (first-resolve): 'Atrial Fibrillation' from 'atrial fibrillation'  => is_primary=True
+
+[afib_stroke / mechanism_first]
+  use_case: 'ambulatory rhythm screening'
+  primary target : 'Atrial Fibrillation'   (secondary: 'Stroke')
+  # diseases surfaced: 3
+  surfaced: Embolic Stroke<-'embolic stroke' | Atrial Fibrillation<-'atrial fibrillation' | Stroke<-'stroke'
+  NAIVE pick (first-resolve): 'Embolic Stroke' from 'embolic stroke'  => is_primary=False
+
+================ F3 PROBE SUMMARY ================
+  hf_in_diabetes   control          FORK (>1 disease)   naive='Heart Failure'          [OK]
+  hf_in_diabetes   mechanism_first  FORK (>1 disease)   naive='Diabetes Mellitus'      [MISPICK]
+  afib_stroke      control          FORK (>1 disease)   naive='Atrial Fibrillation'    [OK]
+  afib_stroke      mechanism_first  FORK (>1 disease)   naive='Embolic Stroke'         [MISPICK]
+
+frozen engine md5 (post-run): 2e6d49cdaa3106b6c29ee66b5df37e58
+results -> /Users/victoriaxwang/Desktop/Claude/Clinical-AI-Eval-Designer/scratchpad/f3_probe_results.json

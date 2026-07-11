@@ -1,0 +1,22 @@
+/Users/victoriaxwang/Desktop/Claude/Clinical-AI-Eval-Designer/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+==== A. NO-REGRESSION (F2 single-disease topics) ====
+  heart_failure            control         resolved='Heart Failure'            popup=False oracle_match=True  [OK]
+  heart_failure            mechanism_first resolved='Heart Failure'            popup=False oracle_match=True  [OK]
+  chronic_kidney_disease   control         resolved='Kidney Diseases'          popup=False oracle_match=False [OK]
+  chronic_kidney_disease   mechanism_first resolved='Kidney Diseases'          popup=False oracle_match=False [OK]
+  pulmonary_embolism       control         resolved='Pulmonary Embolism'       popup=False oracle_match=True  [OK]
+  pulmonary_embolism       mechanism_first resolved='Pulmonary Embolism'       popup=False oracle_match=True  [OK]
+
+==== B. COMORBIDITY (F3 two-disease topics) ====
+  hf_in_diabetes   control         resolved='Heart Failure'            popup=False opts=['Heart Failure'] [PASS]
+  hf_in_diabetes   mechanism_first resolved='Diabetes Mellitus'        popup=True  opts=['Diabetes Mellitus', 'Heart Failure'] [PASS]
+  afib_stroke      control         resolved='Atrial Fibrillation'      popup=False opts=['Atrial Fibrillation'] [PASS]
+  afib_stroke      mechanism_first resolved='Embolic Stroke'           popup=True  opts=['Embolic Stroke', 'Atrial Fibrillation'] [PASS]
+
+================ F3 BUILD SUMMARY ================
+  A. no-regression : 6/6 OK
+  B. comorbidity   : 4/4 PASS
+
+frozen engine md5 (post-run): 2e6d49cdaa3106b6c29ee66b5df37e58
+results -> /Users/victoriaxwang/Desktop/Claude/Clinical-AI-Eval-Designer/scratchpad/f3_build_results.json

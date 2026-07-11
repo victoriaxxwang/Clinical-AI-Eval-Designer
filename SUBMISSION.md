@@ -70,8 +70,13 @@ the shipped pipeline as a baseline and change exactly one dial at a time, across
   measured that it only helps when the disease is *named early*: on realistic
   *mechanism-first* write-ups (disease buried in ML jargon) it surfaces the condition
   in just 3 of 20 independent cases. That's a first-principle bound of the shipped
-  approach; the wide-net fix that recovers it (2→17) needs a disambiguation step and
-  is scoped as Phase 2. (2) A side-effect of that same fix costs sepsis its one golden
+  approach. The wide-net fix that recovers it (2→17) I then built and measured in an
+  isolated prototype: it surfaces the buried disease, and a ranking + clarifying-question
+  tiebreaker resolves the multi-disease fork it opens — 10/10 on the test slate (every
+  previously-working case unchanged; buried-disease cases either resolve correctly or
+  raise the clarifying question, never a silent wrong pick). It stays out of the shipped
+  default and is scoped as Phase 2 (see OPTION1_WIDENET.md), but it's now a measured
+  capability, not a promise. (2) A side-effect of that same fix costs sepsis its one golden
   paper (literature 2→0, because making its MeSH resolve rebuilds the query); the
   compensating patch was net-negative across the slate (−1 golden) so I reverted it and
   document the tradeoff. (3) The MeSH `+hierarchy` vocabulary-expansion axis is still

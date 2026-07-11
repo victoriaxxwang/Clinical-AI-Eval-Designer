@@ -112,8 +112,21 @@ the first 12 keywords, with the same disease-only category gate — recovered su
 from **2/20 → 17/20** with no loosening. But the wide net surfaces **>1 disease in
 16/20** cases, so it needs a ranking / clarifying-question tiebreaker to *pick* the
 right one before it can ship. That disambiguation step is the real remaining work and
-is scoped as a Phase-2 stretch, built in an isolated engine copy so it can never
-regress the frozen shipped engine.
+is scoped as a Phase-2 stretch, built in an isolated engine copy (`experimental/engine_widenet.py`)
+so it can never regress the frozen shipped engine.
+
+**Update — the disambiguation step is now built and measured (2026-07-11).** A live
+comparison (3 topics × 2 phrasings, retrieval-only, no API key) confirmed the wide net
+recovers recall on mechanism-first phrasing: oracle-heading match **2/6 → 4/6**, every
+gain on the buried-disease cases, zero regression on the condition-forward controls. The
+ranking + clarifying-question tiebreaker — prefer a disease *named in the use_case* →
+prefer a full two-word heading over a stray single word → demote over-generic headings;
+raise a clarifying question only on a genuine tie — then scored **10/10** on a combined
+slate: 6/6 single-disease no-regression (the pop-up stays silent) + 4/4 comorbidity
+(controls resolve cleanly; the two mechanism-first cases that previously *silently
+mispicked* the distractor now raise the clarifying question with both diseases on offer —
+**never a silent wrong pick**). It remains out of the shipped default. Full writeup:
+**`OPTION1_WIDENET.md`**.
 
 **Product decision recorded — web search defaults OFF.** An end-to-end live run on 3
 fresh device/imaging cases (each generated *from* the retrieved evidence, then passed
@@ -527,8 +540,9 @@ independent sweep passes (68/68 scored ids re-resolved live, offline consistency
 > recall 2→0 (accepted lit-bow tension; the compensating fix was net −1 and reverted);
 > `+hierarchy` still inert (5-term cap saturates with synonyms); buried-disease
 > surfacing helps condition-forward phrasing only (3/20 on mechanism-first — a
-> first-principle bound, wide-net Phase-2 stretch recovers it 2→17 but needs a
-> ranking tiebreaker). On top of the engine: an **advisory 3-persona review panel**
+> first-principle bound, wide-net Phase-2 stretch recovers it 2→17; its ranking +
+> clarifying-question tiebreaker is now **built + measured 10/10** but stays out of the
+> shipped default — see `OPTION1_WIDENET.md`). On top of the engine: an **advisory 3-persona review panel**
 > (regulator / biostatistician / clinical scientist) with a warn-only grounding audit,
 > and the **web-search toggle defaults OFF** for grounding purity. Engine untouched
 > by the panel.
