@@ -1,0 +1,74 @@
+{
+  "panel": [
+    {
+      "persona": "regulator",
+      "strength": "Correctly identifies product code POK (21 CFR 892.2060, Class II CADx) as the on-point classification and disqualifies the keyword-artifact 510(k)s and therapeutic/cardiovascular records as non-predicates.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "The intended-use claim is explicitly INFERRED and not confirmed, yet the entire pathway, comparator, and pivotal design hang on it; a triage decision-support claim vs. an additive/autonomous claim have materially different evidentiary bars. The claim must be locked before submission.",
+          "evidence_basis": "Draft Field labeled 'Intended clinical claim (INFERRED \u2014 team to confirm)'; no retrieved record supplies an intended-use precedent for this device class."
+        },
+        {
+          "severity": "blocking",
+          "issue": "No predicate has actually been identified \u2014 the plan concedes no systematic 510(k) predicate search was performed, so the choice between 510(k) and De Novo is unresolved and the doubling-time output may expand the intended use beyond any predicate.",
+          "evidence_basis": "Draft Field 7 states 'this pipeline did not do a systematic predicate search'; retrieved 510(k)s under 'branch'/'dual' (K964021, K040829, K103706) are keyword artifacts, and no POK predicate device appears in the retrieved evidence."
+        },
+        {
+          "severity": "minor",
+          "issue": "The auxiliary doubling-time regression is carried as a model output without a decided regulatory disposition (own intended-use statement vs. dropped), leaving a labeled claim ambiguous.",
+          "evidence_basis": "Draft Fields 3 and 7 flag doubling-time as unvalidated; no retrieved record establishes a growth-rate CADx claim precedent."
+        }
+      ]
+    },
+    {
+      "persona": "biostatistician",
+      "strength": "Appropriately insists on event-based (malignant-nodule) powering rather than patient counts and pairs AUROC with explicit calibration slope/intercept, matching a calibrated-probability claim.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "No sample size, target CI half-width, non-inferiority margin, or expected enriched prevalence is specified \u2014 the plan defers all of it, so the study is not yet powered or evaluable.",
+          "evidence_basis": "Draft Field 5 states 'No validated sample-size benchmark retrieved; a biostatistician must derive it'; no retrieved study offers a diagnostic-accuracy/MRMC power precedent (therapeutic trials n=16\u20131264 are survival-powered)."
+        },
+        {
+          "severity": "blocking",
+          "issue": "Screen-detected malignancy prevalence is low, so AUROC is a poor primary discrimination metric for a triage/rule-out use; AUPRC and prevalence-corrected operating points are needed, but AUPRC is not named as a co-primary.",
+          "evidence_basis": "Draft Field 3 names AUROC + calibration as primary and mentions prevalence-correction only in Field 5; no retrieved benchmark specifies the metric for low-prevalence lung CADx."
+        },
+        {
+          "severity": "minor",
+          "issue": "Multiple pre-specified subgroups (vendor/kernel/slice, three nodule types, size strata, sex, age, site) create multiplicity and near-certain underpowering per cell without a stated correction or minimum-event rule beyond a descriptive flag.",
+          "evidence_basis": "Draft Field 6 lists the subgroups and relies on an 'underpowered \u2014 descriptive only' flag; no retrieved record supplies subgroup event-count benchmarks."
+        }
+      ]
+    },
+    {
+      "persona": "clinical_scientist",
+      "strength": "Rightly makes the pivotal question a reader-with-vs-without-AI MRMC concurrent-read study measuring change in biopsy vs. surveillance decisions, tying the claim to a real change in clinical action.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "Detector recall is named as a hard pre-condition (missed nodules never reach the classifier) but no minimum detector-sensitivity gate is set, so a system-level sensitivity ceiling could silently undermine the triage claim.",
+          "evidence_basis": "Draft Field 2 states the U-Net cascade 'silently caps system-level sensitivity' and that 'no established input-validity threshold was retrieved'; no retrieved record sets a detector-recall floor."
+        },
+        {
+          "severity": "minor",
+          "issue": "The plan does not address alert-fatigue or over-referral risk \u2014 a triage aid that shifts indeterminate nodules toward biopsy could increase invasive procedures without a defined harm/benefit trade-off (false-negative vs. unnecessary-biopsy balance).",
+          "evidence_basis": "Draft MRMC endpoint measures 'appropriate biopsy vs. surveillance decisions' but no retrieved evidence or plan section quantifies the harm asymmetry or referral-rate impact."
+        },
+        {
+          "severity": "minor",
+          "issue": "Lead-time actionability of the doubling-time output is unaddressed \u2014 whether a growth estimate changes surveillance timing in a way clinicians would act on is not tested even as a secondary outcome.",
+          "evidence_basis": "Draft Field 3/4 treat doubling-time as exploratory needing separate volumetry ground truth; retrieved growth-prediction literature (PMID 41557569) is method context only, not a clinical-utility precedent."
+        }
+      ]
+    }
+  ],
+  "fix_before_submission": [
+    "Lock the intended-use / clinical claim (triage decision-support vs. additive) before finalizing pathway and pivotal design.",
+    "Perform a systematic 510(k)/De Novo predicate search under product code POK and resolve pathway and doubling-time claim disposition.",
+    "Derive and pre-specify sample size: target AUROC CI half-width or non-inferiority margin, expected enriched malignancy prevalence, and MRMC reader/case counts.",
+    "Add AUPRC and prevalence-corrected operating points as co-primary discrimination metrics for the low-prevalence setting.",
+    "Set a minimum upstream U-Net detector-sensitivity gating criterion and report detector recall separately as a system-sensitivity pre-condition."
+  ]
+}

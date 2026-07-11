@@ -1,0 +1,145 @@
+[tripwire] engine.py md5 OK (2e6d49cdaa3106b6c29ee66b5df37e58)
+/Users/victoriaxwang/Desktop/Claude/Clinical-AI-Eval-Designer/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+################ CASE diabetic_retinopathy_fundus  (oracle: Diabetic Retinopathy) ################
+
+--- diabetic_retinopathy_fundus / FROZEN : generating spec (effort=medium) ---
+    spec chars: 18434  refusal=False
+--- diabetic_retinopathy_fundus / FROZEN : convening critic panel ---
+    panel blockers (fix_before_submission): 4
+
+--- diabetic_retinopathy_fundus / WIDENET : generating spec (effort=medium) ---
+    spec chars: 15704  refusal=False
+--- diabetic_retinopathy_fundus / WIDENET : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+################ CASE crohns_endoscopy_video_cnn  (oracle: Crohn Disease) ################
+
+--- crohns_endoscopy_video_cnn / FROZEN : generating spec (effort=medium) ---
+    spec chars: 18460  refusal=False
+--- crohns_endoscopy_video_cnn / FROZEN : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+--- crohns_endoscopy_video_cnn / WIDENET : generating spec (effort=medium) ---
+    spec chars: 17178  refusal=False
+--- crohns_endoscopy_video_cnn / WIDENET : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+################ CASE nsclc_lung_ct_cnn  (oracle: Carcinoma, Non-Small-Cell Lung) ################
+
+--- nsclc_lung_ct_cnn / FROZEN : generating spec (effort=medium) ---
+    spec chars: 15196  refusal=False
+--- nsclc_lung_ct_cnn / FROZEN : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+--- nsclc_lung_ct_cnn / WIDENET : generating spec (effort=medium) ---
+    spec chars: 16619  refusal=False
+--- nsclc_lung_ct_cnn / WIDENET : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+################ CASE melanoma_dermoscopy_transformer  (oracle: Melanoma) ################
+
+--- melanoma_dermoscopy_transformer / FROZEN : generating spec (effort=medium) ---
+    spec chars: 15644  refusal=False
+--- melanoma_dermoscopy_transformer / FROZEN : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+--- melanoma_dermoscopy_transformer / WIDENET : generating spec (effort=medium) ---
+    spec chars: 15287  refusal=False
+--- melanoma_dermoscopy_transformer / WIDENET : convening critic panel ---
+    panel blockers (fix_before_submission): 5
+
+================ B3 Option A DONE ================
+{
+  "batch": "B3_optionA",
+  "effort": "medium",
+  "cases": {
+    "diabetic_retinopathy_fundus": {
+      "oracle": "Diabetic Retinopathy",
+      "arms": {
+        "frozen": {
+          "spec_chars": 18434,
+          "spec_refusal": false,
+          "spec_file": "diabetic_retinopathy_fundus_frozen_spec.md",
+          "panel_blockers": 4,
+          "panel_file": "diabetic_retinopathy_fundus_frozen_panel.json",
+          "grounding_audit_flags": null
+        },
+        "widenet": {
+          "spec_chars": 15704,
+          "spec_refusal": false,
+          "spec_file": "diabetic_retinopathy_fundus_widenet_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "diabetic_retinopathy_fundus_widenet_panel.json",
+          "grounding_audit_flags": null
+        }
+      }
+    },
+    "crohns_endoscopy_video_cnn": {
+      "oracle": "Crohn Disease",
+      "arms": {
+        "frozen": {
+          "spec_chars": 18460,
+          "spec_refusal": false,
+          "spec_file": "crohns_endoscopy_video_cnn_frozen_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "crohns_endoscopy_video_cnn_frozen_panel.json",
+          "grounding_audit_flags": null
+        },
+        "widenet": {
+          "spec_chars": 17178,
+          "spec_refusal": false,
+          "spec_file": "crohns_endoscopy_video_cnn_widenet_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "crohns_endoscopy_video_cnn_widenet_panel.json",
+          "grounding_audit_flags": null
+        }
+      }
+    },
+    "nsclc_lung_ct_cnn": {
+      "oracle": "Carcinoma, Non-Small-Cell Lung",
+      "arms": {
+        "frozen": {
+          "spec_chars": 15196,
+          "spec_refusal": false,
+          "spec_file": "nsclc_lung_ct_cnn_frozen_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "nsclc_lung_ct_cnn_frozen_panel.json",
+          "grounding_audit_flags": null
+        },
+        "widenet": {
+          "spec_chars": 16619,
+          "spec_refusal": false,
+          "spec_file": "nsclc_lung_ct_cnn_widenet_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "nsclc_lung_ct_cnn_widenet_panel.json",
+          "grounding_audit_flags": null
+        }
+      }
+    },
+    "melanoma_dermoscopy_transformer": {
+      "oracle": "Melanoma",
+      "arms": {
+        "frozen": {
+          "spec_chars": 15644,
+          "spec_refusal": false,
+          "spec_file": "melanoma_dermoscopy_transformer_frozen_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "melanoma_dermoscopy_transformer_frozen_panel.json",
+          "grounding_audit_flags": null
+        },
+        "widenet": {
+          "spec_chars": 15287,
+          "spec_refusal": false,
+          "spec_file": "melanoma_dermoscopy_transformer_widenet_spec.md",
+          "panel_blockers": 5,
+          "panel_file": "melanoma_dermoscopy_transformer_widenet_panel.json",
+          "grounding_audit_flags": null
+        }
+      }
+    }
+  }
+}
+
+[tripwire] engine.py md5 still OK (2e6d49cdaa3106b6c29ee66b5df37e58)

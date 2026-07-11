@@ -1,0 +1,73 @@
+{
+  "panel": [
+    {
+      "persona": "regulator",
+      "strength": "The plan correctly refuses to treat the retrieved hardware device codes (HJI, K864304, K901839) as software predicates and explicitly flags the assistive-vs-autonomous claim as the pivotal intended-use decision that changes the evidentiary bar.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "The primary clinical claim is still marked INFERRED and unconfirmed; a validation plan cannot fix a locked design, endpoint, or comparator until the intended use (assistive triage vs. autonomous diagnosis) is settled, because the two require materially different study designs.",
+          "evidence_basis": "The plan's own Section 7 and header state the claim is inferred and that no on-point software DR-detection predicate/De Novo precedent was returned in the retrieved openFDA records."
+        },
+        {
+          "severity": "blocking",
+          "issue": "No predicate or De Novo precedent is identified, so the regulatory pathway is undetermined; the plan asserts autonomous DR software 'has been FDA-authorized' but no such record appears in the retrieved evidence to anchor a pathway.",
+          "evidence_basis": "Retrieved openFDA results contain only fundus hardware (HJI, K864304, K901839) and irrelevant keyword matches (JIS, K093746, K971293, K951771, K252637); no DR AI software authorization is present, and the coverage note warns absence is not evidence of absence."
+        },
+        {
+          "severity": "minor",
+          "issue": "Ex-US strategy and any drug/biologic labeling considerations are declared out of scope, which is acceptable but should be explicitly confirmed as a deliberate boundary with the reviewer rather than a retrieval artifact.",
+          "evidence_basis": "The coverage note states EMA/MHRA/PMDA and Drugs@FDA/SPL/FAERS were not queried by this pipeline."
+        }
+      ]
+    },
+    {
+      "persona": "biostatistician",
+      "strength": "The plan correctly identifies that referable-positive case count (prevalence-limited), not total enrollment, is the binding constraint on precision and insists sensitivity/specificity lower-bound targets be pre-specified before N is computed.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "No sample size, no pre-specified sensitivity/specificity lower bounds, and no expected screening prevalence are provided; without these the study is not powered and the design cannot be evaluated for adequacy.",
+          "evidence_basis": "The plan's Section 5 states no retrieved record fixes N for this model and that targets and prevalence remain to be set by experts."
+        },
+        {
+          "severity": "minor",
+          "issue": "Calibration is named as a metric but no acceptance criterion or method (e.g., calibration slope/intercept, ECE) is pre-specified, despite calibration being the specific documented failure mode for transferred DR-grading models.",
+          "evidence_basis": "PMID 42078464 (calibration-focused benchmark for DR grading) in the retrieved literature flags calibration degradation on transfer; the plan cites it but sets no calibration threshold."
+        },
+        {
+          "severity": "minor",
+          "issue": "Subgroup analyses are pre-specified in principle but no minimum cell sizes are set, so rare strata (borderline-gradeable, DME-present, high-pigmentation) risk being uninterpretable due to wide confidence intervals.",
+          "evidence_basis": "Plan Section 6 lists strata but explicitly defers minimum cell sizes to expert input; no retrieved record supplies subgroup performance for this model."
+        }
+      ]
+    },
+    {
+      "persona": "clinical_scientist",
+      "strength": "The plan embeds the full deployment workflow (capture \u2192 quality gate \u2192 grade \u2192 tele-ophthalmology review) into the study and treats the quality-gate reject rate as a co-primary operating characteristic, so accuracy is not measured on an artificially curated image set.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "The study measures diagnostic accuracy but nothing about whether the referral flag changes clinical action, missed-referral consequences, or lead-time actionability; the quality gate's discard fraction must be reported alongside conditioned accuracy or a gate that rejects hard cases will inflate apparent benefit while harming patients silently.",
+          "evidence_basis": "DeepDRiD (PMID 35755875) pairs grading with image-quality estimation as integral, supporting the gate concern; the plan's DOES NOT CERTIFY list concedes no downstream clinical outcome (e.g., reduced vision loss) is measured."
+        },
+        {
+          "severity": "minor",
+          "issue": "Fundus-only DME detection is a known workflow weakness because DME is often defined on OCT, risking systematic misclassification at the referral threshold; OCT anchoring is only proposed 'where feasible on a subset.'",
+          "evidence_basis": "Retrieved fundus-OCT fusion and OCT-to-fundus translation work (PMID 42346900, PMID 41590921) indicate DME reference is OCT-linked; the plan itself lists fundus-only DME as not certified."
+        },
+        {
+          "severity": "minor",
+          "issue": "Per-eye laterality integrity is flagged for monitoring but the accuracy study does not clearly specify per-eye result handling, and a silent left/right swap would misdirect specialist referral.",
+          "evidence_basis": "NIDEK fundus-camera software recall Z-2046-2013 (left-eye image saved as right eye) in the retrieved recalls documents this exact silent failure mode."
+        }
+      ]
+    }
+  ],
+  "fix_before_submission": [
+    "Confirm and lock the intended-use claim (assistive tele-ophthalmology triage vs. autonomous diagnosis) before finalizing design, endpoint, and comparator.",
+    "Identify the correct FDA software pathway and a legitimate predicate/De Novo precedent via manual FDA search, since no on-point software record was retrieved.",
+    "Pre-specify sensitivity/specificity lower-bound targets, expected screening prevalence, and compute a powered sample size driven by referable-positive case count.",
+    "Add clinical-impact and safety endpoints \u2014 quality-gate discard fraction with conditioned accuracy and a missed-referral audit \u2014 not diagnostic accuracy alone."
+  ]
+}

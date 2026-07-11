@@ -1,0 +1,74 @@
+{
+  "panel": [
+    {
+      "persona": "regulator",
+      "strength": "Correctly anchors the pathway to the one matching retrieved classification \u2014 POK / 21 CFR 892.2060 Class II CADx radiology software \u2014 and frames the claim as adjunctive rather than autonomous, which fits that class.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "No actual predicate device is identified; the plan proposes a 510(k) but cannot yet name a substantially-equivalent lung-imaging CADx predicate.",
+          "evidence_basis": "The retrieved 510(k) records (K103706 outpatient ECG, K123671 outpatient management, K964021/K040829 vascular grafts, K940827 sunglasses) are none of them imaging CADx; the plan itself concedes no predicate was retrieved and the pipeline did not run a comprehensive predicate search."
+        },
+        {
+          "severity": "blocking",
+          "issue": "The primary intended-use / clinical claim is explicitly INFERRED and unconfirmed; a submission cannot proceed until the team locks the exact intended-use statement (adjunct risk-stratification vs. any biopsy-directing language).",
+          "evidence_basis": "The plan's own 'Intended clinical claim (INFERRED \u2014 team must confirm)' flag; no retrieved record defines an intended use for this device class beyond the generic POK regulation."
+        },
+        {
+          "severity": "minor",
+          "issue": "The auxiliary doubling-time regression is part of the device output but has no defined intended use or validation, which could inadvertently broaden the cleared claim.",
+          "evidence_basis": "Plan states the doubling-time output requires separate validation; no retrieved record supports a growth-rate claim for this model."
+        }
+      ]
+    },
+    {
+      "persona": "biostatistician",
+      "strength": "Correctly recognizes that confirmed cancer count (not total nodule count) governs power given low malignancy prevalence, and requires MRMC reader/case random-effect variance components plus calibration slope/intercept reporting.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "No sample size, effect size, or expected cancer prevalence is specified; the study cannot be evaluated for adequate power as written.",
+          "evidence_basis": "The plan defers N to a biostatistician and notes no retrieved record fixes a sample size for this indication; the only retrieved enrollment (NCT02780739, n=521) is an unrelated cognitive-training trial and is non-transferable."
+        },
+        {
+          "severity": "blocking",
+          "issue": "The primary metric relies on AUC/AUROC, but in a low-prevalence screening cohort discrimination via AUROC can mask poor positive predictive performance; AUPRC and PPV at the operating point should be pre-specified alongside calibration.",
+          "evidence_basis": "The plan itself states malignancy prevalence in screen-detected indeterminate nodules is low; no retrieved benchmark establishes an acceptable AUROC/AUPRC target, so metric choice must be justified rather than assumed."
+        },
+        {
+          "severity": "minor",
+          "issue": "Multi-site generalization is treated as 'ideally different centers' rather than required, weakening external validity of a physics-sensitive radiomics model.",
+          "evidence_basis": "The plan hedges the geographic split as optional; no retrieved record characterizes this model's cross-site or cross-scanner robustness."
+        }
+      ]
+    },
+    {
+      "persona": "clinical_scientist",
+      "strength": "Explicitly ties validation to whether the model changes reader risk-stratification and tracks the upstream U-Net detector miss rate, acknowledging that a missed candidate is a silent false negative the classifier never sees.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "No operating point / acceptable false-positive or recall rate is defined, so the workflow impact \u2014 unnecessary biopsy referrals and alert/recall burden on the screening program \u2014 cannot be assessed.",
+          "evidence_basis": "The plan references 'sensitivity at a fixed, clinically acceptable false-positive/recall rate' but no such threshold is set, and no retrieved benchmark supplies one."
+        },
+        {
+          "severity": "minor",
+          "issue": "The doubling-time output is positioned as clinically useful (surveillance triage) but its lead-time actionability is not evaluated, risking action based on an unvalidated growth estimate.",
+          "evidence_basis": "Plan defers doubling-time to separate volumetric validation; no retrieved record supports its clinical actionability."
+        },
+        {
+          "severity": "minor",
+          "issue": "Silent/shadow-mode phase is proposed but has no criteria linking logged model behavior to a decision to proceed to live triage, leaving the go/no-go for real-world use undefined.",
+          "evidence_basis": "Plan describes the shadow phase but specifies no exit criteria; no retrieved trial design maps this transition for the indication."
+        }
+      ]
+    }
+  ],
+  "fix_before_submission": [
+    "Conduct and document a formal 510(k) predicate search and name a substantially-equivalent lung-imaging CADx predicate before claiming the POK pathway.",
+    "Confirm and lock the exact intended-use statement (adjunctive risk-stratification, explicitly excluding autonomous or biopsy-directing language) with regulatory counsel.",
+    "Have a biostatistician compute powered sample size fixing effect size, expected cancer prevalence, reader count, and reference-standard noise before finalizing the study.",
+    "Pre-specify AUPRC and PPV at the operating point alongside AUROC and calibration, justified for the low-prevalence screening cohort.",
+    "Define the clinically acceptable operating point (false-positive / recall rate) and quantify the resulting biopsy-referral and workflow burden."
+  ]
+}

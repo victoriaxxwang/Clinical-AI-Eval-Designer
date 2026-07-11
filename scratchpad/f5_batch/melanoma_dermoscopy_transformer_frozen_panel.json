@@ -1,0 +1,74 @@
+{
+  "panel": [
+    {
+      "persona": "regulator",
+      "strength": "The plan correctly self-limits to an adjunctive, clinician-in-the-loop CADx claim and explicitly refuses autonomous-diagnosis or biopsy-rule-out framing, which is the defensible posture given the thin regulatory retrieval.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "The intended clinical claim is still marked INFERRED and unconfirmed; a validation plan cannot fix a primary endpoint or comparator without a locked intended-use statement.",
+          "evidence_basis": "The draft itself labels the claim '(INFERRED \u2014 team must confirm)'; nothing in the retrieved evidence establishes an intended-use statement for this device."
+        },
+        {
+          "severity": "blocking",
+          "issue": "No valid predicate or product code has been identified, so the choice between De Novo and 510(k) is unresolved and claims language cannot be finalized against a real pathway.",
+          "evidence_basis": "Retrieved 510(k)s are surgical lasers/culture plates (K862862, K861301, K862864) and the 'outpatient' hits are cardiac telemetry (product_code QYX, 870.1025) and unrelated systems (K123671) \u2014 none is a pigmented-lesion image CADx predicate; the coverage note also states FDA endpoints were not fully queried, so absence is not proof."
+        },
+        {
+          "severity": "minor",
+          "issue": "MAUDE/recall records are cited to motivate post-market monitoring, but the plan should make explicit that these are treatment-laser safety signals and not analogous failure modes for a software CADx.",
+          "evidence_basis": "Retrieved MAUDE reports (2914019-2008-00005/-00010) and recalls (Z-1396-2019, Z-1381-2019) concern surgical lasers and fiber sterility, not imaging software."
+        }
+      ]
+    },
+    {
+      "persona": "biostatistician",
+      "strength": "The plan anchors on melanoma sensitivity as the safety-critical primary endpoint, insists on powering by confirmed malignant-case count rather than total enrollment, and requires subgroup sensitivity to be estimated rather than pooled.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "No sample-size calculation, target sensitivity, expected prevalence, or lower confidence bound is specified \u2014 the study N is entirely deferred, so the plan cannot demonstrate adequate power for the primary or subgroup endpoints.",
+          "evidence_basis": "The draft states 'No sample-size precedent was retrieved' and defers N to the study statistician; no retrieved trial or FDA summary supplies an enrollment figure for this device class."
+        },
+        {
+          "severity": "blocking",
+          "issue": "The plan relies on ROC/AUC as a reported metric but does not commit to precision/recall (AUPRC) and calibration assessment, which are the appropriate framing for a low-prevalence malignancy target that outputs a probability.",
+          "evidence_basis": "The draft acknowledges melanoma is low-prevalence and the model emits a 'malignancy probability,' yet Field 3 lists ROC/AUC without AUPRC or probability calibration; no retrieved benchmark defines the metric choice."
+        },
+        {
+          "severity": "minor",
+          "issue": "Reporting performance only on the non-abstained population plus an abstention rate risks a selection artifact; the statistical handling of abstained cases (e.g., intention-to-diagnose vs conditional analysis) should be pre-specified.",
+          "evidence_basis": "The model uses MC-dropout abstention per the Inputs section; the draft reports non-abstained performance but no retrieved evidence characterizes the abstention behavior of this model class."
+        }
+      ]
+    },
+    {
+      "persona": "clinical_scientist",
+      "strength": "The plan ties validation to whether AI-aided clinicians make better biopsy/referral decisions via an MRMC reader study and builds a closed-loop missed-melanoma surveillance process, correctly focusing on decision change rather than isolated model accuracy.",
+      "critiques": [
+        {
+          "severity": "blocking",
+          "issue": "Standalone teledermatology triage disposition is described as a use setting but the plan never establishes actionability or workflow fit for remote capture \u2014 image-quality validation is required before any teledermatology claim, yet the teledermatology arm is not separately designed.",
+          "evidence_basis": "The draft itself states standalone teledermatology disposition is NOT certified and that remote acquisition is 'an uncontrolled acquisition environment that must be validated separately'; no retrieved study addresses teledermatology capture for this model."
+        },
+        {
+          "severity": "minor",
+          "issue": "Alert-fatigue and false-positive burden on clinician workflow (over-referral/over-biopsy from a high-sensitivity operating point) are not quantified as a study outcome alongside sensitivity.",
+          "evidence_basis": "The draft names specificity as an efficiency co-primary but does not operationalize downstream referral/biopsy burden; retrieved literature is curated-dataset accuracy work (e.g., PMID 36611363, PMID 37627864) with no workflow or alert-burden data."
+        },
+        {
+          "severity": "minor",
+          "issue": "The seven-point-checklist attribute outputs are offered as interpretable aids but their impact on clinician action is untested, risking outputs that do not change decisions.",
+          "evidence_basis": "The model emits seven-point-checklist attributes per Inputs; the draft flags a separate expert-annotated reference is needed but no retrieved evidence shows these attributes alter clinical action."
+        }
+      ]
+    }
+  ],
+  "fix_before_submission": [
+    "Lock a confirmed intended-use / clinical claim statement before setting the primary endpoint and comparator.",
+    "Search FDA databases directly for a dermatology image-CADx predicate/product code and resolve the De Novo vs 510(k) pathway before finalizing claims language.",
+    "Compute and state the study sample size, target melanoma sensitivity, expected prevalence, and lower confidence bound for primary and subgroup endpoints.",
+    "Commit to AUPRC and probability calibration assessment (not ROC/AUC alone) appropriate to a low-prevalence probability output.",
+    "Design a separate teledermatology validation arm with image-quality gating before making any remote-triage claim."
+  ]
+}
