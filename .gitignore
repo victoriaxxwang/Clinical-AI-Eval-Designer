@@ -9,3 +9,19 @@ docs_html/
 # Ablation harness raw retrieval snapshots (regenerable via `python ablation_harness.py --refresh`).
 # The finished results tables (eval_results/ablation_results.md / .json) ARE tracked.
 eval_results/contexts/
+
+# Internal working docs — kept local, not published to the public repo
+SUBMISSION.md
+COMPARISON.md
+INDEX.md
+JOURNAL.md
+PROGRESS_LOG.md
+DEMO_PLAN.md
+OPTION1_WIDENET.md
+claude_code_task_brief.md
+GIT_DEPLOYMENT_GUIDE.md
+CORE_ENGINE_INTEGRATION_BLUEPRINT.md
+CRITIC_PANEL_DESIGN.md
+GOLDEN_PROMPT_TEMPLATE.md
+scratchpad/
+DEMO_SCRIPT.md

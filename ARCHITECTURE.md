@@ -80,13 +80,19 @@ artifact (the clean seam into Phase 2). Code detail in the Appendix.
 | Output field | Primary grounding source |
 |---|---|
 | Study Design | ClinicalTrials.gov (comparable designs, allocation, masking) |
-| Sensor / Input Validation | PubMed + web (device/acquisition validity) |
-| Performance Benchmarks | PubMed + web (reported metrics by regime) |
+| Sensor / Input Validation | PubMed + optional web search, off by default (device/acquisition validity) |
+| Performance Benchmarks | PubMed + optional web search, off by default (reported metrics by regime) |
 | Ground Truth Strategy | PubMed + trial reference standards |
 | Sample Size | ClinicalTrials.gov enrollment of comparable studies |
 | Subgroup Requirements | PubMed (population-specific validity threats) |
 | Regulatory Pathway | openFDA (product codes, predicates, 510(k)/De Novo) |
-| Post-Deployment Monitoring | PubMed + web (drift / monitoring precedent) |
+| Post-Deployment Monitoring | PubMed + optional web search, off by default (drift / monitoring precedent) |
+
+> **On "optional web search":** the primary grounding for every field is the
+> deterministic registry layer above. Web search is **off by default** and only widens
+> the net when a user turns it on; because web pages aren't registry-backed
+> identifiers, the review panel's grounding audit flags any web-sourced citation as
+> unverifiable.
 
 ### Honesty guardrails (what the app does *not* claim)
 - Registry coverage is best-effort. A nil result is reported as "no matching record retrieved," and the model lowers confidence rather than asserting the benchmark doesn't exist.
@@ -111,6 +117,14 @@ Phase-1 constraint layer.
 > endpoint; its connectors are MCP servers, which the API can reach directly.
 
 ### 1. Multi-Agent Critic & Self-Healing Loop (asynchronous verification)
+
+> **What's shipped vs. what's future:** the **three-persona review panel + grounding
+> audit is already built and shipped** — it runs today as **Stage 3** (`critic_panel.py`,
+> shown live in the demo: a regulator, biostatistician, and clinical scientist critique
+> the spec under the same cite-or-flag rule, and a deterministic grounding audit
+> re-checks every identifier they name against the retrieved evidence). What remains
+> **future work** is the **self-correction loop** described below — the tool
+> automatically feeding critiques back to revise its own draft.
 
 An evaluation layer at the end of the deterministic line:
 
